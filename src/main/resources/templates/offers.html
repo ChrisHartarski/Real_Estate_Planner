@@ -13,14 +13,112 @@
 <body>
     <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'home'})}"></header>
     <main>
-<!--No logged user section-->
-        <h1>Оферти</h1>
+        <h1>Продажби</h1>
+<!--        Filter and Sort -->
+        <div class="filter-sort-section">
+            <div class="card">
+                <div class="row">
+                    <div class="filer-section">
+                        <label th:text="Филтър" for="filter-input"></label>
+                        <input id="filter-input">
+                    </div>
+                    <div class="sort-section">
+                        <label th:text="Сортирай-по" for="sort-select"></label>
+                        <select id="sort-select">
+                            <option>Актуализиран най-скоро</option>
+                            <option>Актуализиран най-отдавна</option>
+                            <option>Цена възходяща</option>
+                            <option>Цена низходяща</option>
+                            <option>Тип</option>
+                            <option>Създаден най-скоро</option>
+                            <option>Създаден най-отдавна</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="center">Приложи</button>
+                </div>
+            </div>
+        </div>
 
-        <div>Моля влезте с потребител и парола или се регистрирайте</div>
 
-        <div>Последен ред</div>
-<!--        Logged user section-->
-<!--        buttons for different sections-->
+<!--        Offers-list -->
+        <div class="offer-list-section">
+            <div class="card">
+                <div class="image-section">
+                    <img src="/images/sample_image.jpg" alt="sample_img">
+                </div>
+                <div class="content-section">
+                    <div class="content-header">
+                        <div class="column">
+                            <h2>2-стаен апартамент</h2>
+                            <p>Русе, Възраждане, ул. Солун 26</p>
+                        </div>
+                        <div class="column">
+                            <h3>Цена: €70000</h3>
+                            <p class="grayed-out">(€1000 / кв.м)</p>
+                        </div>
+                    </div>
+                    <div class="content-description">
+                        <div class="column">
+                            <p>Тип: <b>тухла</b></p>
+                            <p>Квадратура: <b>70 кв.м</b></p>
+                        </div>
+                        <div class="column">
+                            <p>Етаж: <b>3 от 8</b></p>
+                            <p>Година: <b>1972 г.</b></p>
+                        </div>
+                    </div>
+                    <div class="content-contact">
+                        <p>Контакт: <b>Иван Иванов</b></p>
+                        <p>Тел: <b>0888 888 888</b></p>
+                        <p>Имейл: <b>ivan_ivanov@gmail.com</b></p>
+                    </div>
+                    <div class="content-footer">
+                        <p class="grayed-out">Актуализиран на: 10.05.2025 г.</p>
+                        <p class="grayed-out">Създаден на: 05.05.2025 г.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="image-section">
+                    <img src="/images/sample_image.jpg" alt="sample_img">
+                </div>
+                <div class="content-section">
+                    <div class="content-header">
+                        <div class="column">
+                            <h2>Къща</h2>
+                            <p>Две Могили, ул. 1-ва 12</p>
+                        </div>
+                        <div class="column">
+                            <h3>Цена: €30000</h3>
+                            <p class="grayed-out">(€200 / кв.м)</p>
+                        </div>
+                    </div>
+                    <div class="content-description">
+                        <div class="column">
+                            <p>Тип: <b>тухла</b></p>
+                            <p>Квадратура: <b>150 кв.м</b></p>
+                            <p>Двор площ: <b>500 кв.м</b></p>
+                        </div>
+                        <div class="column">
+                            <p>Брок етажи: <b>2</b></p>
+                            <p>Година: <b>1975 г.</b></p>
+                        </div>
+                    </div>
+                    <div class="content-contact">
+                        <p>Контакт: <b>Георги Георгиев</b></p>
+                        <p>Тел: <b>0888 777 777</b></p>
+                        <p>Имейл: <b>georgi_georgiev@gmail.com</b></p>
+                    </div>
+                    <div class="content-footer">
+                        <p class="grayed-out">Актуализиран на: 02.05.2025 г.</p>
+                        <p class="grayed-out">Създаден на: 20.03.2025 г.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
 </body>
