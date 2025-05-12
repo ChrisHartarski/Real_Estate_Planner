@@ -10,36 +10,34 @@
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <div th:fragment="navbar(activeLink)">
-        <nav class="navbar">
-            <div class="logo-section">
-                <a th:href="@{/}">
-                    <img class="logo" th:src="@{/images/logo.png}" alt="Real Estate Planner Logo">
-                </a>
-            </div>
-            <div class="menu-section">
-                <ul>
-                    <li class="nav-item" th:classappend="${activeLink == 'home'}? active">
-                        <a th:href="@{/}">Начало</a>
-                    </li>
-                    <li class="nav-item" th:classappend="${activeLink == 'menu-option1'}? active" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/}">Меню опция 1</a>
-                    </li>
-                    <li class="nav-item" th:classappend="${activeLink == 'menu-option2'}? active" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/}">Меню опция 2</a>
-                    </li>
-                    <li class="nav-item" th:classappend="${activeLink == 'menu-option3'}? active" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/}">Меню опция 3</a>
-                    </li>
-                    <li class="nav-item" th:classappend="${activeLink == 'login'}? active" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/login}">Влез</a>
-                    </li>
-                    <li class="nav-item" th:classappend="${activeLink == 'register'}? active" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/register}">Регистрирай се</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <nav class="navbar" th:fragment="navbar(activeLink)">
+        <div class="logo-section">
+            <a th:href="@{/}">
+                <img class="logo" th:src="@{/images/logo.png}" alt="Real Estate Planner Logo">
+            </a>
+        </div>
+        <div class="menu-section">
+            <ul>
+                <li class="nav-item" th:classappend="${activeLink == 'home'}? active">
+                    <a th:href="@{/}">Начало</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink == 'menu-option1'}? active" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/}">Меню опция 1</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink == 'menu-option2'}? active" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/}">Меню опция 2</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink == 'menu-option3'}? active" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/}">Меню опция 3</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink == 'login'}? active" sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Влез</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink == 'register'}? active" sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/register}">Регистрирай се</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </body>
 </html>
