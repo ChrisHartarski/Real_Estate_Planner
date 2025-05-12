@@ -21,14 +21,13 @@
                 <li class="nav-item" th:classappend="${activeLink == 'home'}? active">
                     <a th:href="@{/}">Начало</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'menu-option1'}? active" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/}">Меню опция 1</a>
+                <li class="nav-item" th:classappend="${activeLink == 'sales'}? active"
+                    sec:authorize="isAuthenticated()">
+                    <a th:href="@{/}">Продажби</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'menu-option2'}? active" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/}">Меню опция 2</a>
-                </li>
-                <li class="nav-item" th:classappend="${activeLink == 'menu-option3'}? active" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/}">Меню опция 3</a>
+                <li class="nav-item" th:classappend="${activeLink == 'loans'}? active"
+                    sec:authorize="isAuthenticated()">
+                    <a th:href="@{/}">Наеми</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'login'}? active" sec:authorize="!isAuthenticated()">
                     <a th:href="@{/login}">Влез</a>
