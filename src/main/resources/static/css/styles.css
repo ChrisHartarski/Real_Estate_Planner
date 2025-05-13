@@ -27,13 +27,90 @@ a {
 }
 
 h1 {
-    color: #FFFFFF;
-    text-align: center;
     padding-bottom: 2rem;
+}
+
+.white {
+    color: #FFFFFF;
+}
+
+.blue {
+    color: #263143;
 }
 
 .center {
     margin: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+}
+
+.btn {
+    padding: 0.3rem 1rem;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.btn-blue {
+    background-color: #263143;
+    color: #FFFFFF;
+    border: solid 2px #263143;
+}
+
+.btn-blue:hover {
+    color: #263143;
+    background-color: #FFFFFF;
+    border: solid 2px #263143;
+}
+
+.btn-green {
+    background-color: green;
+    color: #FFFFFF;
+    border: solid 2px green;
+}
+
+.btn-green:hover {
+    color: green;
+    background-color: #FFFFFF;
+    border: solid 2px green;
+}
+
+.btn-red {
+    background-color: red;
+    color: #FFFFFF;
+    border: solid 2px red;
+}
+
+.btn-red:hover {
+    color: red;
+    background-color: #FFFFFF;
+    border: solid 2px red;
+}
+
+.grayed-out {
+    color: #B4B4B4;
 }
 
 /* Navbar */
@@ -70,7 +147,6 @@ h1 {
 /* Offers page */
 .offer-list-section,
 .filter-sort-section {
-    max-width: 70%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -91,20 +167,6 @@ h1 {
 
 .filter-sort-section label {
     padding-right: 0.5rem;
-}
-
-.filter-sort-section button {
-    padding: 0.3rem 1rem;
-    text-align: center;
-    background-color: #263143;
-    color: #FFFFFF;
-    border-radius: 5px;
-}
-
-.filter-sort-section button:hover {
-    color: #263143;
-    background-color: #FFFFFF;
-    border: solid 2px #263143;
 }
 
 #filter-input {
@@ -165,8 +227,47 @@ h1 {
     font-size: 0.8rem;
 }
 
-.grayed-out {
-    color: #B4B4B4;
+/* Property page */
+
+.page-heading,
+.images-section,
+.info-section,
+.buttons-section {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.images-section {
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.page-heading > h1 {
+    padding: 0;
+}
+
+.images-section > .main-image,
+.images-section > .secondary-images{
+    width: calc(50% - 1rem);
+}
+
+.images-section > .secondary-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.main-image > img {
+    max-width: 100%;
+}
+
+.secondary-images > img {
+    max-width: calc(100%/3 - 0.5rem);
+}
+
+.info-section {
+    gap: 0.5rem;
 }
 
 /* Footer */

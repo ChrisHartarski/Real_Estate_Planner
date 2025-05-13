@@ -13,9 +13,9 @@
 <body>
     <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'home'})}"></header>
     <main>
-        <h1>Продажби</h1>
+        <h1 class="white text-center">Продажби</h1>
 <!--        Filter and Sort -->
-        <div class="filter-sort-section">
+        <div class="filter-sort-section w-70">
             <div class="card">
                 <div class="row">
                     <div class="filer-section">
@@ -36,15 +36,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button class="center">Приложи</button>
+                    <button class="btn btn-blue center">Приложи</button>
                 </div>
             </div>
         </div>
 
-
 <!--        Offers-list -->
-        <div class="offer-list-section">
-            <div class="card">
+        <div class="offer-list-section w-70">
+            <div class="card flex-row">
                 <div class="image-section">
                     <img src="/images/sample_image.jpg" alt="sample_img">
                 </div>
