@@ -5,15 +5,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 
-public class OffersController {
+public class SalesController {
 
-    @GetMapping("/offers")
+    @GetMapping("/sales")
     public String getOffers() {
-        return "offers";
+        return "sales";
     }
 
-    @GetMapping("/offers/offer-page")
+    @GetMapping("/sales/property-page")
     public String getOfferPage() {
-        return "offer-page";
+        return "property-page";
     }
 }
