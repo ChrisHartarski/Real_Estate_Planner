@@ -39,8 +39,8 @@ public class Apartment extends BaseProperty {
     public Apartment() {
     }
 
-    public Apartment(String id, Company ownerCompany, String address, double price, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ApartmentType apartmentType, int roomCount, ConstructionType constructionType, int year, int floor, int buildingFloors, boolean hasElevator, String facing) {
-        super(id, ownerCompany, address, price, saleOrRent, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
+    public Apartment(String id, Company ownerCompany, String address, double price, int area, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ApartmentType apartmentType, int roomCount, ConstructionType constructionType, int year, int floor, int buildingFloors, boolean hasElevator, String facing) {
+        super(id, ownerCompany, address, price, area, saleOrRent, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.apartmentType = apartmentType;
         this.roomCount = roomCount;
         this.constructionType = constructionType;
