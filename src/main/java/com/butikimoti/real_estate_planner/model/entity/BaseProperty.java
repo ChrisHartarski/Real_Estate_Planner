@@ -1,0 +1,150 @@
+package com.butikimoti.real_estate_planner.model.entity;
+
+import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class BaseProperty {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    @ManyToOne
+    private Company ownerCompany;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private double price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sale_or_rent", nullable = false)
+    private SaleOrRent saleOrRent;
+
+    @Column(name = "contact_name", nullable = false)
+    private String contactName;
+
+    @Column(name = "contact_phone", nullable = false)
+    private String contactPhone;
+
+    @Column(name = "contact_email")
+    private String contactEmail;
+
+    @Column
+    private String description;
+
+    @Column(name = "created_on", nullable = false)
+    private LocalDateTime createdOn;
+
+    @Column(name = "updated_on", nullable = false)
+    private LocalDateTime updatedOn;
+
+    public BaseProperty() {
+    }
+
+    public BaseProperty(String id, Company ownerCompany, String address, double price, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+        this.id = id;
+        this.ownerCompany = ownerCompany;
+        this.address = address;
+        this.price = price;
+        this.saleOrRent = saleOrRent;
+        this.contactName = contactName;
+        this.contactPhone = contactPhone;
+        this.contactEmail = contactEmail;
+        this.description = description;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Company getOwnerCompany() {
+        return ownerCompany;
+    }
+
+    public void setOwnerCompany(Company ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public SaleOrRent getSaleOrRent() {
+        return saleOrRent;
+    }
+
+    public void setSaleOrRent(SaleOrRent saleOrRent) {
+        this.saleOrRent = saleOrRent;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+}
