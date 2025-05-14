@@ -46,10 +46,10 @@ public abstract class BaseProperty {
     @Column(name = "updated_on", nullable = false)
     private LocalDateTime updatedOn;
 
-    public BaseProperty() {
+    protected BaseProperty() {
     }
 
-    public BaseProperty(String id, Company ownerCompany, String address, double price, int area, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(String id, Company ownerCompany, String address, double price, int area, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
         this.ownerCompany = ownerCompany;
         this.address = address;
