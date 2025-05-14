@@ -27,10 +27,10 @@ public class Apartment extends BaseProperty {
     @Column(nullable = false)
     private int floor;
 
-    @Column(nullable = false)
+    @Column(name = "building_floors", nullable = false)
     private int buildingFloors;
 
-    @Column(nullable = false)
+    @Column(name = "has_elevator", nullable = false)
     private boolean hasElevator;
 
     @Column
