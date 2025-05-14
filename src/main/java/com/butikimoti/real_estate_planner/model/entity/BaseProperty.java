@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.model.entity;
 
+import com.butikimoti.real_estate_planner.model.enums.AreaUnit;
 import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
 import jakarta.persistence.*;
 
@@ -23,6 +24,10 @@ public abstract class BaseProperty {
 
     @Column(nullable = false)
     private int area;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "area_unit", nullable = false)
+    private AreaUnit areaUnit;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_or_rent", nullable = false)
