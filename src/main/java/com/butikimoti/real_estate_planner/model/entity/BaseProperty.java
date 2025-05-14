@@ -21,6 +21,9 @@ public abstract class BaseProperty {
     @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
+    private int area;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_or_rent", nullable = false)
     private SaleOrRent saleOrRent;
@@ -46,11 +49,12 @@ public abstract class BaseProperty {
     public BaseProperty() {
     }
 
-    public BaseProperty(String id, Company ownerCompany, String address, double price, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    public BaseProperty(String id, Company ownerCompany, String address, double price, int area, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
         this.ownerCompany = ownerCompany;
         this.address = address;
         this.price = price;
+        this.area = area;
         this.saleOrRent = saleOrRent;
         this.contactName = contactName;
         this.contactPhone = contactPhone;
@@ -90,6 +94,14 @@ public abstract class BaseProperty {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
     }
 
     public SaleOrRent getSaleOrRent() {
@@ -147,4 +159,9 @@ public abstract class BaseProperty {
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }
+
+    public double getPricePerSqMeter() {
+        return this.price / this.area;
+    }
+
 }
