@@ -37,17 +37,6 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(UUID id, String email, Company company, String password, UserRole userRole, String firstName, String lastName, String phone) {
-        this.id = id;
-        this.email = email;
-        this.company = company;
-        this.password = password;
-        this.userRole = userRole;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-    }
-
     public UUID getId() {
         return id;
     }

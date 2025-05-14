@@ -34,16 +34,6 @@ public class Company {
     public Company() {
     }
 
-    public Company(UUID id, String name, String address, String phone, String email) {
-        this.id = id;
-        this.users = new ArrayList<>();
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.properties = new ArrayList<>();
-    }
-
     public UUID getId() {
         return id;
     }
