@@ -2,10 +2,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import com.butikimoti.real_estate_planner.model.enums.ApartmentType;
 import com.butikimoti.real_estate_planner.model.enums.ConstructionType;
-import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "apartments")
@@ -37,18 +34,6 @@ public class Apartment extends BaseProperty {
     private String facing;
 
     public Apartment() {
-    }
-
-    public Apartment(String id, Company ownerCompany, String address, double price, int area, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ApartmentType apartmentType, int roomCount, ConstructionType constructionType, int year, int floor, int buildingFloors, boolean hasElevator, String facing) {
-        super(id, ownerCompany, address, price, area, saleOrRent, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
-        this.apartmentType = apartmentType;
-        this.roomCount = roomCount;
-        this.constructionType = constructionType;
-        this.year = year;
-        this.floor = floor;
-        this.buildingFloors = buildingFloors;
-        this.hasElevator = hasElevator;
-        this.facing = facing;
     }
 
     public ApartmentType getApartmentType() {

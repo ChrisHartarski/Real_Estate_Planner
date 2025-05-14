@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "companies")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @OneToMany(mappedBy = "company")
     private List<UserEntity> users = new ArrayList<>();
@@ -33,7 +34,7 @@ public class Company {
     public Company() {
     }
 
-    public Company(String id, String name, String address, String phone, String email) {
+    public Company(UUID id, String name, String address, String phone, String email) {
         this.id = id;
         this.users = new ArrayList<>();
         this.name = name;
@@ -43,11 +44,11 @@ public class Company {
         this.properties = new ArrayList<>();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

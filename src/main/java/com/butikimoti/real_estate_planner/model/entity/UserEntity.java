@@ -3,12 +3,14 @@ package com.butikimoti.real_estate_planner.model.entity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -35,7 +37,7 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String id, String email, Company company, String password, UserRole userRole, String firstName, String lastName, String phone) {
+    public UserEntity(UUID id, String email, Company company, String password, UserRole userRole, String firstName, String lastName, String phone) {
         this.id = id;
         this.email = email;
         this.company = company;
@@ -46,11 +48,11 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

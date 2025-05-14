@@ -5,13 +5,14 @@ import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class BaseProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @ManyToOne
     private Company ownerCompany;
@@ -54,12 +55,13 @@ public abstract class BaseProperty {
     protected BaseProperty() {
     }
 
-    protected BaseProperty(String id, Company ownerCompany, String address, double price, int area, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(UUID id, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
         this.ownerCompany = ownerCompany;
         this.address = address;
         this.price = price;
         this.area = area;
+        this.areaUnit = areaUnit;
         this.saleOrRent = saleOrRent;
         this.contactName = contactName;
         this.contactPhone = contactPhone;
@@ -69,11 +71,11 @@ public abstract class BaseProperty {
         this.updatedOn = updatedOn;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -107,6 +109,14 @@ public abstract class BaseProperty {
 
     public void setArea(int area) {
         this.area = area;
+    }
+
+    public AreaUnit getAreaUnit() {
+        return areaUnit;
+    }
+
+    public void setAreaUnit(AreaUnit areaUnit) {
+        this.areaUnit = areaUnit;
     }
 
     public SaleOrRent getSaleOrRent() {
