@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
+    boolean existsByEmail(String email);
 }

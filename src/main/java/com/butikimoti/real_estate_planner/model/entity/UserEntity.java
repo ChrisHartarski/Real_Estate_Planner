@@ -25,13 +25,13 @@ public class UserEntity {
     @Column(nullable = false)
     private UserRole userRole;
 
-    @Column
+    @Column(nullable = false)
     private String firstName;
 
-    @Column
+    @Column(nullable = false)
     private String lastName;
 
-    @Column
+    @Column(nullable = false)
     private String phone;
 
     public UserEntity() {

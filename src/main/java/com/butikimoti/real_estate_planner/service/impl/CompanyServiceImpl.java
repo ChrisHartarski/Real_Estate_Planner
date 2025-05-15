@@ -32,4 +32,13 @@ public class CompanyServiceImpl implements CompanyService {
         System.out.println(company);
         companyRepository.saveAndFlush(company);
     }
+
+    @Override
+    public boolean companyHasUsers(String companyName) {
+        if(!companyRepository.existsByName(companyName)) {
+            return false;
+        }
+
+        return !companyRepository.findByName(companyName).getUsers().isEmpty();
+    }
 }

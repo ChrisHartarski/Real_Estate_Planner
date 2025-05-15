@@ -1,4 +1,5 @@
 package com.butikimoti.real_estate_planner.service;
 
 public interface UserEntityService {
+    boolean userExists(String email);
 }

@@ -11,4 +11,9 @@ public class UserEntityServiceImpl implements UserEntityService {
     public UserEntityServiceImpl(UserEntityRepository userEntityRepository) {
         this.userEntityRepository = userEntityRepository;
     }
+
+    @Override
+    public boolean userExists(String email) {
+        return userEntityRepository.existsByEmail(email);
+    }
 }
