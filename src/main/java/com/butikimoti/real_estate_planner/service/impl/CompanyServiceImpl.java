@@ -1,14 +1,35 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
+import com.butikimoti.real_estate_planner.model.dto.company.RegisterCompanyDTO;
+import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.repository.CompanyRepository;
 import com.butikimoti.real_estate_planner.service.CompanyService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
+    private final ModelMapper modelMapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, ModelMapper modelMapper) {
         this.companyRepository = companyRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public boolean companyExists(String companyName) {
+        return companyRepository.existsByName(companyName);
+    }
+
+    @Override
+    public void registerCompany(RegisterCompanyDTO registerCompanyDTO) {
+        if(companyRepository.existsByName(registerCompanyDTO.getName())) {
+            throw new RuntimeException("Company " + registerCompanyDTO.getName() + " already exists");
+        }
+
+        Company company = modelMapper.map(registerCompanyDTO, Company.class);
+        System.out.println(company);
+        companyRepository.saveAndFlush(company);
     }
 }

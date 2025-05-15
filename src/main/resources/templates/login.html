@@ -17,20 +17,36 @@
             <div class="card flex-column">
                 <h1 class="text-center" th:text="#{login.heading}">Вход</h1>
                 <form class="flex-column" id="login_form"
-                        th:action="@{/login}"
+                        th:action="@{/users/login}"
                         th:method="post">
+
                     <!-- Email address input-->
-                    <small th:if="${wrongUsernameOrPassword}" class="text-danger"
-                           th:text="#{login.error-message}">Грешен имейл или парола
-                    </small>
-                    <div class="flex-row center gap-1">
-                        <label for="email" th:text="#{login.email}">Имейл</label>
-                        <input name="email" id="email" type="email" placeholder="name@example.com"/>
+                    <div class="flex-row text-center">
+                        <small th:if="${wrongUsernameOrPassword}" class="text-danger"
+                               th:text="#{login.error-message}">Грешен имейл или парола
+                        </small>
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="email" th:text="#{login.email} + ':'">Имейл</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="email" id="email" type="email" placeholder="name@example.com"/>
+                            </div>
+                        </div>
                     </div>
+
                     <!-- Password input-->
-                    <div class="flex-row center gap-1">
-                        <label for="password" th:text="#{login.password}">Парола</label>
-                        <input name="password" id="password" type="password" placeholder="парола" />
+
+                    <!-- Company address input-->
+                    <div class="flex-row text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="password" th:text="#{login.password} + ':'">Парола</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="password" id="password" type="password" placeholder="парола" />
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Login Button-->
