@@ -26,10 +26,6 @@ a {
     color: inherit;
 }
 
-h1 {
-    padding-bottom: 2rem;
-}
-
 .white {
     color: #FFFFFF;
 }
@@ -67,10 +63,19 @@ h1 {
     display: flex;
 }
 
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-2 {
+    gap: 2rem;
+}
+
 .btn {
     padding: 0.3rem 1rem;
     text-align: center;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .btn-blue {
@@ -144,7 +149,21 @@ h1 {
 
 /* Main */
 
+/* Login */
+#login_form {
+    gap: 1rem;
+    text-align: center;
+}
+
+#login_form button {
+    margin: 1rem 0;
+}
+
 /* Offers page */
+.page-title {
+    margin-bottom: 2rem;
+}
+
 .offer-list-section,
 .filter-sort-section {
     display: flex;
