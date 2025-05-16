@@ -126,9 +126,21 @@ a {
     border: solid 2px red;
 }
 
-.text-danger {
+.text-red,
+.link-red {
     color: red;
     font-size: small;
+}
+
+.text-black,
+.link-black {
+    color: #000000;
+    font-size: small;
+}
+
+.link-red,
+.link-black {
+    text-decoration: underline;
 }
 
 .grayed-out {

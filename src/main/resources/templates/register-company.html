@@ -31,8 +31,8 @@
                                        placeholder="Наименование на фирма" th:field="*{name}"/>
                             </div>
                         </div>
-                        <small th:errors="*{name}" class="text-danger">Company name invalid!</small>
-                        <small th:if="${companyExists}" class="text-danger" th:text="#{register-company.company-name-error}">Company with this name
+                        <small th:errors="*{name}" class="text-red">Company name invalid!</small>
+                        <small th:if="${companyExists}" class="text-red" th:text="#{register-company.company-name-error}">Company with this name
                             already exists!</small>
                     </div>
 
@@ -47,7 +47,7 @@
                                        placeholder="Адрес на фирма" th:field="*{address}"/>
                             </div>
                         </div>
-                        <small th:errors="*{address}" class="text-danger">Company address invalid!</small>
+                        <small th:errors="*{address}" class="text-red">Company address invalid!</small>
                     </div>
 
                     <!-- Company phone input-->
@@ -61,7 +61,7 @@
                                        th:field="*{phone}"/>
                             </div>
                         </div>
-                        <small th:errors="*{phone}" class="text-danger">Company phone invalid!</small>
+                        <small th:errors="*{phone}" class="text-red">Company phone invalid!</small>
                     </div>
 
                     <!-- Company email input-->
@@ -75,7 +75,7 @@
                                         th:field="*{email}"/>
                             </div>
                         </div>
-                        <small th:errors="*{email}" class="text-danger">Company email invalid!</small>
+                        <small th:errors="*{email}" class="text-red">Company email invalid!</small>
                     </div>
 
                     <!-- Register Button-->
