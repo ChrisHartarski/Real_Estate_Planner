@@ -5,7 +5,6 @@ import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +20,7 @@ public class UserController {
     private final UserEntityService userEntityService;
     private final CompanyService companyService;
 
-    public UserController(UserEntityService userEntityService, CompanyService companyService, ModelMapper modelMapper) {
+    public UserController(UserEntityService userEntityService, CompanyService companyService) {
         this.userEntityService = userEntityService;
         this.companyService = companyService;
     }
