@@ -64,7 +64,7 @@ public class UserController {
             return "redirect:/users/register";
         }
 
-        userEntityService.register(registerUserData);
+        userEntityService.registerUser(registerUserData);
         return "redirect:/users/login";
     }
 

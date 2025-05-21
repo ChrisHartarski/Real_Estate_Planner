@@ -23,7 +23,11 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
-    public void register(RegisterUserDTO registerUserDTO) {
+    public void registerUser(RegisterUserDTO registerUserDTO) {
+        if (userExists(registerUserDTO.getEmail())) {
+            throw new RuntimeException("User with email " + registerUserDTO.getEmail() + " already exists");
+        }
+
         UserEntity user = modelMapper.map(registerUserDTO, UserEntity.class);
         userEntityRepository.saveAndFlush(user);
     }

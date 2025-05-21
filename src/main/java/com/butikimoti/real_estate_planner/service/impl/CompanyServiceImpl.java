@@ -24,12 +24,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void registerCompany(RegisterCompanyDTO registerCompanyDTO) {
-        if(companyRepository.existsByName(registerCompanyDTO.getName())) {
+        if(companyExists(registerCompanyDTO.getName())) {
             throw new RuntimeException("Company " + registerCompanyDTO.getName() + " already exists");
         }
 
         Company company = modelMapper.map(registerCompanyDTO, Company.class);
-        System.out.println(company);
         companyRepository.saveAndFlush(company);
     }
 
