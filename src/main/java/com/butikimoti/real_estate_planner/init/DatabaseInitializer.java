@@ -20,7 +20,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.companyService = companyService;
     }
 
-
     @Override
     public void run(String... args) throws Exception {
         if (userEntityService.userRepositoryIsEmpty()) {

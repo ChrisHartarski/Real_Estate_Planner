@@ -40,4 +40,9 @@ public class CompanyServiceImpl implements CompanyService {
 
         return !companyRepository.findByName(companyName).getUsers().isEmpty();
     }
+
+    @Override
+    public Company getCompany(String companyName) {
+        return companyRepository.findByName(companyName);
+    }
 }

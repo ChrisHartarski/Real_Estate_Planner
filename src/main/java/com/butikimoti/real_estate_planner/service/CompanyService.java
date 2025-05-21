@@ -7,4 +7,5 @@ public interface CompanyService {
     boolean companyExists(String companyName);
     void registerCompany(RegisterCompanyDTO registerCompanyDTO);
     boolean companyHasUsers(String companyName);
+    Company getCompany(String companyName);
 }

@@ -3,6 +3,7 @@ package com.butikimoti.real_estate_planner.service.impl;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
+import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserEntityServiceImpl implements UserEntityService {
     private final UserEntityRepository userEntityRepository;
+    private final CompanyService companyService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserEntityServiceImpl(UserEntityRepository userEntityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserEntityServiceImpl(UserEntityRepository userEntityRepository, CompanyService companyService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
+        this.companyService = companyService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -32,6 +35,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         }
 
         UserEntity user = modelMapper.map(registerUserDTO, UserEntity.class);
+        user.setCompany(companyService.getCompany(registerUserDTO.getCompanyName()));
         encodePassAndSaveUser(user);
     }
 
