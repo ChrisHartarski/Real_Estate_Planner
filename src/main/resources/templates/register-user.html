@@ -83,13 +83,13 @@
                         <small th:if="${companyDoesNotExist == null or !companyDoesNotExist}" class="text-black">
                             <span th:text="#{register-user.register-company-message-part1} + ' '">Ако фирмата Ви не е
                                 регистрирана, моля </span>
-                            <a class="link-black" th:href="@{/companies/register}"
+                            <a class="link-black" th:href="@{/companies/register}" target="_blank"
                                th:text="#{register-user.register-company-message-part2}">регистрирайте нова фирма</a>
                             <span>!</span>
                         </small>
                         <small th:if="${companyDoesNotExist != null and companyDoesNotExist}" class="text-red">
                             <span th:text="#{register-user.register-company-error-part1} + ' '">Тази фирма не е регистрирана! Моля </span>
-                            <a class="link-red" th:href="@{/companies/register}"
+                            <a class="link-red" th:href="@{/companies/register}" target="_blank"
                                th:text="#{register-user.register-company-error-part2}">регистрирайте нова фирма</a>
                             <span>!</span>
                         </small>
