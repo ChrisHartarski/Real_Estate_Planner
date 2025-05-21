@@ -26,6 +26,10 @@ a {
     color: inherit;
 }
 
+.active {
+    font-weight: bolder !important;
+}
+
 .white {
     color: #FFFFFF;
 }
@@ -180,7 +184,7 @@ a {
 .nav-item,
 .footer-text {
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     color: #263143;
     /*font-family: "Roboto", sans-serif;*/
 }
