@@ -74,12 +74,12 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "loginUser";
     }
 
     @GetMapping("/login-error")
     public String viewLoginError(Model model) {
         model.addAttribute("wrongUsernameOrPassword", true);
-        return "login";
+        return "redirect:/users/login";
     }
 }
