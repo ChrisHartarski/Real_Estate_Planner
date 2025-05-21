@@ -31,4 +31,9 @@ public class UserEntityServiceImpl implements UserEntityService {
         UserEntity user = modelMapper.map(registerUserDTO, UserEntity.class);
         userEntityRepository.saveAndFlush(user);
     }
+
+    @Override
+    public boolean userRepositoryIsEmpty() {
+        return userEntityRepository.count() == 0;
+    }
 }

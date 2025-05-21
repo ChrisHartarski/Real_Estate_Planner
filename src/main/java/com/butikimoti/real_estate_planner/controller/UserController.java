@@ -83,5 +83,4 @@ public class UserController {
         model.addAttribute("wrongUsernameOrPassword", true);
         return "login";
     }
-
 }
