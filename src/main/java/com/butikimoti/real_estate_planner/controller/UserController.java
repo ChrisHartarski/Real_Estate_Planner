@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
+import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
@@ -62,6 +63,10 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registerUserData", registerUserData);
             redirectAttributes.addFlashAttribute("companyDoesNotExist", true);
             return "redirect:/users/register";
+        }
+
+        if(!companyService.companyHasUsers(registerUserData.getCompanyName())) {
+            registerUserData.setUserRole(UserRole.COMPANY_ADMIN);
         }
 
         userEntityService.registerUser(registerUserData);
