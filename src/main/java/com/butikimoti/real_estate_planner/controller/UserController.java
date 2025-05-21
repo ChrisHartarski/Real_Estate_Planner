@@ -74,7 +74,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "loginUser";
+        return "login-user";
     }
 
     @GetMapping("/login-error")

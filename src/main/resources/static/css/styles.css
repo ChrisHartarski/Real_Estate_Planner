@@ -126,6 +126,15 @@ a {
     border: solid 2px red;
 }
 
+.btn-transparent {
+    border: none;
+    background-color: transparent;
+}
+
+.btn-transparent:hover {
+    cursor: pointer;
+}
+
 .text-red,
 .link-red {
     color: red;
