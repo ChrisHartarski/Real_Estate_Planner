@@ -1,14 +1,30 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
+import com.butikimoti.real_estate_planner.model.dto.apartment.AddApartmentDTO;
+import com.butikimoti.real_estate_planner.model.entity.Apartment;
 import com.butikimoti.real_estate_planner.repository.ApartmentRepository;
 import com.butikimoti.real_estate_planner.service.ApartmentService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
     private final ApartmentRepository apartmentRepository;
+    private final ModelMapper modelMapper;
 
-    public ApartmentServiceImpl(ApartmentRepository apartmentRepository) {
+    public ApartmentServiceImpl(ApartmentRepository apartmentRepository, ModelMapper modelMapper) {
         this.apartmentRepository = apartmentRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public void addApartment(AddApartmentDTO addApartmentDTO) {
+        Apartment apartment = modelMapper.map(addApartmentDTO, Apartment.class);
+        apartmentRepository.saveAndFlush(apartment);
+    }
+
+    @Override
+    public boolean apartmentRepositoryIsEmpty() {
+        return apartmentRepository.count() == 0;
     }
 }
