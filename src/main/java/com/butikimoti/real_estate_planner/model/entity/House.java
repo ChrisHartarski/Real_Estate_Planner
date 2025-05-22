@@ -19,7 +19,7 @@ public class House extends BaseProperty {
     private int yardArea;
 
     @Column(nullable = false)
-    private int floors;
+    private int floorsCount;
 
     @Column
     private String additionalStructures;
@@ -51,12 +51,12 @@ public class House extends BaseProperty {
         this.yardArea = yardArea;
     }
 
-    public int getFloors() {
-        return floors;
+    public int getFloorsCount() {
+        return floorsCount;
     }
 
-    public void setFloors(int floors) {
-        this.floors = floors;
+    public void setFloorsCount(int floors) {
+        this.floorsCount = floors;
     }
 
     public String getAdditionalStructures() {

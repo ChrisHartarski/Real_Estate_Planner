@@ -54,7 +54,7 @@ public class PropertyDTO {
 
     private int yardArea;
 
-    private int floors;
+    private int floorsCount;
 
     private String additionalStructures;
 
@@ -255,12 +255,12 @@ public class PropertyDTO {
         this.yardArea = yardArea;
     }
 
-    public int getFloors() {
-        return floors;
+    public int getFloorsCount() {
+        return floorsCount;
     }
 
-    public void setFloors(int floors) {
-        this.floors = floors;
+    public void setFloorsCount(int floorsCount) {
+        this.floorsCount = floorsCount;
     }
 
     public String getAdditionalStructures() {
