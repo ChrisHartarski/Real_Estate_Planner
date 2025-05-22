@@ -64,10 +64,6 @@ public class UserController {
             return "redirect:/users/register";
         }
 
-        if(!companyService.companyHasUsers(registerUserData.getCompanyName())) {
-            registerUserData.setUserRole(UserRole.COMPANY_ADMIN);
-        }
-
         userEntityService.registerUser(registerUserData);
         return "redirect:/users/login";
     }

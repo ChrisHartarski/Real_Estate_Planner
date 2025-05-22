@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
+import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
@@ -35,7 +36,10 @@ public class UserEntityServiceImpl implements UserEntityService {
         }
 
         UserEntity user = modelMapper.map(registerUserDTO, UserEntity.class);
-        user.setCompany(companyService.getCompany(registerUserDTO.getCompanyName()));
+
+        setCompany(user, registerUserDTO.getCompanyName());
+        setUserRole(user);
+
         encodePassAndSaveUser(user);
     }
 
@@ -47,5 +51,17 @@ public class UserEntityServiceImpl implements UserEntityService {
     private void encodePassAndSaveUser(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntityRepository.saveAndFlush(user);
+    }
+
+    private void setCompany(UserEntity user, String companyName) {
+        user.setCompany(companyService.getCompany(companyName));
+    }
+
+    private void setUserRole(UserEntity user) {
+        if (user.getCompany().getUsers().isEmpty()) {
+            user.setUserRole(UserRole.COMPANY_ADMIN);
+        } else {
+            user.setUserRole(UserRole.USER);
+        }
     }
 }
