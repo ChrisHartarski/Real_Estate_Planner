@@ -3,6 +3,7 @@ package com.butikimoti.real_estate_planner.service.impl;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.*;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
+import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
 import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
@@ -33,9 +34,9 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable) {
+    public PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, SaleOrRent saleOrRent) {
         UUID ownerCompanyId = userEntityService.getCurrentUser().getCompany().getId();
-        Page<BaseProperty> properties = basePropertyRepository.findByOwnerCompanyId(ownerCompanyId, pageable);
+        Page<BaseProperty> properties = basePropertyRepository.findByOwnerCompanyIdAndSaleOrRent(ownerCompanyId, pageable, saleOrRent);
 
         return new PagedModel<>(properties.map(this::mapBasePropertyToPropertyDTO));
     }

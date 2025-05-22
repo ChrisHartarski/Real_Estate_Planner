@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
+import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,7 +28,7 @@ public class SalesController {
     @GetMapping("/sales")
     public String viewSales(@PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable);
+        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, SaleOrRent.SALE);
         model.addAttribute("properties", properties);
         return "sales";
     }
