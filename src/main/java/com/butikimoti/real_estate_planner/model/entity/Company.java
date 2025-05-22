@@ -14,7 +14,7 @@ public class Company {
     private UUID id;
 
     @OneToMany(mappedBy = "company")
-    private List<UserEntity> users = new ArrayList<>();
+    private List<UserEntity> users;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -29,9 +29,25 @@ public class Company {
     private String email;
 
     @OneToMany(mappedBy = "ownerCompany")
-    private List<BaseProperty> properties = new ArrayList<>();
+    private List<BaseProperty> properties;
 
     public Company() {
+        this.users = new ArrayList<>();
+        this.properties = new ArrayList<>();
+    }
+
+    public Company(String name, String address, String phone, String email) {
+        this();
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public Company(List<UserEntity> users, String name, String address, String phone, String email, List<BaseProperty> properties) {
+        this(name, address, phone, email);
+        this.users = users;
+        this.properties = properties;
     }
 
     public UUID getId() {
