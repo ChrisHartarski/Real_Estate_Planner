@@ -58,6 +58,16 @@ public class PropertyDTO {
 
     private String additionalStructures;
 
+    //garage
+    private GarageType garageType;
+
+    //land
+    private LandType landType;
+
+    //business property
+    private BusinessPropertyType businessPropertyType;
+
+
     public PropertyDTO() {
     }
 
@@ -259,5 +269,29 @@ public class PropertyDTO {
 
     public void setAdditionalStructures(String additionalStructures) {
         this.additionalStructures = additionalStructures;
+    }
+
+    public GarageType getGarageType() {
+        return garageType;
+    }
+
+    public void setGarageType(GarageType garageType) {
+        this.garageType = garageType;
+    }
+
+    public LandType getLandType() {
+        return landType;
+    }
+
+    public void setLandType(LandType landType) {
+        this.landType = landType;
+    }
+
+    public BusinessPropertyType getBusinessPropertyType() {
+        return businessPropertyType;
+    }
+
+    public void setBusinessPropertyType(BusinessPropertyType businessPropertyType) {
+        this.businessPropertyType = businessPropertyType;
     }
 }
