@@ -1,6 +1,5 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.apartment.AddApartmentDTO;
 import com.butikimoti.real_estate_planner.model.entity.Apartment;
 import com.butikimoti.real_estate_planner.repository.ApartmentRepository;
 import com.butikimoti.real_estate_planner.service.ApartmentService;
@@ -17,14 +16,4 @@ public class ApartmentServiceImpl implements ApartmentService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public void addApartment(AddApartmentDTO addApartmentDTO) {
-        Apartment apartment = modelMapper.map(addApartmentDTO, Apartment.class);
-        apartmentRepository.saveAndFlush(apartment);
-    }
-
-    @Override
-    public boolean apartmentRepositoryIsEmpty() {
-        return apartmentRepository.count() == 0;
-    }
 }
