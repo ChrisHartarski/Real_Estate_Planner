@@ -17,7 +17,7 @@ public class PropertyDTO {
 
     private AreaUnit areaUnit;
 
-    private SaleOrRent saleOrRent;
+    private OfferType offerType;
 
     private String contactName;
 
@@ -109,12 +109,12 @@ public class PropertyDTO {
         this.areaUnit = areaUnit;
     }
 
-    public SaleOrRent getSaleOrRent() {
-        return saleOrRent;
+    public OfferType getOfferType() {
+        return offerType;
     }
 
-    public void setSaleOrRent(SaleOrRent saleOrRent) {
-        this.saleOrRent = saleOrRent;
+    public void setOfferType(OfferType offerType) {
+        this.offerType = offerType;
     }
 
     public String getContactName() {

@@ -1,7 +1,7 @@
 package com.butikimoti.real_estate_planner.model.entity;
 
 import com.butikimoti.real_estate_planner.model.enums.AreaUnit;
-import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
+import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -32,7 +32,7 @@ public abstract class BaseProperty {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_or_rent", nullable = false)
-    private SaleOrRent saleOrRent;
+    private OfferType offerType;
 
     @Column(name = "contact_name", nullable = false)
     private String contactName;
@@ -55,14 +55,14 @@ public abstract class BaseProperty {
     protected BaseProperty() {
     }
 
-    protected BaseProperty(UUID id, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, SaleOrRent saleOrRent, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(UUID id, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
         this.ownerCompany = ownerCompany;
         this.address = address;
         this.price = price;
         this.area = area;
         this.areaUnit = areaUnit;
-        this.saleOrRent = saleOrRent;
+        this.offerType = offerType;
         this.contactName = contactName;
         this.contactPhone = contactPhone;
         this.contactEmail = contactEmail;
@@ -119,12 +119,12 @@ public abstract class BaseProperty {
         this.areaUnit = areaUnit;
     }
 
-    public SaleOrRent getSaleOrRent() {
-        return saleOrRent;
+    public OfferType getOfferType() {
+        return offerType;
     }
 
-    public void setSaleOrRent(SaleOrRent saleOrRent) {
-        this.saleOrRent = saleOrRent;
+    public void setOfferType(OfferType saleOrRent) {
+        this.offerType = saleOrRent;
     }
 
     public String getContactName() {

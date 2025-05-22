@@ -1,7 +1,7 @@
 package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
-import com.butikimoti.real_estate_planner.model.enums.SaleOrRent;
+import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,7 +25,7 @@ public class PropertiesController {
     public String viewSales(@RequestParam(value = "offerType") String offerType,
                             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        SaleOrRent saleOrRent = mapSaleOrRent(offerType);
+        OfferType saleOrRent = mapOfferType(offerType);
         PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, saleOrRent);
         model.addAttribute("properties", properties);
         return "properties";
@@ -36,13 +36,13 @@ public class PropertiesController {
         return "property-page";
     }
 
-    private SaleOrRent mapSaleOrRent (String offerType) {
+    private OfferType mapOfferType(String offerType) {
         if (offerType.equalsIgnoreCase("sale")) {
-            return SaleOrRent.SALE;
+            return OfferType.SALE;
         }
 
         if (offerType.equalsIgnoreCase("rent")) {
-            return SaleOrRent.RENT;
+            return OfferType.RENT;
         }
 
         throw new IllegalArgumentException("Invalid saleOrRent: " + offerType);
