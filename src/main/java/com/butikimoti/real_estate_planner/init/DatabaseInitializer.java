@@ -22,8 +22,11 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (userEntityService.userRepositoryIsEmpty()) {
+        if (!companyService.companyExists(FIRST_COMPANY_DATA.getName())) {
             companyService.registerCompany(FIRST_COMPANY_DATA);
+        }
+
+        if (!userEntityService.userExists(FIRST_ADMIN_USER_DATA.getEmail())) {
             userEntityService.registerUser(FIRST_ADMIN_USER_DATA);
         }
     }

@@ -112,23 +112,4 @@ public class UserEntityServiceImplUnitTests {
 
         Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerUser(REGISTER_USER_DTO));
     }
-
-    @Test
-    void testUserRepositoryIsEmptyReturnsTrueIfEmpty() {
-        when(userEntityRepository.count()).thenReturn((long) 0);
-
-        boolean result = serviceToTest.userRepositoryIsEmpty();
-
-        Assertions.assertTrue(result);
-    }
-
-    @Test
-    void testUserRepositoryIsEmptyReturnsFalseIfNotEmpty() {
-        when(userEntityRepository.count()).thenReturn((long) 5);
-
-        boolean result = serviceToTest.userRepositoryIsEmpty();
-
-        Assertions.assertFalse(result);
-    }
-
 }

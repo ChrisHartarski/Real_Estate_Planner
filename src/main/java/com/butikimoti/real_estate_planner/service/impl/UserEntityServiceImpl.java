@@ -6,6 +6,7 @@ import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
+    @Transactional
     public void registerUser(RegisterUserDTO registerUserDTO) {
         if (userExists(registerUserDTO.getEmail())) {
             throw new RuntimeException("User with email " + registerUserDTO.getEmail() + " already exists");
@@ -41,11 +43,6 @@ public class UserEntityServiceImpl implements UserEntityService {
         setUserRole(user);
 
         encodePassAndSaveUser(user);
-    }
-
-    @Override
-    public boolean userRepositoryIsEmpty() {
-        return userEntityRepository.count() == 0;
     }
 
     private void encodePassAndSaveUser(UserEntity user) {
