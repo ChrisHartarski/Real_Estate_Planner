@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bg"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial scale=1.0">
+    <title>Login</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'login'})}"></header>
+    <main>
+        <div class="w-70 center">
+            <div class="card flex-column">
+                <h1 class="text-center" th:text="#{login.heading}">Вход</h1>
+                <form class="flex-column" id="login_form"
+                        th:action="@{/users/login}"
+                        th:method="post">
+
+                    <!-- Email address input-->
+                    <div class="flex-row text-center">
+                        <small th:if="${wrongUsernameOrPassword}" class="text-red"
+                               th:text="#{login.error-message}">Грешен имейл или парола
+                        </small>
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="email" th:text="#{login.email} + ':'">Имейл</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="email" id="email" type="email" placeholder="name@example.com"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="flex-row text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="password" th:text="#{login.password} + ':'">Парола</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="password" id="password" type="password" placeholder="парола" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Login Button-->
+                    <div>
+                        <button class="btn btn-blue" id="submitButton" type="submit"
+                                th:text="#{login.button}">Вход</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+</body>
+</html>

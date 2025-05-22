@@ -26,8 +26,8 @@ a {
     color: inherit;
 }
 
-h1 {
-    padding-bottom: 2rem;
+.active {
+    font-weight: bolder !important;
 }
 
 .white {
@@ -58,6 +58,10 @@ h1 {
     width: 70%;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 .flex-column {
     display: flex;
     flex-direction: column;
@@ -67,10 +71,27 @@ h1 {
     display: flex;
 }
 
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-2 {
+    gap: 2rem;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}
+
 .btn {
     padding: 0.3rem 1rem;
     text-align: center;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .btn-blue {
@@ -109,6 +130,32 @@ h1 {
     border: solid 2px red;
 }
 
+.btn-transparent {
+    border: none;
+    background-color: transparent;
+}
+
+.btn-transparent:hover {
+    cursor: pointer;
+}
+
+.text-red,
+.link-red {
+    color: red;
+    font-size: small;
+}
+
+.text-black,
+.link-black {
+    color: #000000;
+    font-size: small;
+}
+
+.link-red,
+.link-black {
+    text-decoration: underline;
+}
+
 .grayed-out {
     color: #B4B4B4;
 }
@@ -137,14 +184,28 @@ h1 {
 .nav-item,
 .footer-text {
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     color: #263143;
     /*font-family: "Roboto", sans-serif;*/
 }
 
 /* Main */
 
+/* Login */
+#login_form {
+    gap: 1rem;
+    text-align: center;
+}
+
+#login_form button {
+    margin: 1rem 0;
+}
+
 /* Offers page */
+.page-title {
+    margin-bottom: 2rem;
+}
+
 .offer-list-section,
 .filter-sort-section {
     display: flex;

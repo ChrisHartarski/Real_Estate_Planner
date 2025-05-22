@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="bg"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial scale=1.0">
+    <title>Register User</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'register'})}"></header>
+    <main>
+        <div class="w-70 center">
+            <div class="card flex-column">
+                <h1 class="text-center" th:text="#{register-user.heading}">Регистрирай фирма</h1>
+                <form class="flex-column gap-1" id="register_user_form"
+                        th:action="@{/users/register}"
+                        th:method="POST"
+                        th:object="${registerUserData}">
+
+                    <!-- User email input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="email" th:text="#{register-user.email} + ':'">Имейл</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="email" id="email" type="email"
+                                       th:placeholder="#{register-user.email-placeholder}"
+                                       th:field="*{email}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{email}" class="text-red">User email invalid!</small>
+                        <small th:if="${userExists != null and userExists}" class="text-red" th:text="#{register-user.email-error}">User with this email already exists!</small>
+                    </div>
+
+                    <!-- User password input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="password" th:text="#{register-user.password} + ':'">Password</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="password" id="password" type="password"
+                                       th:placeholder="#{register-user.password-placeholder}" th:field="*{password}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{password}" class="text-red">Password invalid!</small>
+                    </div>
+
+                    <!-- Confirm password input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="confirm-password" th:text="#{register-user.confirm-password} + ':'">Confirm Password</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" name="confirm-password" id="confirm-password" type="password"
+                                       th:placeholder="#{register-user.confirm-password-placeholder}"
+                                       th:field="*{confirmPassword}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{confirmPassword}" class="text-red">Password invalid!</small>
+                        <small th:if="${passwordsDoNotMatch != null and passwordsDoNotMatch}" class="text-red" th:text="#{register-user.passwords-do-not-match}">Passwords do not match!</small>
+                    </div>
+
+                    <!-- Company Name input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="companyName" th:text="#{register-user.company}">Company name</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" id="companyName" type="text"
+                                       th:placeholder="#{register-user.company-placeholder}"
+                                       th:field="*{companyName}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{companyName}" class="text-red">Company name input errors!</small>
+                        <small th:if="${companyDoesNotExist == null or !companyDoesNotExist}" class="text-black">
+                            <span th:text="#{register-user.register-company-message-part1} + ' '">Ако фирмата Ви не е
+                                регистрирана, моля </span>
+                            <a class="link-black" th:href="@{/companies/register}" target="_blank"
+                               th:text="#{register-user.register-company-message-part2}">регистрирайте нова фирма</a>
+                            <span>!</span>
+                        </small>
+                        <small th:if="${companyDoesNotExist != null and companyDoesNotExist}" class="text-red">
+                            <span th:text="#{register-user.register-company-error-part1} + ' '">Тази фирма не е регистрирана! Моля </span>
+                            <a class="link-red" th:href="@{/companies/register}" target="_blank"
+                               th:text="#{register-user.register-company-error-part2}">регистрирайте нова фирма</a>
+                            <span>!</span>
+                        </small>
+                    </div>
+
+                    <!-- First name input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="firstName" th:text="#{register-user.first-name}">Име</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" id="firstName" type="text"
+                                        th:placeholder="#{register-user.first-name-placeholder}"
+                                       th:field="*{firstName}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{firstName}" class="text-red">First name input errors!</small>
+                    </div>
+
+                    <!-- Last name input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="lastName" th:text="#{register-user.last-name}">Фамилия</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" id="lastName" type="text"
+                                        th:placeholder="#{register-user.last-name-placeholder}"
+                                       th:field="*{lastName}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{lastName}" class="text-red">Last name input errors!</small>
+                    </div>
+
+                    <!-- Phone input-->
+                    <div class="flex-column text-center">
+                        <div class="flex-row w-100 gap-1">
+                            <div class="w-50 align-right">
+                                <label for="phone" th:text="#{register-user.phone}">Телефон</label>
+                            </div>
+                            <div class="w-50 align-left">
+                                <input class="w-70" id="phone" type="text"
+                                       th:placeholder="#{register-user.phone-placeholder}"
+                                       th:field="*{phone}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{phone}" class="text-red">Phone input errors!</small>
+                    </div>
+
+                    <!-- Register Button-->
+                    <div class="center">
+                        <button class="btn btn-blue" id="submitButton" type="submit"
+                                th:text="#{register-user.button}">Регистрирай</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+</body>
+</html>

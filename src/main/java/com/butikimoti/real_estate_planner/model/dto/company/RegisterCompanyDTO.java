@@ -1,61 +1,47 @@
-package com.butikimoti.real_estate_planner.model.entity;
+package com.butikimoti.real_estate_planner.model.dto.company;
 
-import jakarta.persistence.*;
+import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
+import com.butikimoti.real_estate_planner.model.entity.UserEntity;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-@Entity
-@Table(name = "companies")
-public class Company {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-    @OneToMany(mappedBy = "company")
+public class RegisterCompanyDTO {
     private List<UserEntity> users;
 
-    @Column(unique = true, nullable = false)
+    @NotEmpty(message = "{companyName.notEmpty}")
+    @Size(min = 2, max = 40, message = "{companyName.length}")
     private String name;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "{company.address.notEmpty}")
+    @Size(max = 200, message = "{company.address.length}")
     private String address;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "{phone.notEmpty}")
+    @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}")
     private String phone;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "{email.notEmpty}")
+    @Email(message = "{email.invalid}")
     private String email;
 
-    @OneToMany(mappedBy = "ownerCompany")
     private List<BaseProperty> properties;
 
-    public Company() {
+    public RegisterCompanyDTO() {
         this.users = new ArrayList<>();
         this.properties = new ArrayList<>();
     }
 
-    public Company(String name, String address, String phone, String email) {
+    public RegisterCompanyDTO(String name, String address, String phone, String email) {
         this();
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
-    }
-
-    public Company(List<UserEntity> users, String name, String address, String phone, String email, List<BaseProperty> properties) {
-        this(name, address, phone, email);
-        this.users = users;
-        this.properties = properties;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public List<UserEntity> getUsers() {

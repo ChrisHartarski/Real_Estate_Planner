@@ -18,22 +18,30 @@
         </div>
         <div class="menu-section">
             <ul>
-                <li class="nav-item" th:classappend="${activeLink == 'home'}? active">
-                    <a th:href="@{/}">Начало</a>
+                <li class="nav-item" th:classappend="${activeLink == 'home'}? 'active' : ''">
+                    <a th:text="#{navbar.home}" th:href="@{/}">Начало</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'sales'}? active"
+                <li class="nav-item" th:classappend="${activeLink == 'sales'}? 'active' : ''"
                     sec:authorize="isAuthenticated()">
-                    <a th:href="@{/}">Продажби</a>
+                    <a th:text="#{navbar.sales}" th:href="@{/sales}">Продажби</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'loans'}? active"
+                <li class="nav-item" th:classappend="${activeLink == 'loans'}? 'active' : ''"
                     sec:authorize="isAuthenticated()">
-                    <a th:href="@{/}">Наеми</a>
+                    <a th:text="#{navbar.rents}" th:href="@{/rents}">Наеми</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'login'}? active" sec:authorize="!isAuthenticated()">
-                    <a th:href="@{/login}">Влез</a>
+                <li class="nav-item" th:classappend="${activeLink == 'login'}? 'active' : ''"
+                    sec:authorize="!isAuthenticated()">
+                    <a th:text="#{navbar.login}" th:href="@{/users/login}">Влез</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'register'}? active" sec:authorize="!isAuthenticated()">
-                    <a th:href="@{/register}">Регистрирай се</a>
+                <li class="nav-item" th:classappend="${activeLink == 'register'}? 'active' : ''"
+                    sec:authorize="!isAuthenticated()">
+                    <a th:text="#{navbar.register}" th:href="@{/users/register}">Регистрирай се</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/users/logout}"
+                          th:method="post">
+                        <button class="nav-item btn-transparent" type="submit" th:href="@{/users/logout}" th:text="#{navbar.logout}">Излез</button>
+                    </form>
                 </li>
             </ul>
         </div>
