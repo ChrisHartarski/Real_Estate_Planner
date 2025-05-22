@@ -31,8 +31,10 @@ public class UserEntityServiceImplUnitTests {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private static final Company TEST_COMPANY_EMPTY = new Company("Test Company", "Test Address", "+359000000000", "test@email.com");
     private static final Company TEST_COMPANY_FULL = new Company(List.of(new UserEntity(), new UserEntity()), "Test Company", "Test Address", "+359000000000", "test@email.com", List.of(new Apartment(), new House()));
-    private static final UserEntity TEST_USER = new UserEntity("test@email.com", TEST_COMPANY_EMPTY, "MyStrongPassword_12", UserRole.COMPANY_ADMIN, "First name", "Last Name", "+359111111111");
+    private static final UserEntity TEST_USER = new UserEntity("test@email.com", TEST_COMPANY_EMPTY, "MyStrongPassword_12", "First name", "Last Name", "+359111111111");
     private static final RegisterUserDTO REGISTER_USER_DTO = new RegisterUserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone());
+    private static final RegisterUserDTO REGISTER_USER_DTO_ADMIN = new RegisterUserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone(), UserRole.ADMIN);
+    private static final RegisterUserDTO REGISTER_USER_DTO_COMPANY_ADMIN = new RegisterUserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone(), UserRole.COMPANY_ADMIN);
 
     @Mock
     private UserEntityRepository userEntityRepository;
@@ -111,5 +113,45 @@ public class UserEntityServiceImplUnitTests {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(true);
 
         Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerUser(REGISTER_USER_DTO));
+    }
+
+    @Test
+    void testRegisterUserAddsUserWithAdminRoleWhenUserRoleInArguments() {
+        when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
+        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
+
+        serviceToTest.registerUser(REGISTER_USER_DTO_ADMIN);
+
+        verify(userEntityRepository).saveAndFlush(captor.capture());
+        UserEntity actual = captor.getValue();
+
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals(TEST_USER.getEmail(), actual.getEmail());
+        Assertions.assertEquals(TEST_COMPANY_EMPTY.getName(), actual.getCompany().getName());
+        Assertions.assertTrue(passwordEncoder.matches(TEST_USER.getPassword(), actual.getPassword()));
+        Assertions.assertEquals(TEST_USER.getFirstName(), actual.getFirstName());
+        Assertions.assertEquals(TEST_USER.getLastName(), actual.getLastName());
+        Assertions.assertEquals(TEST_USER.getPhone(), actual.getPhone());
+        Assertions.assertEquals(UserRole.ADMIN, actual.getUserRole());
+    }
+
+    @Test
+    void testRegisterUserAddsUserWithCompanyAdminRoleWhenUserRoleInArguments() {
+        when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
+        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
+
+        serviceToTest.registerUser(REGISTER_USER_DTO_COMPANY_ADMIN);
+
+        verify(userEntityRepository).saveAndFlush(captor.capture());
+        UserEntity actual = captor.getValue();
+
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals(TEST_USER.getEmail(), actual.getEmail());
+        Assertions.assertEquals(TEST_COMPANY_EMPTY.getName(), actual.getCompany().getName());
+        Assertions.assertTrue(passwordEncoder.matches(TEST_USER.getPassword(), actual.getPassword()));
+        Assertions.assertEquals(TEST_USER.getFirstName(), actual.getFirstName());
+        Assertions.assertEquals(TEST_USER.getLastName(), actual.getLastName());
+        Assertions.assertEquals(TEST_USER.getPhone(), actual.getPhone());
+        Assertions.assertEquals(UserRole.COMPANY_ADMIN, actual.getUserRole());
     }
 }

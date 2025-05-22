@@ -55,6 +55,14 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     private void setUserRole(UserEntity user) {
+        if (user.getUserRole() == UserRole.ADMIN) {
+            return;
+        }
+
+        if (user.getUserRole() == UserRole.COMPANY_ADMIN) {
+            return;
+        }
+
         if (user.getCompany().getUsers().isEmpty()) {
             user.setUserRole(UserRole.COMPANY_ADMIN);
         } else {
