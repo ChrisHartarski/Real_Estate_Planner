@@ -1,33 +1,47 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
 import com.butikimoti.real_estate_planner.model.enums.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-public class PropertyDTO {
-    private UUID id;
+public class AddPropertyDTO {
 
+    @NotEmpty(message = "{propertyType.notEmpty}")
     private PropertyType propertyType;
 
     private String ownerCompanyName;
 
+    @NotEmpty(message = "{propertyAddress.notEmpty}")
     private String address;
 
+    @NotEmpty(message = "{propertyPrice.notEmpty}")
+    @Positive(message = "{propertyPrice.positive}")
     private double price;
 
+    @NotEmpty(message = "{propertyArea.notEmpty}")
+    @Positive(message = "{propertyArea.positive}")
     private int area;
 
+    @NotEmpty(message = "{propertyArea.unitNotEmpty}")
     private AreaUnit areaUnit;
 
+    @NotEmpty(message = "{offerType.notEmpty}")
     private OfferType offerType;
 
+    @NotEmpty(message = "{contactName.notEmpty}")
+    @Size(min = 1, max = 80, message = "{contactName.length}")
     private String contactName;
 
+    @NotEmpty(message = "{phone.notEmpty}")
+    @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}")
     private String contactPhone;
 
+    @NotEmpty(message = "{email.notEmpty}")
+    @Email(message = "{email.invalid}")
     private String contactEmail;
 
+    @Size(max = 1000, message = "{description.length}")
     private String description;
 
     private LocalDateTime createdOn;
@@ -71,15 +85,7 @@ public class PropertyDTO {
     private BusinessPropertyType businessPropertyType;
 
 
-    public PropertyDTO() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+    public AddPropertyDTO() {
     }
 
     public PropertyType getPropertyType() {
