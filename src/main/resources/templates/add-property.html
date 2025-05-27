@@ -23,7 +23,7 @@
 
                     <div class="flex-column gap-1 text-center">
                         <!-- Property type input-->
-                        <div class="flex-row w-100 gap-1" id="propertyTypeSelect">
+                        <div class="flex-row w-100 gap-1 type-visible" id="propertyTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="propertyType"
                                        th:text="#{property.property-type} + ':'">Тип имот</label>
@@ -45,7 +45,7 @@
                         </div>
 
                         <!-- Main inputs (common for all property types)-->
-                        <div class="flex-row w-100 gap-1" id="addressInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="addressInput">
                             <div class="w-30 align-right">
                                 <label for="address"
                                        th:text="#{property.address} + ':'">Property address
@@ -59,7 +59,7 @@
                             <small th:errors="*{address}" class="text-red">Property address error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="priceInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="priceInput">
                             <div class="w-30 align-right">
                                 <label for="price"
                                        th:text="#{property.price} + ':'">Property address
@@ -73,7 +73,7 @@
                             <small th:errors="*{price}" class="text-red">Property price error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="areaInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="areaInput">
                             <div class="w-30 align-right">
                                 <label for="area"
                                        th:text="#{property.area} + ':'">Property area
@@ -95,7 +95,7 @@
                             <small th:errors="*{areaUnit}" class="text-red">Property area unit error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="offerTypeSelect">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="offerTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="offerType"
                                        th:text="#{property.offer-type} + ':'">Offer type</label>
@@ -115,7 +115,7 @@
                             <small th:errors="*{offerType}" class="text-red">Offer type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="contactNameInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="contactNameInput">
                             <div class="w-30 align-right">
                                 <label for="contactName"
                                        th:text="#{property.contact-name} + ':'">Property address
@@ -129,7 +129,7 @@
                             <small th:errors="*{contactName}" class="text-red">Contact name error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="contactPhoneInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="contactPhoneInput">
                             <div class="w-30 align-right">
                                 <label for="contactPhone" th:text="#{property.contact-phone} + ':'">Property contact phone</label>
                             </div>
@@ -140,7 +140,7 @@
                             <small th:errors="*{contactPhone}" class="text-red">Company phone invalid!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="contactEmailInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="contactEmailInput">
                             <div class="w-30 align-right">
                                 <label for="contactEmail"
                                        th:text="#{property.contact-email} + ':'">Property address
@@ -154,7 +154,7 @@
                             <small th:errors="*{contactEmail}" class="text-red">Contact email error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="descriptionInput">
+                        <div class="flex-row w-100 gap-1 property-type-main hidden" id="descriptionInput">
                             <div class="w-30 align-right">
                                 <label for="description"
                                        th:text="#{property.description} + ':'">Property description
@@ -170,9 +170,9 @@
                         </div>
 
                         <!-- Additional info (for specific property types)-->
-                        <h3 id="additionalInfo" th:text="#{property.additional-info-header}"></h3>
+                        <h3 class="property-type-main hidden" id="additionalInfo" th:text="#{property.additional-info-header}"></h3>
 
-                        <div class="flex-row w-100 gap-1" id="apartmentTypeSelect">
+                        <div class="flex-row w-100 gap-1 property-type-apartment hidden" id="apartmentTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="apartmentType"
                                        th:text="#{property.apartment-type} + ':'">Apartment type</label>
@@ -193,7 +193,7 @@
                             <small th:errors="*{apartmentType}" class="text-red">Apartment type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="houseTypeSelect">
+                        <div class="flex-row w-100 gap-1 property-type-house hidden" id="houseTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="houseType"
                                        th:text="#{property.house-type} + ':'">House type</label>
@@ -214,7 +214,7 @@
                             <small th:errors="*{houseType}" class="text-red">House type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="garageTypeSelect">
+                        <div class="flex-row w-100 gap-1 property-type-garage hidden" id="garageTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="garageType"
                                        th:text="#{property.garage-type} + ':'">Garage type</label>
@@ -235,7 +235,7 @@
                             <small th:errors="*{garageType}" class="text-red">Garage type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="landTypeSelect">
+                        <div class="flex-row w-100 gap-1 property-type-land hidden" id="landTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="landType"
                                        th:text="#{property.land-type} + ':'">Land type</label>
@@ -256,7 +256,7 @@
                             <small th:errors="*{landType}" class="text-red">Land type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="businessPropertySelect">
+                        <div class="flex-row w-100 gap-1 property-type-business hidden" id="businessPropertySelect">
                             <div class="w-30 align-right">
                                 <label for="businessPropertyType"
                                        th:text="#{property.business-property-type} + ':'">Business property type</label>
@@ -277,7 +277,7 @@
                             <small th:errors="*{businessPropertyType}" class="text-red">Business property type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="constructionTypeSelect">
+                        <div class="flex-row w-100 gap-1 property-type-apartment property-type-house property-type-business hidden" id="constructionTypeSelect">
                             <div class="w-30 align-right">
                                 <label for="constructionType"
                                 th:text="#{property.construction-type} + ':'">Construction type</label>
@@ -294,7 +294,7 @@
                             <small th:errors="*{constructionType}" class="text-red">Construction type error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="yearInput">
+                        <div class="flex-row w-100 gap-1 property-type-apartment property-type-house property-type-business hidden" id="yearInput">
                             <div class="w-30 align-right">
                                 <label for="year"
                                 th:text="#{property.year} + ':'">Property year
@@ -308,7 +308,7 @@
                             <small th:errors="*{year}" class="text-red">Property year error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="roomCountInput">
+                        <div class="flex-row w-100 gap-1 property-type-apartment property-type-house property-type-business hidden" id="roomCountInput">
                             <div class="w-30 align-right">
                                 <label for="roomCount"
                                 th:text="#{property.room-count} + ':'">Property year
@@ -321,7 +321,7 @@
                             <small th:errors="*{roomCount}" class="text-red">Property year error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="floorInput">
+                        <div class="flex-row w-100 gap-1 property-type-apartment property-type-business hidden" id="floorInput">
                             <div class="w-30 align-right">
                                 <label for="floor"
                                 th:text="#{property.floor} + ':'">Property floor
@@ -338,7 +338,7 @@
                             <small th:errors="*{buildingFloors}" class="text-red">Property building floors error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="facingInput">
+                        <div class="flex-row w-100 gap-1 property-type-apartment hidden" id="facingInput">
                             <div class="w-30 align-right">
                                 <label for="facing"
                                 th:text="#{property.facing} + ':'">Property facing
@@ -352,7 +352,7 @@
                             <small th:errors="*{facing}" class="text-red">Property year error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="hasElevatorSelect">
+                        <div class="flex-row w-100 gap-1 property-type-apartment property-type-business hidden" id="hasElevatorSelect">
                             <div class="w-30 align-right">
                                 <label for="hasElevator"
                                 th:text="#{property.has-elevator} + ':'">Elevator
@@ -364,10 +364,10 @@
                                     <option value="true" th:text="#{property.has-elevator-true}"></option>
                                 </select>
                             </div>
-                            <small th:errors="*{hasElevator}" class="text-red">Property floor error!</small>
+                            <small th:errors="*{hasElevator}" class="text-red">Property has elevator error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="yardAreaInput">
+                        <div class="flex-row w-100 gap-1 property-type-house hidden" id="yardAreaInput">
                             <div class="w-30 align-right">
                                 <label for="yardArea"
                                        th:text="#{property.yard-area} + ':'">Yard area
@@ -389,7 +389,7 @@
                             <small th:errors="*{yardAreaUnit}" class="text-red">Property yard area unit error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="floorsCountInput">
+                        <div class="flex-row w-100 gap-1 property-type-house hidden" id="floorsCountInput">
                             <div class="w-30 align-right">
                                 <label for="floorsCount"
                                        th:text="#{property.floors-count} + ':'">Property floor count
@@ -402,7 +402,7 @@
                             <small th:errors="*{floorsCount}" class="text-red">Property floor count error!</small>
                         </div>
 
-                        <div class="flex-row w-100 gap-1" id="additionalStructuresInput">
+                        <div class="flex-row w-100 gap-1 property-type-house hidden" id="additionalStructuresInput">
                             <div class="w-30 align-right">
                                 <label for="additionalStructures"
                                        th:text="#{property.additional-structures} + ':'">Property additional structures
@@ -428,5 +428,6 @@
         </div>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

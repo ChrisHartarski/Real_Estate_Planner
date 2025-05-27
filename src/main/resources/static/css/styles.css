@@ -30,6 +30,10 @@ a {
     font-weight: bolder !important;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .white {
     color: #FFFFFF;
 }
