@@ -25,7 +25,7 @@ public class SecurityConfig {
                                 //access to ADMIN role users
                                 .requestMatchers("/admin-panel").hasRole("ADMIN")
                                 //access to COMPANY_ADMIN role users
-                                .requestMatchers("/companies/edit").hasRole("COMPANY_ADMIN")
+                                .requestMatchers("/companies/edit", "properties/add").hasRole("COMPANY_ADMIN")
                                 //access to USER role users
                                 .requestMatchers("/properties", "/properties/{id}").hasRole("USER")
                                 .anyRequest()
