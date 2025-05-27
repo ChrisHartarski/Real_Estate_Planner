@@ -1,8 +1,8 @@
 package com.butikimoti.real_estate_planner.service;
 
-import com.butikimoti.real_estate_planner.model.dto.house.AddHouseDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 
 public interface HouseService {
-    void addHouse(AddHouseDTO addHouseDTO);
+    void addHouse(AddPropertyDTO addPropertyDTO);
     boolean houseRepositoryIsEmpty();
 }

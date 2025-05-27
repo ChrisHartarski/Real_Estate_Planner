@@ -1,6 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.house.AddHouseDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.House;
 import com.butikimoti.real_estate_planner.repository.HouseRepository;
 import com.butikimoti.real_estate_planner.service.HouseService;
@@ -18,8 +18,8 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public void addHouse(AddHouseDTO addHouseDTO) {
-        House house = modelMapper.map(addHouseDTO, House.class);
+    public void addHouse(AddPropertyDTO addPropertyDTO) {
+        House house = modelMapper.map(addPropertyDTO, House.class);
         houseRepository.saveAndFlush(house);
     }
 
