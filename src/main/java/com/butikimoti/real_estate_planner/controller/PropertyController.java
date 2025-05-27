@@ -1,27 +1,35 @@
 package com.butikimoti.real_estate_planner.controller;
 
+import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-
-public class PropertiesController {
+@RequestMapping("/properties")
+public class PropertyController {
     private final BasePropertyService basePropertyService;
 
-    public PropertiesController(BasePropertyService basePropertyService) {
+    public PropertyController(BasePropertyService basePropertyService) {
         this.basePropertyService = basePropertyService;
     }
 
-    @GetMapping("/properties")
+    @ModelAttribute("addPropertyData")
+    public AddPropertyDTO addPropertyData() {
+        return new AddPropertyDTO();
+    }
+
+    @GetMapping("/sales")
     public String viewSales(@RequestParam(value = "offerType") String offerType,
                             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
@@ -36,6 +44,22 @@ public class PropertiesController {
         return "property-page";
     }
 
+    @GetMapping("add")
+    public String viewAddProperty() {
+        return "add-property";
+    }
+
+    @PostMapping("/add")
+    public String addProperty(@Valid AddPropertyDTO addPropertyData,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes) {
+
+
+        return "redirect:/";
+    }
+
+
+
     private OfferType mapOfferType(String offerType) {
         if (offerType.equalsIgnoreCase("sale")) {
             return OfferType.SALE;
@@ -47,4 +71,7 @@ public class PropertiesController {
 
         throw new IllegalArgumentException("Invalid saleOrRent: " + offerType);
     }
+
+
+
 }
