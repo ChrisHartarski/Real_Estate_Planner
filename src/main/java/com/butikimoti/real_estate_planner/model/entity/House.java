@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.model.entity;
 
+import com.butikimoti.real_estate_planner.model.enums.AreaUnit;
 import com.butikimoti.real_estate_planner.model.enums.ConstructionType;
 import com.butikimoti.real_estate_planner.model.enums.HouseType;
 import jakarta.persistence.*;
@@ -17,6 +18,9 @@ public class House extends BaseProperty {
 
     @Column(name = "yard_area", nullable = false)
     private int yardArea;
+
+    @Column(name = "yard_area_unit", nullable = false)
+    private AreaUnit yardAreaUnit;
 
     @Column(nullable = false)
     private int floorsCount;
@@ -49,6 +53,14 @@ public class House extends BaseProperty {
 
     public void setYardArea(int yardArea) {
         this.yardArea = yardArea;
+    }
+
+    public AreaUnit getYardAreaUnit() {
+        return yardAreaUnit;
+    }
+
+    public void setYardAreaUnit(AreaUnit yardAreaUnit) {
+        this.yardAreaUnit = yardAreaUnit;
     }
 
     public int getFloorsCount() {

@@ -71,6 +71,8 @@ public class AddPropertyDTO {
 
     private Integer yardArea;
 
+    private AreaUnit yardAreaUnit;
+
     private Integer floorsCount;
 
     private String additionalStructures;
@@ -270,6 +272,14 @@ public class AddPropertyDTO {
 
     public void setYardArea(Integer yardArea) {
         this.yardArea = yardArea;
+    }
+
+    public AreaUnit getYardAreaUnit() {
+        return yardAreaUnit;
+    }
+
+    public void setYardAreaUnit(AreaUnit yardAreaUnit) {
+        this.yardAreaUnit = yardAreaUnit;
     }
 
     public Integer getFloorsCount() {
