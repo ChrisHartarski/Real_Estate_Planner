@@ -17,11 +17,11 @@ public class AddPropertyDTO {
 
     @NotEmpty(message = "{propertyPrice.notEmpty}")
     @Positive(message = "{propertyPrice.positive}")
-    private double price;
+    private Double price;
 
     @NotEmpty(message = "{propertyArea.notEmpty}")
     @Positive(message = "{propertyArea.positive}")
-    private int area;
+    private Integer area;
 
     @NotEmpty(message = "{propertyArea.unitNotEmpty}")
     private AreaUnit areaUnit;
@@ -51,13 +51,13 @@ public class AddPropertyDTO {
     //common
     private ConstructionType constructionType;
 
-    private int year;
+    private Integer year;
 
-    private int roomCount;
+    private Integer roomCount;
 
-    private int floor;
+    private Integer floor;
 
-    private int buildingFloors;
+    private Integer buildingFloors;
 
     private String facing;
 
@@ -69,9 +69,9 @@ public class AddPropertyDTO {
     //house
     private HouseType houseType;
 
-    private int yardArea;
+    private Integer yardArea;
 
-    private int floorsCount;
+    private Integer floorsCount;
 
     private String additionalStructures;
 
@@ -88,11 +88,11 @@ public class AddPropertyDTO {
     public AddPropertyDTO() {
     }
 
-    public PropertyType getPropertyType() {
+    public @NotEmpty(message = "{propertyType.notEmpty}") PropertyType getPropertyType() {
         return propertyType;
     }
 
-    public void setPropertyType(PropertyType propertyType) {
+    public void setPropertyType(@NotEmpty(message = "{propertyType.notEmpty}") PropertyType propertyType) {
         this.propertyType = propertyType;
     }
 
@@ -104,75 +104,75 @@ public class AddPropertyDTO {
         this.ownerCompanyName = ownerCompanyName;
     }
 
-    public String getAddress() {
+    public @NotEmpty(message = "{propertyAddress.notEmpty}") String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(@NotEmpty(message = "{propertyAddress.notEmpty}") String address) {
         this.address = address;
     }
 
-    public double getPrice() {
+    public @NotEmpty(message = "{propertyPrice.notEmpty}") @Positive(message = "{propertyPrice.positive}") Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(@NotEmpty(message = "{propertyPrice.notEmpty}") @Positive(message = "{propertyPrice.positive}") Double price) {
         this.price = price;
     }
 
-    public int getArea() {
+    public @NotEmpty(message = "{propertyArea.notEmpty}") @Positive(message = "{propertyArea.positive}") Integer getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(@NotEmpty(message = "{propertyArea.notEmpty}") @Positive(message = "{propertyArea.positive}") Integer area) {
         this.area = area;
     }
 
-    public AreaUnit getAreaUnit() {
+    public @NotEmpty(message = "{propertyArea.unitNotEmpty}") AreaUnit getAreaUnit() {
         return areaUnit;
     }
 
-    public void setAreaUnit(AreaUnit areaUnit) {
+    public void setAreaUnit(@NotEmpty(message = "{propertyArea.unitNotEmpty}") AreaUnit areaUnit) {
         this.areaUnit = areaUnit;
     }
 
-    public OfferType getOfferType() {
+    public @NotEmpty(message = "{offerType.notEmpty}") OfferType getOfferType() {
         return offerType;
     }
 
-    public void setOfferType(OfferType offerType) {
+    public void setOfferType(@NotEmpty(message = "{offerType.notEmpty}") OfferType offerType) {
         this.offerType = offerType;
     }
 
-    public String getContactName() {
+    public @NotEmpty(message = "{contactName.notEmpty}") @Size(min = 1, max = 80, message = "{contactName.length}") String getContactName() {
         return contactName;
     }
 
-    public void setContactName(String contactName) {
+    public void setContactName(@NotEmpty(message = "{contactName.notEmpty}") @Size(min = 1, max = 80, message = "{contactName.length}") String contactName) {
         this.contactName = contactName;
     }
 
-    public String getContactPhone() {
+    public @NotEmpty(message = "{phone.notEmpty}") @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}") String getContactPhone() {
         return contactPhone;
     }
 
-    public void setContactPhone(String contactPhone) {
+    public void setContactPhone(@NotEmpty(message = "{phone.notEmpty}") @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}") String contactPhone) {
         this.contactPhone = contactPhone;
     }
 
-    public String getContactEmail() {
+    public @NotEmpty(message = "{email.notEmpty}") @Email(message = "{email.invalid}") String getContactEmail() {
         return contactEmail;
     }
 
-    public void setContactEmail(String contactEmail) {
+    public void setContactEmail(@NotEmpty(message = "{email.notEmpty}") @Email(message = "{email.invalid}") String contactEmail) {
         this.contactEmail = contactEmail;
     }
 
-    public String getDescription() {
+    public @Size(max = 1000, message = "{description.length}") String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Size(max = 1000, message = "{description.length}") String description) {
         this.description = description;
     }
 
@@ -200,35 +200,35 @@ public class AddPropertyDTO {
         this.constructionType = constructionType;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
-    public int getRoomCount() {
+    public Integer getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(int roomCount) {
+    public void setRoomCount(Integer roomCount) {
         this.roomCount = roomCount;
     }
 
-    public int getFloor() {
+    public Integer getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
+    public void setFloor(Integer floor) {
         this.floor = floor;
     }
 
-    public int getBuildingFloors() {
+    public Integer getBuildingFloors() {
         return buildingFloors;
     }
 
-    public void setBuildingFloors(int buildingFloors) {
+    public void setBuildingFloors(Integer buildingFloors) {
         this.buildingFloors = buildingFloors;
     }
 
@@ -264,19 +264,19 @@ public class AddPropertyDTO {
         this.houseType = houseType;
     }
 
-    public int getYardArea() {
+    public Integer getYardArea() {
         return yardArea;
     }
 
-    public void setYardArea(int yardArea) {
+    public void setYardArea(Integer yardArea) {
         this.yardArea = yardArea;
     }
 
-    public int getFloorsCount() {
+    public Integer getFloorsCount() {
         return floorsCount;
     }
 
-    public void setFloorsCount(int floorsCount) {
+    public void setFloorsCount(Integer floorsCount) {
         this.floorsCount = floorsCount;
     }
 
