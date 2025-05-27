@@ -53,7 +53,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             dto.setPropertyType(PropertyType.APARTMENT);
         }
         if (baseProperty.getClass() == BusinessProperty.class) {
-            dto.setPropertyType(PropertyType.BUSINESS_PROPERTY);
+            dto.setPropertyType(PropertyType.BUSINESS);
         }
         if (baseProperty.getClass() == Garage.class) {
             dto.setPropertyType(PropertyType.GARAGE);
