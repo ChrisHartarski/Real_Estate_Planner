@@ -4,6 +4,7 @@ import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
+import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,9 +20,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/properties")
 public class PropertyController {
     private final BasePropertyService basePropertyService;
+    private final UserEntityService userEntityService;
 
-    public PropertyController(BasePropertyService basePropertyService) {
+    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService) {
         this.basePropertyService = basePropertyService;
+        this.userEntityService = userEntityService;
     }
 
     @ModelAttribute("addPropertyData")
@@ -44,7 +47,7 @@ public class PropertyController {
         return "property-page";
     }
 
-    @GetMapping("add")
+    @GetMapping("/add")
     public String viewAddProperty() {
         return "add-property";
     }
@@ -53,8 +56,13 @@ public class PropertyController {
     public String addProperty(@Valid AddPropertyDTO addPropertyData,
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addPropertyData", addPropertyData);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPropertyData", bindingResult);
+            return "redirect:/properties/add";
+        }
 
-
+        basePropertyService.savePropertyToDB(addPropertyData);
         return "redirect:/";
     }
 

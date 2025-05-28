@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.service;
 
+import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
@@ -11,4 +12,5 @@ import java.util.List;
 public interface BasePropertyService {
     List<BaseProperty> getAllProperties();
     PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent);
+    BaseProperty savePropertyToDB(AddPropertyDTO addPropertyDTO);
 }
