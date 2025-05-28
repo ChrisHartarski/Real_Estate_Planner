@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
+import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.enums.*;
 import jakarta.validation.constraints.*;
 
@@ -7,26 +8,26 @@ import java.time.LocalDateTime;
 
 public class AddPropertyDTO {
 
-    @NotEmpty(message = "{propertyType.notEmpty}")
+    @NotNull(message = "{propertyType.notEmpty}")
     private PropertyType propertyType;
 
-    private String ownerCompanyName;
+    private Company ownerCompany;
 
     @NotEmpty(message = "{propertyAddress.notEmpty}")
     private String address;
 
-    @NotEmpty(message = "{propertyPrice.notEmpty}")
+    @NotNull(message = "{propertyPrice.notEmpty}")
     @Positive(message = "{propertyPrice.positive}")
     private Double price;
 
-    @NotEmpty(message = "{propertyArea.notEmpty}")
+    @NotNull(message = "{propertyArea.notEmpty}")
     @Positive(message = "{propertyArea.positive}")
     private Integer area;
 
-    @NotEmpty(message = "{propertyArea.unitNotEmpty}")
+    @NotNull(message = "{propertyArea.unitNotEmpty}")
     private AreaUnit areaUnit;
 
-    @NotEmpty(message = "{offerType.notEmpty}")
+    @NotNull(message = "{offerType.notEmpty}")
     private OfferType offerType;
 
     @NotEmpty(message = "{contactName.notEmpty}")
@@ -90,91 +91,91 @@ public class AddPropertyDTO {
     public AddPropertyDTO() {
     }
 
-    public @NotEmpty(message = "{propertyType.notEmpty}") PropertyType getPropertyType() {
+    public PropertyType getPropertyType() {
         return propertyType;
     }
 
-    public void setPropertyType(@NotEmpty(message = "{propertyType.notEmpty}") PropertyType propertyType) {
+    public void setPropertyType(PropertyType propertyType) {
         this.propertyType = propertyType;
     }
 
-    public String getOwnerCompanyName() {
-        return ownerCompanyName;
+    public Company getOwnerCompany() {
+        return ownerCompany;
     }
 
-    public void setOwnerCompanyName(String ownerCompanyName) {
-        this.ownerCompanyName = ownerCompanyName;
+    public void setOwnerCompany(Company ownerCompany) {
+        this.ownerCompany = ownerCompany;
     }
 
-    public @NotEmpty(message = "{propertyAddress.notEmpty}") String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(@NotEmpty(message = "{propertyAddress.notEmpty}") String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public @NotEmpty(message = "{propertyPrice.notEmpty}") @Positive(message = "{propertyPrice.positive}") Double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(@NotEmpty(message = "{propertyPrice.notEmpty}") @Positive(message = "{propertyPrice.positive}") Double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public @NotEmpty(message = "{propertyArea.notEmpty}") @Positive(message = "{propertyArea.positive}") Integer getArea() {
+    public Integer getArea() {
         return area;
     }
 
-    public void setArea(@NotEmpty(message = "{propertyArea.notEmpty}") @Positive(message = "{propertyArea.positive}") Integer area) {
+    public void setArea(Integer area) {
         this.area = area;
     }
 
-    public @NotEmpty(message = "{propertyArea.unitNotEmpty}") AreaUnit getAreaUnit() {
+    public AreaUnit getAreaUnit() {
         return areaUnit;
     }
 
-    public void setAreaUnit(@NotEmpty(message = "{propertyArea.unitNotEmpty}") AreaUnit areaUnit) {
+    public void setAreaUnit(AreaUnit areaUnit) {
         this.areaUnit = areaUnit;
     }
 
-    public @NotEmpty(message = "{offerType.notEmpty}") OfferType getOfferType() {
+    public OfferType getOfferType() {
         return offerType;
     }
 
-    public void setOfferType(@NotEmpty(message = "{offerType.notEmpty}") OfferType offerType) {
+    public void setOfferType(OfferType offerType) {
         this.offerType = offerType;
     }
 
-    public @NotEmpty(message = "{contactName.notEmpty}") @Size(min = 1, max = 80, message = "{contactName.length}") String getContactName() {
+    public String getContactName() {
         return contactName;
     }
 
-    public void setContactName(@NotEmpty(message = "{contactName.notEmpty}") @Size(min = 1, max = 80, message = "{contactName.length}") String contactName) {
+    public void setContactName(String contactName) {
         this.contactName = contactName;
     }
 
-    public @NotEmpty(message = "{phone.notEmpty}") @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}") String getContactPhone() {
+    public String getContactPhone() {
         return contactPhone;
     }
 
-    public void setContactPhone(@NotEmpty(message = "{phone.notEmpty}") @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}") String contactPhone) {
+    public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
     }
 
-    public @NotEmpty(message = "{email.notEmpty}") @Email(message = "{email.invalid}") String getContactEmail() {
+    public String getContactEmail() {
         return contactEmail;
     }
 
-    public void setContactEmail(@NotEmpty(message = "{email.notEmpty}") @Email(message = "{email.invalid}") String contactEmail) {
+    public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
 
-    public @Size(max = 1000, message = "{description.length}") String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(@Size(max = 1000, message = "{description.length}") String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
