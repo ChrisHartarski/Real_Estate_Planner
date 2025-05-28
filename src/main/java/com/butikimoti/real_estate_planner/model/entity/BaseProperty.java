@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import com.butikimoti.real_estate_planner.model.enums.AreaUnit;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
+import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,10 @@ public abstract class BaseProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "property_type", nullable = false)
+    private PropertyType propertyType;
 
     @ManyToOne
     private Company ownerCompany;
@@ -55,8 +60,9 @@ public abstract class BaseProperty {
     protected BaseProperty() {
     }
 
-    protected BaseProperty(UUID id, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
+        this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
         this.address = address;
         this.price = price;
@@ -77,6 +83,14 @@ public abstract class BaseProperty {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public PropertyType getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(PropertyType propertyType) {
+        this.propertyType = propertyType;
     }
 
     public Company getOwnerCompany() {

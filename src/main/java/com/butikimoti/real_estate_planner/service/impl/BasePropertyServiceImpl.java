@@ -43,26 +43,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
     private PropertyDTO mapBasePropertyToPropertyDTO(BaseProperty baseProperty) {
         PropertyDTO dto = modelMapper.map(baseProperty, PropertyDTO.class);
-        setPropertyTypeToDTO(dto, baseProperty);
 
         return dto;
-    }
-
-    private void setPropertyTypeToDTO(PropertyDTO dto, BaseProperty baseProperty) {
-        if (baseProperty.getClass() == Apartment.class) {
-            dto.setPropertyType(PropertyType.APARTMENT);
-        }
-        if (baseProperty.getClass() == BusinessProperty.class) {
-            dto.setPropertyType(PropertyType.BUSINESS);
-        }
-        if (baseProperty.getClass() == Garage.class) {
-            dto.setPropertyType(PropertyType.GARAGE);
-        }
-        if (baseProperty.getClass() == House.class) {
-            dto.setPropertyType(PropertyType.HOUSE);
-        }
-        if (baseProperty.getClass() == Land.class) {
-            dto.setPropertyType(PropertyType.LAND);
-        }
     }
 }
