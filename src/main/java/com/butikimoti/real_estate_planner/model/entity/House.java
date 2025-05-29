@@ -19,6 +19,7 @@ public class House extends BaseProperty {
     @Column(name = "yard_area", nullable = false)
     private int yardArea;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "yard_area_unit", nullable = false)
     private AreaUnit yardAreaUnit;
 

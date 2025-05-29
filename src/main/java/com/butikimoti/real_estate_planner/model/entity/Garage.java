@@ -1,13 +1,12 @@
 package com.butikimoti.real_estate_planner.model.entity;
 
 import com.butikimoti.real_estate_planner.model.enums.GarageType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "garages")
 public class Garage extends BaseProperty {
+    @Enumerated(EnumType.STRING)
     @Column(name = "garage_type", nullable = false)
     private GarageType garageType;
 
