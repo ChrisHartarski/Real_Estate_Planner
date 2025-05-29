@@ -16,6 +16,9 @@ public class House extends BaseProperty {
     @Column(name = "construction_type", nullable = false)
     private ConstructionType constructionType;
 
+    @Column
+    private int year;
+
     @Column(name = "yard_area", nullable = false)
     private int yardArea;
 
@@ -46,6 +49,14 @@ public class House extends BaseProperty {
 
     public void setConstructionType(ConstructionType constructionType) {
         this.constructionType = constructionType;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public int getYardArea() {
