@@ -57,6 +57,8 @@ public class PropertyDTO {
 
     private int yardArea;
 
+    private AreaUnit yardAreaUnit;
+
     private int floorsCount;
 
     private String additionalStructures;
@@ -69,6 +71,7 @@ public class PropertyDTO {
 
     //business property
     private BusinessPropertyType businessPropertyType;
+
 
 
     public PropertyDTO() {
@@ -264,6 +267,14 @@ public class PropertyDTO {
 
     public void setYardArea(int yardArea) {
         this.yardArea = yardArea;
+    }
+
+    public AreaUnit getYardAreaUnit() {
+        return yardAreaUnit;
+    }
+
+    public void setYardAreaUnit(AreaUnit yardAreaUnit) {
+        this.yardAreaUnit = yardAreaUnit;
     }
 
     public int getFloorsCount() {
