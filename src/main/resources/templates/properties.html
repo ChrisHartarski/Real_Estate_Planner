@@ -4,16 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
-    <title>Sales</title>
+    <title th:if="${page.equals('sales')}">Sales</title>
+    <title th:if="${page.equals('rents')}">Rents</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
     <!-- Core theme CSS -->
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'sales'})}"></header>
+    <th:block th:if="${page.equals('sales')}">
+        <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'sales'})}"></header>
+    </th:block>
+    <th:block th:if="${page.equals('rents')}">
+        <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'rents'})}"></header>
+    </th:block>
+
     <main>
-        <h1 class="white text-center page-title">Продажби</h1>
+        <h1 th:if="${page.equals('sales')}"
+            th:text="#{property.page-header-sales}"
+                class="white text-center page-title">Продажби
+        </h1>
+        <h1 th:if="${page.equals('rents')}"
+            th:text="#{property.page-header-rents}"
+            class="white text-center page-title">Наеми
+        </h1>
+
 <!--        Filter and Sort -->
         <div class="filter-sort-section w-70">
             <div class="card">
@@ -42,81 +57,156 @@
         </div>
 
 <!--        Offers-list -->
-        <div class="offer-list-section w-70">
-            <div class="card flex-row">
-                <div class="image-section">
-                    <img src="/images/sample_image.jpg" alt="sample_img">
-                </div>
-                <div class="content-section">
-                    <div class="content-header">
-                        <div class="column">
-                            <h2>2-стаен апартамент</h2>
-                            <p>Русе, Възраждане, ул. Солун 26</p>
-                        </div>
-                        <div class="column">
-                            <h3>Цена: €70000</h3>
-                            <p class="grayed-out">(€1000 / кв.м)</p>
-                        </div>
+        <div class="offer-list-section w-70" id="offerListSection">
+            <div th:each="property : ${properties.getContent()}">
+                <div class="card flex-row">
+                    <div class="image-section">
+                        <img src="/images/sample_image.jpg" alt="sample_img">
                     </div>
-                    <div class="content-description">
-                        <div class="column">
-                            <p>Тип: <b>тухла</b></p>
-                            <p>Квадратура: <b>70 кв.м</b></p>
+                    <div class="content-section">
+                        <div class="content-header">
+                            <div class="flex-column">
+                                <div class="header">
+                                    <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
+                                            th:text="#{'apartmentType.' + ${property.apartmentType.name()}}">тип
+                                        апартамент</h2>
+                                    <h2 th:if="${property.propertyType.name() == 'HOUSE'}"
+                                        th:text="#{'houseType.' + ${property.houseType.name()}}">тип
+                                        къща</h2>
+                                    <h2 th:if="${property.propertyType.name() == 'BUSINESS'}"
+                                        th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">тип
+                                        бизнес имот</h2>
+                                    <h2 th:if="${property.propertyType.name() == 'GARAGE'}"
+                                        th:text="#{'garageType.' + ${property.garageType.name()}}">тип
+                                        гараж</h2>
+                                    <h2 th:if="${property.propertyType.name() == 'LAND'}"
+                                        th:text="#{'landType.' + ${property.landType.name()}}">тип
+                                        парцел</h2>
+                                </div>
+                                <p th:text="${property.address}">Русе, Възраждане, ул. Солун 26</p>
+                            </div>
+                            <div class="flex-column">
+                                <h3>
+                                    <span th:text="#{property.price} + ': '">Цена: </span>
+                                    <span th:text="'€' + ${#numbers.formatInteger(property.price, 0)}">€70000</span>
+                                </h3>
+
+                                <p class="grayed-out"
+                                    th:text="'(€' + ${#numbers.formatInteger(property.price / property.area, 0)} + ' / ' + #{'areaUnit.' + ${property.areaUnit}} + ')'">(€1000 / кв
+                                    .м)</p>
+                            </div>
                         </div>
-                        <div class="column">
-                            <p>Етаж: <b>3 от 8</b></p>
-                            <p>Година: <b>1972 г.</b></p>
+                        <div class="content-description">
+                            <div class="flex-row gap-1 w-50"
+                                 th:if="${property.propertyType.name() == 'APARTMENT'
+                                           or property.propertyType.name() == 'HOUSE'
+                                           or property.propertyType.name() == 'BUSINESS'}">
+                                <div th:text="#{property.construction-type} + ': '">Тип:</div>
+                                <div class="bold"
+                                      th:text="#{${'constructionType.' + property.constructionType.name()}}">тухла
+                                </div>
+                            </div>
+                            <div class="flex-row gap-1 w-50">
+                                <div th:text="#{property.area} + ': '">Квадратура: </div>
+                                <div class="bold"
+                                        th:text="${property.area} + ' ' + #{${'areaUnit.' + property.areaUnit.name()}}">70 кв
+                                    .м</div>
+                            </div>
+                            <div class="flex-row gap-1 w-50"
+                                 th:if="${property.propertyType.name() == 'APARTMENT'
+                                           or property.propertyType.name() == 'BUSINESS'}">
+                                <div th:text="#{property.floor} + ':'"></div>
+                                <div class="bold"
+                                        th:text="${property.floor} + ' ' + #{property.floor-from} + ' ' + ${property.buildingFloors}"></div>
+                            </div>
+                            <div class="flex-row gap-1 w-50"
+                                 th:if="${property.propertyType.name() == 'HOUSE'}">
+                                <div th:text="#{property.floors-count} + ':'">Брой етажи: </div>
+                                <div class="bold"
+                                     th:text="${property.floorsCount}"></div>
+                            </div>
+                            <div class="flex-row gap-1 w-50"
+                                 th:if="${property.propertyType.name() == 'HOUSE'}">
+                                <div th:text="#{property.yard-area} + ': '">Площ двор: </div>
+                                <div class="bold"
+                                     th:text="${property.yardArea} + ' ' + #{${'areaUnit.' + property.yardAreaUnit.name()}}">70 кв
+                                    .м</div>
+                            </div>
+                            <div class="flex-row gap-1 w-50"
+                                 th:if="${property.propertyType.name() == 'APARTMENT'
+                                           or property.propertyType.name() == 'HOUSE'}">
+                                <div th:text="#{property.year} + ': '">Година: </div>
+                                <div class="bold"
+                                      th:text="${property.year}">1972</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="content-contact">
-                        <p>Контакт: <b>Иван Иванов</b></p>
-                        <p>Тел: <b>0888 888 888</b></p>
-                        <p>Имейл: <b>ivan_ivanov@gmail.com</b></p>
-                    </div>
-                    <div class="content-footer">
-                        <p class="grayed-out">Актуализиран на: 10.05.2025 г.</p>
-                        <p class="grayed-out">Създаден на: 05.05.2025 г.</p>
+                        <div class="flex-row w-100 content-contact">
+                            <div class="flex-row w-100 gap-1">
+                                <div th:text="#{property.contact-name} + ': '">Контакт: </div>
+                                <div class="bold" th:text="${property.contactName}">Иван Иванов</div>
+                            </div>
+                            <div class="flex-row w-100 gap-1">
+                                <div th:text="#{property.contact-phone} + ': '">Тел: </div>
+                                <div class="bold" th:text="${property.contactPhone}">0888 888 888</div>
+                            </div>
+                            <div class="flex-row w-100 gap-1">
+                                <div th:text="#{property.contact-email} + ': '">Имейл: </div>
+                                <div class="bold" th:text="${property.contactEmail}">ivan_ivanov@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="content-footer">
+                            <div class="flex-row w-50 gap-1">
+                                <div th:text="#{property.updatedOn} + ': '">Актуализиран на: </div>
+                                <div th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025</div>
+                            </div>
+                            <div class="flex-row w-50 gap-1">
+                                <div th:text="#{property.createdOn} + ': '">Създаден на: </div>
+                                <div th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="image-section">
-                    <img src="/images/sample_image.jpg" alt="sample_img">
-                </div>
-                <div class="content-section">
-                    <div class="content-header">
-                        <div class="column">
-                            <h2>Къща</h2>
-                            <p>Две Могили, ул. 1-ва 12</p>
-                        </div>
-                        <div class="column">
-                            <h3>Цена: €30000</h3>
-                            <p class="grayed-out">(€200 / кв.м)</p>
-                        </div>
-                    </div>
-                    <div class="content-description">
-                        <div class="column">
-                            <p>Тип: <b>тухла</b></p>
-                            <p>Квадратура: <b>150 кв.м</b></p>
-                            <p>Двор площ: <b>500 кв.м</b></p>
-                        </div>
-                        <div class="column">
-                            <p>Брой етажи: <b>2</b></p>
-                            <p>Година: <b>1975 г.</b></p>
-                        </div>
-                    </div>
-                    <div class="content-contact">
-                        <p>Контакт: <b>Георги Георгиев</b></p>
-                        <p>Тел: <b>0888 777 777</b></p>
-                        <p>Имейл: <b>georgi_georgiev@gmail.com</b></p>
-                    </div>
-                    <div class="content-footer">
-                        <p class="grayed-out">Актуализиран на: 02.05.2025 г.</p>
-                        <p class="grayed-out">Създаден на: 20.03.2025 г.</p>
-                    </div>
-                </div>
+<!--                <div class="card">-->
+<!--                    <div class="image-section">-->
+<!--                        <img src="/images/sample_image.jpg" alt="sample_img">-->
+<!--                    </div>-->
+<!--                    <div class="content-section">-->
+<!--                        <div class="content-header">-->
+<!--                            <div class="column">-->
+<!--                                <h2>Къща</h2>-->
+<!--                                <p>Две Могили, ул. 1-ва 12</p>-->
+<!--                            </div>-->
+<!--                            <div class="column">-->
+<!--                                <h3>Цена: €30000</h3>-->
+<!--                                <p class="grayed-out">(€200 / кв.м)</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="content-description">-->
+<!--                            <div class="column">-->
+<!--                                <p>Тип: <b>тухла</b></p>-->
+<!--                                <p>Квадратура: <b>150 кв.м</b></p>-->
+<!--                                <p>Двор площ: <b>500 кв.м</b></p>-->
+<!--                            </div>-->
+<!--                            <div class="column">-->
+<!--                                <p>Брой етажи: <b>2</b></p>-->
+<!--                                <p>Година: <b>1975 г.</b></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="content-contact">-->
+<!--                            <p>Контакт: <b>Георги Георгиев</b></p>-->
+<!--                            <p>Тел: <b>0888 777 777</b></p>-->
+<!--                            <p>Имейл: <b>georgi_georgiev@gmail.com</b></p>-->
+<!--                        </div>-->
+<!--                        <div class="content-footer">-->
+<!--                            <p class="grayed-out">Актуализиран на: 02.05.2025 г.</p>-->
+<!--                            <p class="grayed-out">Създаден на: 20.03.2025 г.</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
+
         </div>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>

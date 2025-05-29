@@ -25,7 +25,7 @@
                     sec:authorize="isAuthenticated()">
                     <a th:text="#{navbar.sales}" th:href="@{/properties/sales}">Продажби</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'loans'}? 'active' : ''"
+                <li class="nav-item" th:classappend="${activeLink == 'rents'}? 'active' : ''"
                     sec:authorize="isAuthenticated()">
                     <a th:text="#{navbar.rents}" th:href="@{/properties/rents}">Наеми</a>
                 </li>

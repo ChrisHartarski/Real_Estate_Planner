@@ -33,12 +33,20 @@ public class PropertyController {
     }
 
     @GetMapping("/sales")
-    public String viewSales(@RequestParam(value = "offerType") String offerType,
-                            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+    public String viewSales(@PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        OfferType saleOrRent = mapOfferType(offerType);
-        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, saleOrRent);
+        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE);
         model.addAttribute("properties", properties);
+        model.addAttribute("page", "sales");
+        return "properties";
+    }
+
+    @GetMapping("/rents")
+    public String viewRents(@PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+                            Model model) {
+        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.RENT);
+        model.addAttribute("properties", properties);
+        model.addAttribute("page", "rents");
         return "properties";
     }
 

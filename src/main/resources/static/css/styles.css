@@ -176,6 +176,10 @@ a {
     color: #B4B4B4;
 }
 
+.bold {
+    font-weight: 600;
+}
+
 /* Navbar */
 .navbar {
     width: 100%;
@@ -274,6 +278,7 @@ a {
     flex-direction: column;
     justify-content: space-between;
     width: calc(70% - 1rem);
+    gap: 1rem;
 }
 
 .content-section > .content-header {
@@ -283,8 +288,8 @@ a {
 
 .content-section > .content-description{
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
     font-size: 0.9rem;
 }
 
