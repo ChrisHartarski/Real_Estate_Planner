@@ -2,12 +2,10 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import com.butikimoti.real_estate_planner.model.enums.BusinessPropertyType;
 import com.butikimoti.real_estate_planner.model.enums.ConstructionType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "business_properties")
 public class BusinessProperty extends BaseProperty {
     @Enumerated(EnumType.STRING)
     @Column(name = "busines_property_type", nullable = false)
