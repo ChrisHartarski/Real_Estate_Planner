@@ -23,11 +23,11 @@
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'sales'}? 'active' : ''"
                     sec:authorize="isAuthenticated()">
-                    <a th:text="#{navbar.sales}" th:href="@{/sales}">Продажби</a>
+                    <a th:text="#{navbar.sales}" th:href="@{/properties/sales}">Продажби</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'loans'}? 'active' : ''"
                     sec:authorize="isAuthenticated()">
-                    <a th:text="#{navbar.rents}" th:href="@{/rents}">Наеми</a>
+                    <a th:text="#{navbar.rents}" th:href="@{/properties/rents}">Наеми</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'login'}? 'active' : ''"
                     sec:authorize="!isAuthenticated()">
