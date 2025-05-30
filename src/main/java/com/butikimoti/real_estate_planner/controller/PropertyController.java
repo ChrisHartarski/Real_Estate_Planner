@@ -89,13 +89,23 @@ public class PropertyController {
     @GetMapping("/{id}")
     public String getPropertyInfoPage(@PathVariable UUID id, Model model) {
         PropertyDTO propertyData = getPropertyDTOById(id);
-        model.addAttribute("property", propertyData);
 
+        if (!isCompanyMatching(propertyData)) {
+            return "unauthorized";
+        }
+
+        model.addAttribute("property", propertyData);
         return "property-page";
     }
 
     private PropertyDTO getPropertyDTOById(UUID id) {
         return modelMapper.map(basePropertyService.getPropertyByID(id), PropertyDTO.class);
+    }
+
+    private boolean isCompanyMatching(PropertyDTO property) {
+        String userCompanyName = userEntityService.getCurrentUser().getCompany().getName();
+
+        return userCompanyName.equalsIgnoreCase(property.getOwnerCompanyName());
     }
 
 
