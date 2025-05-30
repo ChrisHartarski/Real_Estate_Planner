@@ -67,21 +67,23 @@
                         <div class="content-header">
                             <div class="flex-column">
                                 <div class="header">
-                                    <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
+                                    <a th:href="@{'/properties/' + ${property.id}}">
+                                        <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
                                             th:text="#{'apartmentType.' + ${property.apartmentType.name()}}">тип
-                                        апартамент</h2>
-                                    <h2 th:if="${property.propertyType.name() == 'HOUSE'}"
-                                        th:text="#{'houseType.' + ${property.houseType.name()}}">тип
-                                        къща</h2>
-                                    <h2 th:if="${property.propertyType.name() == 'BUSINESS'}"
-                                        th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">тип
-                                        бизнес имот</h2>
-                                    <h2 th:if="${property.propertyType.name() == 'GARAGE'}"
-                                        th:text="#{'garageType.' + ${property.garageType.name()}}">тип
-                                        гараж</h2>
-                                    <h2 th:if="${property.propertyType.name() == 'LAND'}"
-                                        th:text="#{'landType.' + ${property.landType.name()}}">тип
-                                        парцел</h2>
+                                            апартамент</h2>
+                                        <h2 th:if="${property.propertyType.name() == 'HOUSE'}"
+                                            th:text="#{'houseType.' + ${property.houseType.name()}}">тип
+                                            къща</h2>
+                                        <h2 th:if="${property.propertyType.name() == 'BUSINESS'}"
+                                            th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">тип
+                                            бизнес имот</h2>
+                                        <h2 th:if="${property.propertyType.name() == 'GARAGE'}"
+                                            th:text="#{'garageType.' + ${property.garageType.name()}}">тип
+                                            гараж</h2>
+                                        <h2 th:if="${property.propertyType.name() == 'LAND'}"
+                                            th:text="#{'landType.' + ${property.landType.name()}}">тип
+                                            парцел</h2>
+                                    </a>
                                 </div>
                                 <p th:text="${property.address}">Русе, Възраждане, ул. Солун 26</p>
                             </div>
@@ -155,14 +157,15 @@
                             </div>
                         </div>
                         <div class="content-footer">
-                            <div class="flex-row w-50 gap-1">
+                            <div class="flex-row w-30 gap-1">
                                 <div th:text="#{property.updatedOn} + ': '">Актуализиран на: </div>
                                 <div th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025</div>
                             </div>
-                            <div class="flex-row w-50 gap-1">
+                            <div class="flex-row w-30 gap-1">
                                 <div th:text="#{property.createdOn} + ': '">Създаден на: </div>
                                 <div th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025</div>
                             </div>
+                            <a class="link-blue" th:href="@{'/properties/' + ${property.id}}" th:text="#{property.more-details} + '...'">Повече информация...</a>
                         </div>
                     </div>
                 </div>

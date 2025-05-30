@@ -185,8 +185,13 @@ a {
     font-size: small;
 }
 
+.link-blue {
+    color: blue;
+}
+
 .link-red,
-.link-black {
+.link-black,
+.link-blue {
     text-decoration: underline;
 }
 
@@ -298,7 +303,6 @@ a {
     justify-content: space-between;
     width: calc(70% - 1rem);
     gap: 1rem;
-    padding: 1rem;
 }
 
 .content-section > .content-header {
@@ -306,7 +310,8 @@ a {
     justify-content: space-between;
 }
 
-.content-section > .content-description{
+.content-section > .content-description,
+.content-section > .content-contact{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
