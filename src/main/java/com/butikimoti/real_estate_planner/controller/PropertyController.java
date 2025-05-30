@@ -2,10 +2,12 @@ package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
+import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -16,15 +18,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Properties;
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/properties")
 public class PropertyController {
     private final BasePropertyService basePropertyService;
     private final UserEntityService userEntityService;
+    private final ModelMapper modelMapper;
 
-    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService) {
+    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, ModelMapper modelMapper) {
         this.basePropertyService = basePropertyService;
         this.userEntityService = userEntityService;
+        this.modelMapper = modelMapper;
     }
 
     @ModelAttribute("addPropertyData")
@@ -50,11 +57,6 @@ public class PropertyController {
         return "properties";
     }
 
-    @GetMapping("/sales/property-page")
-    public String getOfferPage() {
-        return "property-page";
-    }
-
     @GetMapping("/add")
     public String viewAddProperty() {
         return "add-property";
@@ -70,10 +72,31 @@ public class PropertyController {
             return "redirect:/properties/add";
         }
 
-        basePropertyService.savePropertyToDB(addPropertyData);
+        BaseProperty savedProperty = basePropertyService.savePropertyToDB(addPropertyData);
+        if (savedProperty != null) {
+            redirectAttributes.addFlashAttribute("propertySaved", true);
+        } else {
+            redirectAttributes.addFlashAttribute("propertySaved", false);
+        }
         return "redirect:/";
     }
 
+    @GetMapping("/property-page")
+    public String getOfferPage() {
+        return "property-page";
+    }
+
+    @GetMapping("/{id}")
+    public String getPropertyInfoPage(@PathVariable UUID id, Model model) {
+        PropertyDTO propertyData = getPropertyDTOById(id);
+        model.addAttribute("property", propertyData);
+
+        return "property-page";
+    }
+
+    private PropertyDTO getPropertyDTOById(UUID id) {
+        return modelMapper.map(basePropertyService.getPropertyByID(id), PropertyDTO.class);
+    }
 
 
     private OfferType mapOfferType(String offerType) {

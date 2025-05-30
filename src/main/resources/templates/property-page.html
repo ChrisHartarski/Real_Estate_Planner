@@ -14,10 +14,26 @@
     <header th:replace="~{fragments/navbar.html}"></header>
     <main>
         <div class="wrapper center w-70">
-            <div class="card flex-column">
+            <div class="card flex-column" th:object="${property}">
                 <div class="page-heading flex-column text-center">
-                    <h1>2-стаен апартамент</h1>
-                    <h3>Русе, Възраждане, ул. Солун 26</h3>
+                    <div class="header">
+                        <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
+                            th:text="#{'apartmentType.' + ${property.apartmentType.name()}}">тип
+                            апартамент</h2>
+                        <h2 th:if="${property.propertyType.name() == 'HOUSE'}"
+                            th:text="#{'houseType.' + ${property.houseType.name()}}">тип
+                            къща</h2>
+                        <h2 th:if="${property.propertyType.name() == 'BUSINESS'}"
+                            th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">тип
+                            бизнес имот</h2>
+                        <h2 th:if="${property.propertyType.name() == 'GARAGE'}"
+                            th:text="#{'garageType.' + ${property.garageType.name()}}">тип
+                            гараж</h2>
+                        <h2 th:if="${property.propertyType.name() == 'LAND'}"
+                            th:text="#{'landType.' + ${property.landType.name()}}">тип
+                            парцел</h2>
+                    </div>
+                    <h3 th:text="${property.address}">Русе, Възраждане, ул. Солун 26</h3>
                 </div>
                 <div class="images-section flex-row">
                     <div class="main-image">
