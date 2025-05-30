@@ -77,6 +77,11 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         throw new RuntimeException("No such property type: " + addPropertyDTO.getPropertyType());
     }
 
+    @Override
+    public BaseProperty getPropertyByID(UUID id) {
+        return basePropertyRepository.findById(id).orElseThrow(() -> new RuntimeException("Property not found"));
+    }
+
     private PropertyDTO mapBasePropertyToPropertyDTO(BaseProperty baseProperty) {
         return modelMapper.map(baseProperty, PropertyDTO.class);
     }
