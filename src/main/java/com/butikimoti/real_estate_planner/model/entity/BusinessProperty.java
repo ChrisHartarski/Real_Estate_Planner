@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Table(name = "business_properties")
 public class BusinessProperty extends BaseProperty {
     @Enumerated(EnumType.STRING)
-    @Column(name = "busines_property_type", nullable = false)
+    @Column(name = "business_property_type", nullable = false)
     private BusinessPropertyType businessPropertyType;
 
     @Enumerated(EnumType.STRING)

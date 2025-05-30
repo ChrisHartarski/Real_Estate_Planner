@@ -51,7 +51,7 @@
                 </div>
                 <div class="info-section flex-column gap-1">
                     <div class="main-info flex-column gap-0-5">
-                        <h3>Основна информация</h3>
+                        <h3 th:text="#{property.main-info-header}">Основна информация</h3>
                         <!-- Property offer type-->
                         <div class="flex-row">
                             <div class="w-30 white-space-nowrap" th:text="#{property.offer-type} + ':'">Тип оферта:</div>
@@ -68,9 +68,14 @@
                         <!-- Property price-->
                         <div class="flex-row">
                             <div class="w-30 white-space-nowrap" th:text="#{property.price} + ':'">Цена:</div>
-                            <div class="w-70"
-                                 th:text="'€ ' + ${#numbers.formatDecimal(property.price, 1, 'POINT', 0, 'COMMA')}">€ 70
-                                .000</div>
+                            <div class="w-70 flex-row gap-1">
+                                <div th:text="'€ ' + ${#numbers.formatDecimal(property.price, 1, 'POINT', 0, 'COMMA')}">€ 70
+                                    .000</div>
+                                <div class="grayed-out"
+                                     th:text="'(€ ' + ${#numbers.formatDecimal(property.price / property.area, 1, 'POINT', 0, 'COMMA')} + ' / ' + #{'areaUnit.' + ${property.areaUnit}} + ')'">
+                                </div>
+                            </div>
+
                         </div>
 
                         <!-- Property area-->
@@ -110,78 +115,155 @@
                     </div>
 
                     <div class="additional-info flex-column gap-0-5">
-                        <h3>Допълнителна информация</h3>
-                        <div class="flex-row">
-                            <div class="w-30">Брой&nbsp;стаи:</div>
-                            <div class="w-70">2</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Тип&nbsp;строителство:</div>
-                            <div class="w-70">тухла</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Година:</div>
-                            <div class="w-70">1972 г.</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Етаж:</div>
-                            <div class="w-70">3 от 8</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Асансьор:</div>
-                            <div class="w-70">да</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Изложение:</div>
-                            <div class="w-70">запад</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Контакт:</div>
-                            <div class="w-70">Иван Иванов</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Телефон:</div>
-                            <div class="w-70">0888 888 888</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Имейл:</div>
-                            <div class="w-70">ivan_ivanov@gmail.com</div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="w-30">Описание:</div>
-                            <div class="w-70 text-justified">
-                                Апартаментът е с южно и западно изложение, което осигурява много светлина и топлина през цялата година.
-                                Разпределението включва входно антре, две преходни стаи, самостоятелна кухня с тераса, както и баня с тоалетна в едно помещение.
-                                Преходът между стаите е плавен и създава усещане за простор, въпреки компактната квадратура.
+                        <h3 th:text="#{property.additional-info-header}">Допълнителна информация</h3>
 
-                                Жилището е обновено и в много добро състояние:
-                                - Стените са шпакловани и боядисани;
-                                - Подовете са с ламинат в стаите и теракот в кухнята;
-                                - Навсякъде е поставена PVC дограма, което гарантира по-добра топло- и шумоизолация;
-                                - Сменени са всички вътрешни врати, а входната е нова блиндирана врата;
-                                - Външната изолация на сградата допринася за енергийната ефективност;
-                                - Покривът е с керемиди и е в много добро състояние.
+                        <!-- Apartment type-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.apartment-type} + ':'">Тип
+                                апартамент:</div>
+                            <div class="w-70"
+                                 th:text="#{'apartmentType.' + ${property.apartmentType.name()}}">2-стаен
+                                апартамент</div>
+                        </div>
+
+                        <!-- House type-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.house-type} + ':'">Тип
+                                къща:</div>
+                            <div class="w-70"
+                                 th:text="#{'houseType.' + ${property.houseType.name()}}">къща</div>
+                        </div>
+
+                        <!-- Business property type-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('BUSINESS')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.business-property-type} + ':'">Тип
+                                бизнес имот:</div>
+                            <div class="w-70"
+                                 th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">офис
                             </div>
                         </div>
+
+                        <!-- Garage type-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('GARAGE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.garage-type} + ':'">Тип
+                                гараж:</div>
+                            <div class="w-70"
+                                 th:text="#{'garageType.' + ${property.garageType.name()}}">гараж
+                            </div>
+                        </div>
+
+                        <!-- Land type-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('LAND')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.land-type} + ':'">Тип
+                                гараж:</div>
+                            <div class="w-70"
+                                 th:text="#{'landType.' + ${property.landType.name()}}">парцел
+                            </div>
+                        </div>
+
+                        <!-- Construction type-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('HOUSE')
+                                                        or property.propertyType.name().equals('BUSINESS')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.construction-type} + ':'">Тип
+                                строителство:</div>
+                            <div class="w-70"
+                                 th:text="#{'constructionType.' + ${property.constructionType.name()}}">тухла
+                            </div>
+                        </div>
+
+                        <!-- Year -->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.year} + ':'">Година:</div>
+                            <div class="w-70"
+                                 th:text="${property.year}">2025
+                            </div>
+                        </div>
+
+                        <!-- Room count -->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.room-count} + ':'">Брой стаи:</div>
+                            <div class="w-70"
+                                 th:text="${property.roomCount}">2
+                            </div>
+                        </div>
+
+                        <!-- Floor -->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('BUSINESS')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.floor} + ':'">Етаж:</div>
+                            <div class="w-70"
+                                 th:text="${property.floor} + ' ' + #{property.floor-from} + ' ' + ${property.buildingFloors}">2 от 5
+                            </div>
+                        </div>
+
+                        <!-- Has elevator -->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('BUSINESS')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.has-elevator} + ':'">Асансьор:
+                            </div>
+                            <div class="w-70" th:if="${property.hasElevator}"
+                                 th:text="#{property.has-elevator-true}">да
+                            </div>
+                            <div class="w-70" th:if="${!property.hasElevator}"
+                                 th:text="#{property.has-elevator-false}">не
+                            </div>
+                        </div>
+
+                        <!-- Facing -->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.facing} + ':'">Изложение:</div>
+                            <div class="w-70"
+                                 th:text="${property.facing}">запад
+                            </div>
+                        </div>
+
+                        <!-- Yard area-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.yard-area} + ':'">Площ двор:</div>
+                            <div class="w-70"
+                                 th:text="${property.yardArea} + ' ' + #{'areaUnit.' + ${property.yardAreaUnit}}">200
+                                кв.м</div>
+                        </div>
+
+                        <!-- Floors count-->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.floors-count} + ':'">Брой
+                                етажи:</div>
+                            <div class="w-70"
+                                 th:text="${property.floorsCount}">3</div>
+                        </div>
+
+                        <!-- Additional structures -->
+                        <div class="flex-row" th:if="${property.propertyType.name().equals('HOUSE')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.additional-structures} + ':'">
+                                Допълнителни постройки:</div>
+                            <div class="w-70"
+                                 th:text="${property.additionalStructures}">3</div>
+                        </div>
                     </div>
 
-
-
-                    <div class="flex-row">
-                        <div class="w-30">Създаден&nbsp;на:</div>
-                        <div class="w-70">05.05.2025 г.</div>
+                    <div class="created-on-updated-on-section flex-column gap-0-5">
+                        <div class="flex-row">
+                            <div class="w-30">Създаден&nbsp;на:</div>
+                            <div class="w-70">05.05.2025 г.</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Последна актуализация:</div>
+                            <div class="w-70">10.05.2025 г.</div>
+                        </div>
                     </div>
-                    <div class="flex-row">
-                        <div class="w-30">Последна актуализация:</div>
-                        <div class="w-70">10.05.2025 г.</div>
-                    </div>
+
                 </div>
                 <div class="buttons-section flex-row">
                     <div class="w-50 text-center">
-                        <button class="btn btn-green">Промени</button>
+                        <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
                     </div>
                     <div class="w-50 text-center">
-                        <button class="btn btn-red">Изтрий</button>
+                        <button class="btn btn-red" th:text="#{property.button-delete}">Изтрий</button>
                     </div>
                 </div>
             </div>
