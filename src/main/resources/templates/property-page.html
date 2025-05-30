@@ -14,7 +14,7 @@
     <header th:replace="~{fragments/navbar.html}"></header>
     <main>
         <div class="wrapper center w-70">
-            <div class="card flex-column" th:object="${property}">
+            <div class="card gap-1 flex-column" th:object="${property}">
                 <div class="page-heading flex-column text-center">
                     <div class="header">
                         <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
@@ -49,71 +49,124 @@
                         <img src="/images/sample_image.jpg" alt="sample_img">
                     </div>
                 </div>
-                <div class="info-section flex-column">
-                    <div class="flex-row">
-                        <div class="w-30">Адрес:</div>
-                        <div class="w-70">Русе,&nbsp;Възраждане,&nbsp;Солун&nbsp;26</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Квадратура:</div>
-                        <div class="w-70">72 кв.м.</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Цена:</div>
-                        <div class="w-70">€70000</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Брой&nbsp;стаи:</div>
-                        <div class="w-70">2</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Тип&nbsp;строителство:</div>
-                        <div class="w-70">тухла</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Година:</div>
-                        <div class="w-70">1972 г.</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Етаж:</div>
-                        <div class="w-70">3 от 8</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Асансьор:</div>
-                        <div class="w-70">да</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Изложение:</div>
-                        <div class="w-70">запад</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Контакт:</div>
-                        <div class="w-70">Иван Иванов</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Телефон:</div>
-                        <div class="w-70">0888 888 888</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Имейл:</div>
-                        <div class="w-70">ivan_ivanov@gmail.com</div>
-                    </div>
-                    <div class="flex-row">
-                        <div class="w-30">Описание:</div>
-                        <div class="w-70">
-                            Апартаментът е с южно и западно изложение, което осигурява много светлина и топлина през цялата година.
-                            Разпределението включва входно антре, две преходни стаи, самостоятелна кухня с тераса, както и баня с тоалетна в едно помещение.
-                            Преходът между стаите е плавен и създава усещане за простор, въпреки компактната квадратура.
+                <div class="info-section flex-column gap-1">
+                    <div class="main-info flex-column gap-0-5">
+                        <h3>Основна информация</h3>
+                        <!-- Property offer type-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.offer-type} + ':'">Тип оферта:</div>
+                            <div class="w-70"
+                                 th:text="#{'offerType.' + ${property.offerType.name()}}">наем</div>
+                        </div>
 
-                            Жилището е обновено и в много добро състояние:
-                            - Стените са шпакловани и боядисани;
-                            - Подовете са с ламинат в стаите и теракот в кухнята;
-                            - Навсякъде е поставена PVC дограма, което гарантира по-добра топло- и шумоизолация;
-                            - Сменени са всички вътрешни врати, а входната е нова блиндирана врата;
-                            - Външната изолация на сградата допринася за енергийната ефективност;
-                            - Покривът е с керемиди и е в много добро състояние.
+                        <!-- Property address-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.address} + ':'">Адрес:</div>
+                            <div class="w-70" th:text="${property.address}">Русе,&nbsp;Възраждане,&nbsp;Солун&nbsp;26</div>
+                        </div>
+
+                        <!-- Property price-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.price} + ':'">Цена:</div>
+                            <div class="w-70"
+                                 th:text="'€ ' + ${#numbers.formatDecimal(property.price, 1, 'POINT', 0, 'COMMA')}">€ 70
+                                .000</div>
+                        </div>
+
+                        <!-- Property area-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.area} + ':'">Площ:</div>
+                            <div class="w-70"
+                                 th:text="${property.area} + ' ' + #{'areaUnit.' + ${property.areaUnit}}">200 кв.м.</div>
+                        </div>
+
+                        <!-- Contact name-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.contact-name} + ':'">Име на контакт:</div>
+                            <div class="w-70"
+                                 th:text="${property.contactName}">Георги Георгиев</div>
+                        </div>
+
+                        <!-- Contact phone-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.contact-phone} + ':'">Телефон на контакт:</div>
+                            <div class="w-70"
+                                 th:text="${property.contactPhone}">+359 XXX XXX XXX</div>
+                        </div>
+
+                        <!-- Contact email-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.contact-email} + ':'">Имейл на контакт:</div>
+                            <div class="w-70"
+                                 th:text="${property.contactEmail}">name@mail.com</div>
+                        </div>
+
+                        <!-- Property description-->
+                        <div class="flex-row">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.description} + ':'">Описание:</div>
+                            <div class="w-70 text-justified"
+                                 th:text="${property.description}">Описание</div>
                         </div>
                     </div>
+
+                    <div class="additional-info flex-column gap-0-5">
+                        <h3>Допълнителна информация</h3>
+                        <div class="flex-row">
+                            <div class="w-30">Брой&nbsp;стаи:</div>
+                            <div class="w-70">2</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Тип&nbsp;строителство:</div>
+                            <div class="w-70">тухла</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Година:</div>
+                            <div class="w-70">1972 г.</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Етаж:</div>
+                            <div class="w-70">3 от 8</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Асансьор:</div>
+                            <div class="w-70">да</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Изложение:</div>
+                            <div class="w-70">запад</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Контакт:</div>
+                            <div class="w-70">Иван Иванов</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Телефон:</div>
+                            <div class="w-70">0888 888 888</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Имейл:</div>
+                            <div class="w-70">ivan_ivanov@gmail.com</div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="w-30">Описание:</div>
+                            <div class="w-70 text-justified">
+                                Апартаментът е с южно и западно изложение, което осигурява много светлина и топлина през цялата година.
+                                Разпределението включва входно антре, две преходни стаи, самостоятелна кухня с тераса, както и баня с тоалетна в едно помещение.
+                                Преходът между стаите е плавен и създава усещане за простор, въпреки компактната квадратура.
+
+                                Жилището е обновено и в много добро състояние:
+                                - Стените са шпакловани и боядисани;
+                                - Подовете са с ламинат в стаите и теракот в кухнята;
+                                - Навсякъде е поставена PVC дограма, което гарантира по-добра топло- и шумоизолация;
+                                - Сменени са всички вътрешни врати, а входната е нова блиндирана врата;
+                                - Външната изолация на сградата допринася за енергийната ефективност;
+                                - Покривът е с керемиди и е в много добро състояние.
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div class="flex-row">
                         <div class="w-30">Създаден&nbsp;на:</div>
                         <div class="w-70">05.05.2025 г.</div>

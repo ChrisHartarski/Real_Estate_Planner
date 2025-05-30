@@ -52,6 +52,7 @@ a {
 
 .w-10 {
     width: 10%;
+    white-space: nowrap;
 }
 
 .w-20 {
@@ -78,6 +79,10 @@ a {
     width: 100%;
 }
 
+.white-space-nowrap {
+    white-space: nowrap;
+}
+
 .flex-column {
     display: flex;
     flex-direction: column;
@@ -87,12 +92,20 @@ a {
     display: flex;
 }
 
+.gap-0 {
+    gap: 0 !important;
+}
+
+.gap-0-5 {
+    gap: 0.5rem !important;
+}
+
 .gap-1 {
-    gap: 1rem;
+    gap: 1rem !important;
 }
 
 .gap-2 {
-    gap: 2rem;
+    gap: 2rem !important;
 }
 
 .align-right {
@@ -101,6 +114,11 @@ a {
 
 .align-left {
     text-align: left;
+}
+
+.text-justified {
+    text-align: justify;
+    text-align-last: left;
 }
 
 .btn {
@@ -265,6 +283,7 @@ a {
     padding: 1rem;
 }
 
+/* Card properties */
 .card > .image-section {
     width: calc(30% - 1rem);
 }
@@ -279,6 +298,7 @@ a {
     justify-content: space-between;
     width: calc(70% - 1rem);
     gap: 1rem;
+    padding: 1rem;
 }
 
 .content-section > .content-header {
@@ -317,6 +337,7 @@ a {
 .buttons-section {
     width: 100%;
     flex-wrap: wrap;
+    padding: 1rem;
 }
 
 .images-section {
@@ -346,10 +367,6 @@ a {
 
 .secondary-images > img {
     max-width: calc(100%/3 - 0.5rem);
-}
-
-.info-section {
-    gap: 0.5rem;
 }
 
 /* Footer */
