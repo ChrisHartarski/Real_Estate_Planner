@@ -16,6 +16,12 @@ public class BusinessProperty extends BaseProperty {
     private ConstructionType constructionType;
 
     @Column
+    private int year;
+
+    @Column(name = "room_count")
+    private int roomCount;
+
+    @Column
     private int floor;
 
     @Column(name = "building_floors", nullable = false)
@@ -38,6 +44,22 @@ public class BusinessProperty extends BaseProperty {
 
     public void setConstructionType(ConstructionType constructionType) {
         this.constructionType = constructionType;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getRoomCount() {
+        return roomCount;
+    }
+
+    public void setRoomCount(int roomCount) {
+        this.roomCount = roomCount;
     }
 
     public int getFloor() {
