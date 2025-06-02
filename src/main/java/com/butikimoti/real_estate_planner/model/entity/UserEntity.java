@@ -51,6 +51,11 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
+    public UserEntity(UUID id, String email, Company company, String password, UserRole userRole, String firstName, String lastName, String phone) {
+        this(email, company, password, userRole, firstName, lastName, phone);
+        this.id = id;
+    }
+
     public UUID getId() {
         return id;
     }

@@ -55,6 +55,11 @@ public class Company {
         this.properties = properties;
     }
 
+    public Company(UUID id, List<UserEntity> users, String name, String address, String phone, String email, List<BaseProperty> properties) {
+        this(users, name, address, phone, email, properties);
+        this.id = id;
+    }
+
     public UUID getId() {
         return id;
     }

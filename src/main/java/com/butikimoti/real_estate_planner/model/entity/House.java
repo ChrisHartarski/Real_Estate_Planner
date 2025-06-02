@@ -1,9 +1,10 @@
 package com.butikimoti.real_estate_planner.model.entity;
 
-import com.butikimoti.real_estate_planner.model.enums.AreaUnit;
-import com.butikimoti.real_estate_planner.model.enums.ConstructionType;
-import com.butikimoti.real_estate_planner.model.enums.HouseType;
+import com.butikimoti.real_estate_planner.model.enums.*;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "houses")
@@ -33,6 +34,17 @@ public class House extends BaseProperty {
     private String additionalStructures;
 
     public House() {
+    }
+
+    public House(UUID id, PropertyType propertyType, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, HouseType houseType, ConstructionType constructionType, int year, int yardArea, AreaUnit yardAreaUnit, int floorsCount, String additionalStructures) {
+        super(id, propertyType, ownerCompany, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
+        this.houseType = houseType;
+        this.constructionType = constructionType;
+        this.year = year;
+        this.yardArea = yardArea;
+        this.yardAreaUnit = yardAreaUnit;
+        this.floorsCount = floorsCount;
+        this.additionalStructures = additionalStructures;
     }
 
     public HouseType getHouseType() {
