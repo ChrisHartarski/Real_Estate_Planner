@@ -40,11 +40,6 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public List<BaseProperty> getAllProperties() {
-        return basePropertyRepository.findAll();
-    }
-
-    @Override
     public PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent) {
         UUID ownerCompanyId = userEntityService.getCurrentUser().getCompany().getId();
         Page<BaseProperty> properties = basePropertyRepository.findByOwnerCompanyIdAndOfferType(ownerCompanyId, pageable, saleOrRent);

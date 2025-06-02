@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BasePropertyService {
-    List<BaseProperty> getAllProperties();
     PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent);
     BaseProperty savePropertyToDB(AddPropertyDTO addPropertyDTO);
     BaseProperty getPropertyByID(UUID id);
