@@ -15,7 +15,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedModel;
 
 import java.time.LocalDateTime;
@@ -75,7 +78,7 @@ public class BasePropertyServiceImplUnitTests {
         Pageable pageable = PageRequest.of(1, 10, Sort.by(Sort.Direction.DESC, "updatedOn"));
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
-        when(basePropertyRepository.findByOwnerCompanyIdAndOfferType(TEST_COMPANY.getId(), pageable, OfferType.SALE)).thenReturn(new PageImpl<BaseProperty>(properties, pageable, 20));
+        when(basePropertyRepository.findByOwnerCompanyIdAndOfferType(TEST_COMPANY.getId(), pageable, OfferType.SALE)).thenReturn(new PageImpl<>(properties, pageable, 20));
 
         PagedModel<PropertyDTO> result = serviceToTest.getAllPropertiesByCompany(pageable, OfferType.SALE);
         List<PropertyDTO> resultList = result.getContent();
