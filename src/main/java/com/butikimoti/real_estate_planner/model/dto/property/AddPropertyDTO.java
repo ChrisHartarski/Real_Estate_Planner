@@ -91,6 +91,38 @@ public class AddPropertyDTO {
     public AddPropertyDTO() {
     }
 
+    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
+        this.propertyType = propertyType;
+        this.ownerCompany = ownerCompany;
+        this.address = address;
+        this.price = price;
+        this.area = area;
+        this.areaUnit = areaUnit;
+        this.offerType = offerType;
+        this.contactName = contactName;
+        this.contactPhone = contactPhone;
+        this.contactEmail = contactEmail;
+        this.description = description;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
+        this.constructionType = constructionType;
+        this.year = year;
+        this.roomCount = roomCount;
+        this.floor = floor;
+        this.buildingFloors = buildingFloors;
+        this.facing = facing;
+        this.apartmentType = apartmentType;
+        this.hasElevator = hasElevator;
+        this.houseType = houseType;
+        this.yardArea = yardArea;
+        this.yardAreaUnit = yardAreaUnit;
+        this.floorsCount = floorsCount;
+        this.additionalStructures = additionalStructures;
+        this.garageType = garageType;
+        this.landType = landType;
+        this.businessPropertyType = businessPropertyType;
+    }
+
     public PropertyType getPropertyType() {
         return propertyType;
     }
