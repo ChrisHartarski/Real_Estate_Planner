@@ -18,11 +18,6 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public boolean houseRepositoryIsEmpty() {
-        return houseRepository.count() == 0;
-    }
-
-    @Override
     public House saveHouse(AddPropertyDTO addPropertyDTO) {
         House house = modelMapper.map(addPropertyDTO, House.class);
         return houseRepository.saveAndFlush(house);
