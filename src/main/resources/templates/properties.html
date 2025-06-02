@@ -90,11 +90,11 @@
                             <div class="flex-column">
                                 <h3>
                                     <span th:text="#{property.price} + ': '">Цена: </span>
-                                    <span th:text="'€' + ${#numbers.formatInteger(property.price, 0)}">€70000</span>
+                                    <span th:text="'€ ' + ${#numbers.formatDecimal(property.price, 1, 'POINT', 0, 'COMMA')}">€70000</span>
                                 </h3>
 
                                 <p class="grayed-out"
-                                    th:text="'(€' + ${#numbers.formatInteger(property.price / property.area, 0)} + ' / ' + #{'areaUnit.' + ${property.areaUnit}} + ')'">(€1000 / кв
+                                    th:text="'(€ ' + ${#numbers.formatDecimal(property.price / property.area, 1, 'POINT', 0, 'COMMA')} + ' / ' + #{'areaUnit.' + ${property.areaUnit}} + ')'">(€1000 / кв
                                     .м)</p>
                             </div>
                         </div>
