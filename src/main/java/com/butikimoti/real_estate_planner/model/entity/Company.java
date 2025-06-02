@@ -44,6 +44,11 @@ public class Company {
         this.email = email;
     }
 
+    public Company(UUID id, String name, String address, String phone, String email) {
+        this(name, address, phone, email);
+        this.id = id;
+    }
+
     public Company(List<UserEntity> users, String name, String address, String phone, String email, List<BaseProperty> properties) {
         this(name, address, phone, email);
         this.users = users;
