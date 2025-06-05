@@ -22,4 +22,9 @@ public class LandServiceImpl implements LandService {
         Land land = modelMapper.map(addPropertyDTO, Land.class);
         return landRepository.saveAndFlush(land);
     }
+
+    @Override
+    public Land updateLand(Land land) {
+        return landRepository.saveAndFlush(land);
+    }
 }

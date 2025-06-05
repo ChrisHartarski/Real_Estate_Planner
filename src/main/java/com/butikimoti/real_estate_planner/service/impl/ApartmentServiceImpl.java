@@ -22,4 +22,9 @@ public class ApartmentServiceImpl implements ApartmentService {
         Apartment apartment = modelMapper.map(addPropertyDTO, Apartment.class);
         return apartmentRepository.saveAndFlush(apartment);
     }
+
+    @Override
+    public Apartment updateApartment(Apartment apartment) {
+        return apartmentRepository.saveAndFlush(apartment);
+    }
 }

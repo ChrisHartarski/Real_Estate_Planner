@@ -14,7 +14,6 @@ import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,7 +53,8 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         addPropertyDTO.setUpdatedOn(LocalDateTime.now());
 
         if (addPropertyDTO.getPropertyType() == PropertyType.APARTMENT) {
-            return apartmentService.saveApartment(addPropertyDTO);
+            Apartment apartment = modelMapper.map(addPropertyDTO, Apartment.class);
+            return apartmentService.updateApartment(apartment);
         }
         if (addPropertyDTO.getPropertyType() == PropertyType.BUSINESS) {
             return businessPropertyService.saveBusinessProperty(addPropertyDTO);
@@ -75,6 +75,27 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     @Override
     public BaseProperty getPropertyByID(UUID id) {
         return basePropertyRepository.findById(id).orElseThrow(() -> new RuntimeException("Property not found"));
+    }
+
+    @Override
+    public BaseProperty updateProperty(BaseProperty property) {
+        if (property.getClass() == Apartment.class) {
+            return apartmentService.updateApartment((Apartment) property);
+        }
+        if (property.getClass() == BusinessProperty.class) {
+            return businessPropertyService.updateBusinessProperty((BusinessProperty) property);
+        }
+        if (property.getClass() == Garage.class) {
+            return garageService.updateGarage((Garage) property);
+        }
+        if (property.getClass() == House.class) {
+            return houseService.updateHouse((House) property);
+        }
+        if (property.getClass() == Land.class) {
+            return landService.updateLand((Land) property);
+        }
+
+        throw new RuntimeException("No such property type: " + property.getPropertyType());
     }
 
     private PropertyDTO mapBasePropertyToPropertyDTO(BaseProperty baseProperty) {

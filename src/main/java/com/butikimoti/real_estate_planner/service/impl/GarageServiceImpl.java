@@ -22,4 +22,9 @@ public class GarageServiceImpl implements GarageService {
         Garage garage = modelMapper.map(addPropertyDTO, Garage.class);
         return garageRepository.saveAndFlush(garage);
     }
+
+    @Override
+    public Garage updateGarage(Garage garage) {
+        return garageRepository.saveAndFlush(garage);
+    }
 }

@@ -14,4 +14,5 @@ public interface BasePropertyService {
     PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent);
     BaseProperty savePropertyToDB(AddPropertyDTO addPropertyDTO);
     BaseProperty getPropertyByID(UUID id);
+    BaseProperty updateProperty(BaseProperty property);
 }

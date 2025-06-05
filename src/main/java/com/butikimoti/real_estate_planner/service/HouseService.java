@@ -6,4 +6,5 @@ import com.butikimoti.real_estate_planner.model.entity.House;
 
 public interface HouseService {
     House saveHouse(AddPropertyDTO addPropertyDTO);
+    House updateHouse(House house);
 }

@@ -6,4 +6,5 @@ import com.butikimoti.real_estate_planner.model.entity.Garage;
 
 public interface GarageService {
     Garage saveGarage(AddPropertyDTO addPropertyDTO);
+    Garage updateGarage(Garage garage);
 }

@@ -22,4 +22,9 @@ public class BusinessPropertyServiceImpl implements BusinessPropertyService {
         BusinessProperty businessProperty = modelMapper.map(addPropertyDTO, BusinessProperty.class);
         return businessPropertyRepository.saveAndFlush(businessProperty);
     }
+
+    @Override
+    public BusinessProperty updateBusinessProperty(BusinessProperty businessProperty) {
+        return businessPropertyRepository.saveAndFlush(businessProperty);
+    }
 }

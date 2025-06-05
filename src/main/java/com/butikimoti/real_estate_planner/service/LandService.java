@@ -6,4 +6,5 @@ import com.butikimoti.real_estate_planner.model.entity.Land;
 
 public interface LandService {
     Land saveLand(AddPropertyDTO addPropertyDTO);
+    Land updateLand(Land land);
 }

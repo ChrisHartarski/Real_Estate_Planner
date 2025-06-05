@@ -22,4 +22,9 @@ public class HouseServiceImpl implements HouseService {
         House house = modelMapper.map(addPropertyDTO, House.class);
         return houseRepository.saveAndFlush(house);
     }
+
+    @Override
+    public House updateHouse(House house) {
+        return houseRepository.saveAndFlush(house);
+    }
 }
