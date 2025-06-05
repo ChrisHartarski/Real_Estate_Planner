@@ -47,6 +47,39 @@
                         </div>
 
                         <!-- Main inputs (common for all property types) -->
+                        <!-- City input -->
+                        <div class="flex-column w-100 property-type-main hidden" id="cityInput">
+                            <div class="flex-row w-100 gap-1" >
+                                <div class="w-30 align-right">
+                                    <label for="city"
+                                           th:text="#{property.city} + ':'">Property city
+                                    </label>
+                                </div>
+                                <div class="w-70 align-left">
+                                    <input class="w-70" name="city" id="city" type="text"
+                                           th:placeholder="#{property.city-placeholder}"
+                                           th:field="*{city}"/>
+                                </div>
+                            </div>
+                            <small th:errors="*{city}" class="text-red">Property city error!</small>
+                        </div>
+
+                        <!-- Neighbourhood input -->
+                        <div class="flex-column w-100 property-type-main hidden" id="neighbourhoodInput">
+                            <div class="flex-row w-100 gap-1" >
+                                <div class="w-30 align-right">
+                                    <label for="neighbourhood"
+                                           th:text="#{property.neighbourhood} + ':'">Property neighbourhood
+                                    </label>
+                                </div>
+                                <div class="w-70 align-left">
+                                    <input class="w-70" name="neighbourhood" id="neighbourhood" type="text"
+                                           th:placeholder="#{property.neighbourhood-placeholder}"
+                                           th:field="*{neighbourhood}"/>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Address input -->
                         <div class="flex-column w-100 property-type-main hidden" id="addressInput">
                             <div class="flex-row w-100 gap-1" >

@@ -17,7 +17,8 @@ public abstract class BaseProperty {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "property")
+    @OrderBy("createdOn")
     private List<PropertyPicture> pictures;
 
     @Enumerated(EnumType.STRING)
@@ -26,6 +27,12 @@ public abstract class BaseProperty {
 
     @ManyToOne
     private Company ownerCompany;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column
+    private String neighbourhood;
 
     @Column(nullable = false)
     private String address;
@@ -66,11 +73,13 @@ public abstract class BaseProperty {
         this.pictures = new ArrayList<>();
     }
 
-    protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
         this.pictures = new ArrayList<>();
         this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
+        this.city = city;
+        this.neighbourhood = neighbourhood;
         this.address = address;
         this.price = price;
         this.area = area;
@@ -84,8 +93,8 @@ public abstract class BaseProperty {
         this.updatedOn = updatedOn;
     }
 
-    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
-        this(id, propertyType, ownerCompany, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
+    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+        this(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.pictures = pictures;
     }
 
@@ -119,6 +128,22 @@ public abstract class BaseProperty {
 
     public void setOwnerCompany(Company ownerCompany) {
         this.ownerCompany = ownerCompany;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public void setNeighbourhood(String neighbourhood) {
+        this.neighbourhood = neighbourhood;
     }
 
     public String getAddress() {

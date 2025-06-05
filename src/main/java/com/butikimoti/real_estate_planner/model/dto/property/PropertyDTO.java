@@ -16,6 +16,10 @@ public class PropertyDTO {
 
     private String ownerCompanyName;
 
+    private String city;
+
+    private String neighbourhood;
+
     private String address;
 
     private double price;
@@ -111,6 +115,22 @@ public class PropertyDTO {
 
     public void setOwnerCompanyName(String ownerCompanyName) {
         this.ownerCompanyName = ownerCompanyName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public void setNeighbourhood(String neighbourhood) {
+        this.neighbourhood = neighbourhood;
     }
 
     public String getAddress() {

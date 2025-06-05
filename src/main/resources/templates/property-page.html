@@ -39,7 +39,7 @@
                     <h3 th:text="${property.address}">Русе, Възраждане, ул. Солун 26</h3>
                 </div>
                 <div class="flex-column gap-1">
-                    <div class="glide flex-row text-center">
+                    <div class="glide text-center">
                         <div class="glide__track relative text-center" data-glide-el="track">
                             <ul class="glide__slides">
                                 <li th:each="picture : ${property.pictures}" class="glide__slide">
@@ -54,6 +54,9 @@
                         </div>
                         <div class="absolute top-1/2 right-4 transform -translate-y-1/2 z-10" data-glide-el="controls">
                             <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+                        </div>
+                        <div id="carousel-status">
+                            1/12
                         </div>
                     </div>
 
@@ -88,11 +91,22 @@
                                  th:text="#{'offerType.' + ${property.offerType.name()}}">наем</div>
                         </div>
 
+                        <!-- Property city-->
+                        <div class="flex-row gap-1">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.city} + ':'">Населено място:</div>
+                            <div class="w-60" th:text="${property.city}">Русе</div>
+                        </div>
+
+                        <!-- Property neighbourhood-->
+                        <div class="flex-row gap-1" th:if="${!property.neighbourhood.equals('') and property.neighbourhood != null}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.neighbourhood} + ':'">Квартал:</div>
+                            <div class="w-60" th:text="${property.neighbourhood}">Възраждане</div>
+                        </div>
+
                         <!-- Property address-->
                         <div class="flex-row gap-1">
                             <div class="w-30 white-space-nowrap" th:text="#{property.address} + ':'">Адрес:</div>
-                            <div class="w-60" th:text="${property.address}">Русе,&nbsp;Възраждане,&nbsp;Солун&nbsp;
-                                26</div>
+                            <div class="w-60" th:text="${property.address}">Солун&nbsp;26</div>
                         </div>
 
                         <!-- Property price-->
@@ -301,13 +315,10 @@
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
 
-    <!-- Initialize script.js -->
-    <script th:src="@{/js/script.js}"></script>
-
     <!-- Initialize Glide after the DOM is ready -->
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
-    <script>
-        new Glide('.glide').mount();
-    </script>
+
+    <!-- Initialize script.js -->
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

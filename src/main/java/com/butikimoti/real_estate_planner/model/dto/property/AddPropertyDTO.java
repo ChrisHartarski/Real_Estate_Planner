@@ -13,6 +13,10 @@ public class AddPropertyDTO {
 
     private Company ownerCompany;
 
+    private String city;
+
+    private String neighbourhood;
+
     @NotEmpty(message = "{propertyAddress.notEmpty}")
     private String address;
 
@@ -91,9 +95,11 @@ public class AddPropertyDTO {
     public AddPropertyDTO() {
     }
 
-    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
+    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
         this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
+        this.city = city;
+        this.neighbourhood = neighbourhood;
         this.address = address;
         this.price = price;
         this.area = area;
@@ -137,6 +143,22 @@ public class AddPropertyDTO {
 
     public void setOwnerCompany(Company ownerCompany) {
         this.ownerCompany = ownerCompany;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public void setNeighbourhood(String neighbourhood) {
+        this.neighbourhood = neighbourhood;
     }
 
     public String getAddress() {
