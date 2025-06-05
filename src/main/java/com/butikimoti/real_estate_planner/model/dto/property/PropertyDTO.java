@@ -1,12 +1,16 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
+import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.enums.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class PropertyDTO {
     private UUID id;
+
+    private List<PropertyPicture> pictures;
 
     private PropertyType propertyType;
 
@@ -83,6 +87,14 @@ public class PropertyDTO {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public List<PropertyPicture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<PropertyPicture> pictures) {
+        this.pictures = pictures;
     }
 
     public PropertyType getPropertyType() {
