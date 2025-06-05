@@ -322,6 +322,8 @@ a {
 
 /* Card properties */
 .card > .image-section {
+    display: flex;
+    align-items: center;
     width: calc(30% - 1rem);
 }
 

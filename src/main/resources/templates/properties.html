@@ -61,7 +61,8 @@
             <div th:each="property : ${properties.getContent()}">
                 <div class="card flex-row">
                     <div class="image-section">
-                        <img src="/images/sample_image.jpg" alt="sample_img">
+                        <img th:if="${!property.getPictures().isEmpty()}" th:src="@{${property.getPictures().getFirst().getPictureLink()}}" alt="property image">
+                        <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
                     </div>
                     <div class="content-section">
                         <div class="content-header">
@@ -85,7 +86,8 @@
                                             парцел</h2>
                                     </a>
                                 </div>
-                                <p th:text="${property.address}">Русе, Възраждане, ул. Солун 26</p>
+                                <p th:if="${property.neighbourhood.isEmpty() or property.neighbourhood.equalsIgnoreCase('')}" th:text="${property.city} + ', ' + ${property.address}">Русе, ул. Солун 26</p>
+                                <p th:if="${!property.neighbourhood.isEmpty() and !property.neighbourhood.equalsIgnoreCase('')}" th:text="${property.city} + ', ' + ${property.neighbourhood} + ', ' + ${property.address}">Русе, Възраждане, ул. Солун 26</p>
                             </div>
                             <div class="flex-column">
                                 <h3>
