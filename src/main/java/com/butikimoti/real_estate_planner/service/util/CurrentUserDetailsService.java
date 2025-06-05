@@ -1,4 +1,4 @@
-package com.butikimoti.real_estate_planner.service.impl;
+package com.butikimoti.real_estate_planner.service.util;
 
 import com.butikimoti.real_estate_planner.model.CurrentUserDetails;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;

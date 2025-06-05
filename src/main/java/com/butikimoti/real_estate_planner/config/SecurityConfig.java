@@ -1,7 +1,7 @@
 package com.butikimoti.real_estate_planner.config;
 
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
-import com.butikimoti.real_estate_planner.service.impl.CurrentUserDetailsService;
+import com.butikimoti.real_estate_planner.service.util.CurrentUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
