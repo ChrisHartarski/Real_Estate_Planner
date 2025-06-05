@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.Properties;
 import java.util.UUID;
 
 @Controller
@@ -128,20 +127,4 @@ public class PropertyController {
 
         return userCompanyName.equalsIgnoreCase(property.getOwnerCompanyName());
     }
-
-
-    private OfferType mapOfferType(String offerType) {
-        if (offerType.equalsIgnoreCase("sale")) {
-            return OfferType.SALE;
-        }
-
-        if (offerType.equalsIgnoreCase("rent")) {
-            return OfferType.RENT;
-        }
-
-        throw new IllegalArgumentException("Invalid saleOrRent: " + offerType);
-    }
-
-
-
 }
