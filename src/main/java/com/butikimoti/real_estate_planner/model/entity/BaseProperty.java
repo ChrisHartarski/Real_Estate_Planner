@@ -6,6 +6,7 @@ import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,10 +63,12 @@ public abstract class BaseProperty {
     private LocalDateTime updatedOn;
 
     protected BaseProperty() {
+        this.pictures = new ArrayList<>();
     }
 
     protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this.id = id;
+        this.pictures = new ArrayList<>();
         this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
         this.address = address;
@@ -81,12 +84,25 @@ public abstract class BaseProperty {
         this.updatedOn = updatedOn;
     }
 
+    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+        this(id, propertyType, ownerCompany, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
+        this.pictures = pictures;
+    }
+
     public UUID getId() {
         return id;
     }
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public List<PropertyPicture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<PropertyPicture> pictures) {
+        this.pictures = pictures;
     }
 
     public PropertyType getPropertyType() {
