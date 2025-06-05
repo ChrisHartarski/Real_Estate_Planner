@@ -6,6 +6,7 @@ import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,6 +15,9 @@ public abstract class BaseProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<PropertyPicture> pictures;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "property_type", nullable = false)
