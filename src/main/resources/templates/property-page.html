@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bg"
-       xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
@@ -9,6 +10,8 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
     <!-- Core theme CSS -->
     <link href="/css/styles.css" rel="stylesheet" />
+    <!-- Glide.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
 </head>
 <body>
     <header th:replace="~{fragments/navbar.html}"></header>
@@ -35,26 +38,45 @@
                     </div>
                     <h3 th:text="${property.address}">Русе, Възраждане, ул. Солун 26</h3>
                 </div>
-                <div class="images-section flex-row">
-                    <div class="flex-row">
-                        <div class="main-image">
-                            <img src="/images/sample_image.jpg" alt="sample_img">
+                <div class="flex-column gap-1">
+                    <div class="glide flex-row text-center">
+                        <div class="glide__track relative text-center" data-glide-el="track">
+                            <ul class="glide__slides">
+                                <li th:each="picture : ${property.pictures}" class="glide__slide">
+                                    <div class="image-container">
+                                        <img th:src="@{${picture.getPictureLink()}}" alt="Property Image" />
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="secondary-images">
-                            <div th:each="picture : ${property.pictures}">
-                                <img th:src="${picture.getPictureLink()}" alt="property image">
-                            </div>
+                        <div class="absolute top-1/2 left-4 transform -translate-y-1/2 z-10" data-glide-el="controls">
+                            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
                         </div>
-                    </div>
-                    <div class="flex-row">
-                        <form th:action="@{/properties/{id}/upload-picture(id=${property.id})}"
-                              th:method="POST"
-                              enctype="multipart/form-data">
-                            <input type="file" name="image" required />
-                            <button type="submit">Upload</button>
-                        </form>
+                        <div class="absolute top-1/2 right-4 transform -translate-y-1/2 z-10" data-glide-el="controls">
+                            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+                        </div>
                     </div>
 
+                    <div class="text-center">
+                        <details class="flex-column gap-1" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
+                            <summary>Добави снимка</summary>
+                            <form th:action="@{/properties/{id}/upload-picture(id=${property.id})}"
+                                  th:method="POST"
+                                  enctype="multipart/form-data"
+                                  class="flex-row gap-0-5 justify-content-center">
+                                <label for="file-upload"
+                                       class="custom-file-upload btn btn-blue font-size-0-9 font-weight-normal"
+                                       th:text="#{property.button-choose-file} + '...'">Choose file</label>
+                                <input id="file-upload" type="file" name="image" style="display:none" required />
+                                <div class="textbox textbox-white-border" id="file-name"
+                                     th:text="#{property.no-file-chosen}">
+                                    No file chosen
+                                </div>
+                                <button class="btn btn-blue" type="submit" th:text="#{property.button-upload}">Upload
+                                </button>
+                            </form>
+                        </details>
+                    </div>
                 </div>
                 <div class="info-section flex-column gap-1">
                     <div class="main-info flex-column gap-0-5">
@@ -265,7 +287,7 @@
                     </div>
 
                 </div>
-                <div class="buttons-section flex-row">
+                <div class="buttons-section flex-row" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
                     <div class="w-50 text-center">
                         <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
                     </div>
@@ -277,5 +299,14 @@
         </div>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
+
+    <!-- Initialize script.js -->
+    <script th:src="@{/js/script.js}"></script>
+
+    <!-- Initialize Glide after the DOM is ready -->
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+    <script>
+        new Glide('.glide').mount();
+    </script>
 </body>
 </html>
