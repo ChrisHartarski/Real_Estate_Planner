@@ -112,6 +112,7 @@ public class PropertyController {
 
         PropertyPicture picture = new PropertyPicture();
         picture.setPictureLink(imageUrl);
+        picture.setProperty(property);
         property.getPictures().add(picture);
         basePropertyService.updateProperty(property);
 

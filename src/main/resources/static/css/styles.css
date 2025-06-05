@@ -453,6 +453,13 @@ a {
     cursor: pointer;
 }
 
+#carousel-status {
+    font-size: 0.9rem;
+    color: #B4B4B4;
+    padding: 0.5rem;
+
+}
+
 /* Footer */
 .footer {
     width: 100%;

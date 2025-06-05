@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -17,10 +18,15 @@ public class PropertyPicture {
     @ManyToOne
     private BaseProperty property;
 
+    @Column(name = "created_on", nullable = false)
+    private LocalDateTime createdOn;
+
     public PropertyPicture() {
+        createdOn = LocalDateTime.now();
     }
 
     public PropertyPicture(UUID id, String pictureLink, BaseProperty property) {
+        this();
         this.id = id;
         this.pictureLink = pictureLink;
         this.property = property;
@@ -48,5 +54,13 @@ public class PropertyPicture {
 
     public void setProperty(BaseProperty property) {
         this.property = property;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
     }
 }

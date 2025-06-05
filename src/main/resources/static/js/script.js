@@ -18,6 +18,29 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    const glideEl = document.querySelector('.glide');
+    if (glideEl) {
+        const glide = new Glide('.glide');
+        const status = document.getElementById('carousel-status');
+
+        glide.on(['mount.after', 'run'], () => {
+            let current = glide.index;
+            const total = glide._c.Html.slides.length;
+
+            if (total > 0) {
+                current++;
+            }
+
+            if (status) {
+                status.textContent = `${current} / ${total}`;
+            }
+        });
+
+        glide.mount();
+    }
+
+
 });
 
 function toggleFields(selectedTypeValue) {
