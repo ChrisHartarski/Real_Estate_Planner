@@ -119,6 +119,13 @@ public class PropertyController {
         return "redirect:/properties/" + id;
     }
 
+    @DeleteMapping("/{id}/delete-picture/{pictureId}")
+    public String deletePicture(@PathVariable UUID id, @PathVariable UUID pictureId) throws IOException {
+        basePropertyService.deletePicture(id, pictureId);
+
+        return "redirect:/properties/" + id;
+    }
+
     private PropertyDTO getPropertyDTOById(UUID id) {
         return modelMapper.map(basePropertyService.getPropertyByID(id), PropertyDTO.class);
     }

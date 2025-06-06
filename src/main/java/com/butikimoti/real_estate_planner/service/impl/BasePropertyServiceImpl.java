@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,9 +26,10 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     private final GarageService garageService;
     private final HouseService houseService;
     private final LandService landService;
+    private final PropertyPictureService propertyPictureService;
     private final ModelMapper modelMapper;
 
-    public BasePropertyServiceImpl(BasePropertyRepository basePropertyRepository, UserEntityService userEntityService, ApartmentService apartmentService, BusinessPropertyService businessPropertyService, GarageService garageService, HouseService houseService, LandService landService, ModelMapper modelMapper) {
+    public BasePropertyServiceImpl(BasePropertyRepository basePropertyRepository, UserEntityService userEntityService, ApartmentService apartmentService, BusinessPropertyService businessPropertyService, GarageService garageService, HouseService houseService, LandService landService, PropertyPictureService propertyPictureService, ModelMapper modelMapper) {
         this.basePropertyRepository = basePropertyRepository;
         this.userEntityService = userEntityService;
         this.apartmentService = apartmentService;
@@ -35,6 +37,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         this.garageService = garageService;
         this.houseService = houseService;
         this.landService = landService;
+        this.propertyPictureService = propertyPictureService;
         this.modelMapper = modelMapper;
     }
 
@@ -96,6 +99,16 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         }
 
         throw new RuntimeException("No such property type: " + property.getPropertyType());
+    }
+
+    @Override
+    public void deletePicture(UUID id, UUID pictureId) throws IOException {
+        BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new RuntimeException("Property not found"));
+        PropertyPicture picture = propertyPictureService.getPicture(pictureId);
+
+        propertyPictureService.deletePictureFromCloud(pictureId);
+        property.getPictures().remove(picture);
+        basePropertyRepository.saveAndFlush(property);
     }
 
     private PropertyDTO mapBasePropertyToPropertyDTO(BaseProperty baseProperty) {

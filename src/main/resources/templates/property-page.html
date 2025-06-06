@@ -45,6 +45,14 @@
                                 <li th:each="picture : ${property.pictures}" class="glide__slide">
                                     <div class="image-container">
                                         <img th:src="@{${picture.getPictureLink()}}" alt="Property Image" />
+                                        <form id="delete-picture-form"
+                                            th:action="@{/properties/{id}/delete-picture/{pictureId}(id=${property.id}, pictureId=${picture.id})}"
+                                            th:method="DELETE">
+                                            <button th:class="btn-delete" type="submit" class="link-blue">
+                                                X
+                                            </button>
+                                        </form>
+
                                     </div>
                                 </li>
                             </ul>
@@ -58,11 +66,12 @@
                         <div id="carousel-status">
                             1/12
                         </div>
+
                     </div>
 
                     <div class="text-center">
                         <details class="flex-column gap-1" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
-                            <summary>Добави снимка</summary>
+                            <summary th:text="#{property.add-picture}">Добави снимка</summary>
                             <form th:action="@{/properties/{id}/upload-picture(id=${property.id})}"
                                   th:method="POST"
                                   enctype="multipart/form-data"
@@ -317,6 +326,12 @@
 
     <!-- Initialize Glide after the DOM is ready -->
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+
+    <script>
+        window.i18nMessages = {
+            deleteConfirmMessage: '[[#{property.confirm-delete-message}]]'
+        }
+    </script>
 
     <!-- Initialize script.js -->
     <script th:src="@{/js/script.js}"></script>

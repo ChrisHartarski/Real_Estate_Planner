@@ -197,6 +197,29 @@ a {
     cursor: pointer;
 }
 
+.btn-delete {
+    background-color: rgba(255, 0, 0, 0.7);
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.btn-delete:hover {
+    background-color: rgba(255, 0, 0, 0.9);
+}
+
+.btn-delete:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
 .text-red,
 .link-red {
     color: red;
@@ -217,6 +240,7 @@ a {
 .link-black,
 .link-blue {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .grayed-out {
@@ -415,6 +439,7 @@ a {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
 .image-container img {
@@ -459,7 +484,13 @@ a {
     font-size: 0.9rem;
     color: #B4B4B4;
     padding: 0.5rem;
+}
 
+#delete-picture-form {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin: 0;
 }
 
 /* Footer */

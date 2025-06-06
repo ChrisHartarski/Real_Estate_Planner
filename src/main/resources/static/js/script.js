@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM loaded");
     const propertyTypeSelect = document.getElementById("propertyType");
 
     if(propertyTypeSelect) {
@@ -40,7 +39,15 @@ document.addEventListener("DOMContentLoaded", () => {
         glide.mount();
     }
 
-
+    const deletePictureForm = document.getElementById("delete-picture-form");
+    if (deletePictureForm) {
+        deletePictureForm.addEventListener('submit', function (event) {
+            const message = window.i18nMessages?.deleteConfirmMessage || 'Are you sure you want to delete this image?'
+            if (!confirm(message)) {
+                event.preventDefault();
+            }
+        });
+    }
 });
 
 function toggleFields(selectedTypeValue) {

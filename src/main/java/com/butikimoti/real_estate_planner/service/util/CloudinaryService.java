@@ -38,4 +38,8 @@ public class CloudinaryService {
 
         return new CloudinaryImageInfoDTO(imageUrl, imagePublicID);
     }
+
+    public void deletePicture(String publicID) throws IOException {
+        this.cloudinary.uploader().destroy(publicID, ObjectUtils.emptyMap());
+    }
 }

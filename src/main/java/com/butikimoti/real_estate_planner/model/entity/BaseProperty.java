@@ -17,7 +17,7 @@ public abstract class BaseProperty {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "property")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "property")
     @OrderBy("createdOn")
     private List<PropertyPicture> pictures;
 
