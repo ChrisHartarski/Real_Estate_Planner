@@ -21,15 +21,23 @@ public class PropertyPicture {
     @Column(name = "created_on", nullable = false)
     private LocalDateTime createdOn;
 
+    @Column(name = "public_Id", nullable = false)
+    private String publicID;
+
     public PropertyPicture() {
         createdOn = LocalDateTime.now();
     }
 
-    public PropertyPicture(UUID id, String pictureLink, BaseProperty property) {
+    public PropertyPicture(String pictureLink, BaseProperty property, String publicID) {
         this();
-        this.id = id;
         this.pictureLink = pictureLink;
         this.property = property;
+        this.publicID = publicID;
+    }
+
+    public PropertyPicture(UUID id, String pictureLink, BaseProperty property, String publicID) {
+        this(pictureLink, property, publicID);
+        this.id = id;
     }
 
     public UUID getId() {
@@ -62,5 +70,13 @@ public class PropertyPicture {
 
     public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public String getPublicID() {
+        return publicID;
+    }
+
+    public void setPublicID(String publicID) {
+        this.publicID = publicID;
     }
 }

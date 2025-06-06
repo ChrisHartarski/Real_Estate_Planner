@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
@@ -107,11 +108,11 @@ public class PropertyController {
     public String uploadPicture(@PathVariable UUID id,
                                 @RequestParam("image") MultipartFile file) throws IOException {
         BaseProperty property = basePropertyService.getPropertyByID(id);
-        String imageUrl = cloudinaryService.uploadImage(file);
+        CloudinaryImageInfoDTO cloudinaryImageInfo = cloudinaryService.uploadImage(file);
+        String imageUrl = cloudinaryImageInfo.getImageUrl();
+        String imagePublicId = cloudinaryImageInfo.getPublicId();
 
-        PropertyPicture picture = new PropertyPicture();
-        picture.setPictureLink(imageUrl);
-        picture.setProperty(property);
+        PropertyPicture picture = new PropertyPicture(imageUrl, property, imagePublicId);
         property.getPictures().add(picture);
         basePropertyService.updateProperty(property);
 

@@ -1,6 +1,8 @@
 package com.butikimoti.real_estate_planner.service.util;
 
+import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +23,19 @@ public class CloudinaryService {
         ));
     }
 
-    public String uploadImage(MultipartFile file) throws IOException {
-        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-        return uploadResult.get("secure_url").toString();
+    @SuppressWarnings("unchecked")
+    public CloudinaryImageInfoDTO uploadImage(MultipartFile file) throws IOException {
+        Map<String, Object> uploadResult = cloudinary
+                        .uploader()
+                        .upload(file.getBytes(), ObjectUtils.asMap(
+                                "transformation", new Transformation()
+                                        .width(1200).height(1200).crop("limit")
+                                        .quality("auto")
+                                        .fetchFormat("auto")
+                        ));
+        String imageUrl = uploadResult.get("secure_url").toString();
+        String imagePublicID = uploadResult.get("public_id").toString();
+
+        return new CloudinaryImageInfoDTO(imageUrl, imagePublicID);
     }
 }
