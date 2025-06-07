@@ -44,7 +44,7 @@
                                 <label for="password" th:text="#{register-user.password} + ':'">Password</label>
                             </div>
                             <div class="w-50 align-left">
-                                <input class="w-70" name="password" id="password" type="password"
+                                <input class="w-70" name="password" id="password" type="password" autocomplete="off"
                                        th:placeholder="#{register-user.password-placeholder}" th:field="*{password}"/>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <label for="confirm-password" th:text="#{register-user.confirm-password} + ':'">Confirm Password</label>
                             </div>
                             <div class="w-50 align-left">
-                                <input class="w-70" name="confirm-password" id="confirm-password" type="password"
+                                <input class="w-70" name="confirm-password" id="confirm-password" type="password" autocomplete="off"
                                        th:placeholder="#{register-user.confirm-password-placeholder}"
                                        th:field="*{confirmPassword}"/>
                             </div>
