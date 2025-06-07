@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 public interface BasePropertyService {
