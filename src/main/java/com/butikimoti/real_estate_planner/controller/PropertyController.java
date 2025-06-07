@@ -104,6 +104,22 @@ public class PropertyController {
         return "property-page";
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteProperty(@PathVariable UUID id) throws IOException {
+        OfferType offerType = basePropertyService.getPropertyByID(id).getOfferType();
+        basePropertyService.deleteProperty(id);
+
+        if(offerType == OfferType.SALE) {
+            return "redirect:/properties/sales";
+        }
+
+        if (offerType == OfferType.RENT) {
+            return "redirect:/properties/rents";
+        }
+
+        return "redirect:/";
+    }
+
     @PostMapping("/{id}/upload-picture")
     public String uploadPicture(@PathVariable UUID id,
                                 @RequestParam("image") MultipartFile file) throws IOException {

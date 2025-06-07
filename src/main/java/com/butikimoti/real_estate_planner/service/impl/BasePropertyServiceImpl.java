@@ -3,8 +3,8 @@ package com.butikimoti.real_estate_planner.service.impl;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.*;
-import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
+import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
 import com.butikimoti.real_estate_planner.service.*;
 import org.modelmapper.ModelMapper;
@@ -102,6 +102,12 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
+    public void deleteProperty(UUID id) throws IOException {
+        deleteAllPicturesFromProperty(id);
+        basePropertyRepository.deleteById(id);
+    }
+
+    @Override
     public void deletePicture(UUID id, UUID pictureId) throws IOException {
         BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new RuntimeException("Property not found"));
         PropertyPicture picture = propertyPictureService.getPicture(pictureId);
@@ -109,6 +115,13 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         propertyPictureService.deletePictureFromCloud(pictureId);
         property.getPictures().remove(picture);
         basePropertyRepository.saveAndFlush(property);
+    }
+
+    private void deleteAllPicturesFromProperty(UUID propertyId) throws IOException {
+        BaseProperty property = getPropertyByID(propertyId);
+        while (!property.getPictures().isEmpty()) {
+            deletePicture(property.getId(), property.getPictures().getFirst().getId());
+        }
     }
 
     private PropertyDTO mapBasePropertyToPropertyDTO(BaseProperty baseProperty) {

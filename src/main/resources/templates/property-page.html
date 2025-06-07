@@ -50,7 +50,7 @@
                                               th:method="DELETE"
                                               th:attr="data-message=#{property.confirm-delete-picture-message}"
                                               onsubmit="return false;">
-                                            <button id="delete-picture-button" class="btn-delete delete-button" type="button" onclick="confirmDelete(this)">
+                                            <button id="delete-picture-button" class="btn-delete delete-button" type="button">
                                                 X
                                             </button>
                                         </form>
@@ -314,10 +314,18 @@
                 </div>
                 <div class="buttons-section flex-row" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
                     <div class="w-50 text-center">
-                        <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
+                        <a th:href="@{/properties/edit/{id}(id=${property.id})}">
+                            <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
+                        </a>
                     </div>
                     <div class="w-50 text-center">
-                        <button class="btn btn-red" th:text="#{property.button-delete}">Изтрий</button>
+                        <form id="delete-property-form"
+                              th:action="@{/properties/{id}(id=${property.id})}"
+                              th:method="DELETE"
+                              th:attr="data-message=#{property.confirm-delete-property-message}"
+                              onsubmit="return false;">
+                            <button class="btn btn-red delete-button" th:text="#{property.button-delete}">Изтрий</button>
+                        </form>
                     </div>
                 </div>
             </div>
