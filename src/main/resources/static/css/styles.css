@@ -345,13 +345,13 @@ a {
 }
 
 /* Card properties */
-.card > .image-section {
+.image-section {
     display: flex;
     align-items: center;
     width: calc(30% - 1rem);
 }
 
-.image-section > img {
+.image-section img {
     max-width: 100%;
 }
 

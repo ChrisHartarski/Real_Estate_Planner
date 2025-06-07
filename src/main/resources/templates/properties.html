@@ -61,8 +61,10 @@
             <div th:each="property : ${properties.getContent()}">
                 <div class="card flex-row">
                     <div class="image-section">
-                        <img th:if="${!property.getPictures().isEmpty()}" th:src="@{${property.getPictures().getFirst().getPictureLink()}}" alt="property image">
-                        <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
+                        <a th:href="@{'/properties/' + ${property.id}}">
+                            <img th:if="${!property.getPictures().isEmpty()}" th:src="@{${property.getPictures().getFirst().getPictureLink()}}" alt="property image">
+                            <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
+                        </a>
                     </div>
                     <div class="content-section">
                         <div class="content-header">
