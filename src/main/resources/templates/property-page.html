@@ -46,13 +46,14 @@
                                     <div class="image-container">
                                         <img th:src="@{${picture.getPictureLink()}}" alt="Property Image" />
                                         <form id="delete-picture-form"
-                                            th:action="@{/properties/{id}/delete-picture/{pictureId}(id=${property.id}, pictureId=${picture.id})}"
-                                            th:method="DELETE">
-                                            <button th:class="btn-delete" type="submit" class="link-blue">
+                                              th:action="@{/properties/{id}/delete-picture/{pictureId}(id=${property.id}, pictureId=${picture.id})}"
+                                              th:method="DELETE"
+                                              th:attr="data-message=#{property.confirm-delete-picture-message}"
+                                              onsubmit="return false;">
+                                            <button id="delete-picture-button" class="btn-delete delete-button" type="button" onclick="confirmDelete(this)">
                                                 X
                                             </button>
                                         </form>
-
                                     </div>
                                 </li>
                             </ul>
@@ -318,6 +319,15 @@
                     <div class="w-50 text-center">
                         <button class="btn btn-red" th:text="#{property.button-delete}">Изтрий</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="modal">
+            <div class="modal-content">
+                <p id="modal-message">Are you sure?</p>
+                <div class="modal-buttons">
+                    <button id="confirm-delete-button" class="btn btn-blue" th:text="#{property.confirm-yes}">Yes</button>
+                    <button id="cancel-delete-button" class="btn btn-blue" th:text="#{property.confirm-no}">No</button>
                 </div>
             </div>
         </div>

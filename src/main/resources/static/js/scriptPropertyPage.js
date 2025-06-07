@@ -32,33 +32,66 @@ document.addEventListener("DOMContentLoaded", () => {
         glide.mount();
     }
 
-    const deletePictureForm = document.getElementById("delete-picture-form");
-    if (deletePictureForm) {
-        deletePictureForm.addEventListener('submit', function (event) {
-            const message = window.i18nMessages?.deleteConfirmMessage || 'Are you sure you want to delete this image?'
-            if (!confirm(message)) {
-                event.preventDefault();
-            }
+
+    // const deletePictureButton = document.getElementById('delete-picture-button');
+    //
+    // deletePictureButton.addEventListener("click", function (event) {
+    //     const confirmDeletePictureModal = document.getElementById('confirm-delete-picture-modal');
+    //     openModal(confirmDeletePictureModal);
+    //
+    //     const confirmDeletePictureButton = document.getElementById('confirm-delete-picture-button');
+    //     confirmDeletePictureButton.addEventListener('click', function () {
+    //         const deletePictureForm = document.getElementById('delete-picture-form');
+    //         deletePictureForm.submit();
+    //     })
+    //
+    //     const cancelDeletePictureButton = document.getElementById('cancel-delete-picture-button');
+    //     cancelDeletePictureButton.addEventListener('click', function () {
+    //         const modal = document.closest('.modal');
+    //         closeModal(modal);
+    //     })
+    // });
+    //
+    // function openModal(modal) {
+    //     modal.style.display="block";
+    // }
+    //
+    // function closeModal(modal) {
+    //     modal.style.display="none";
+    // }
+
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    const modal = document.querySelector('#modal');
+    const confirmDeleteButton = document.querySelector('#confirm-delete-button');
+    const cancelDeleteButton = document.querySelector('#cancel-delete-button');
+
+    let formToSubmit = null;
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            formToSubmit = button.closest('form');
+            const modalMessage = document.querySelector('#modal-message');
+            modalMessage.textContent = formToSubmit.getAttribute("data-message");
+            openModal(modal);
         });
-    }
-});
-
-function toggleFields(selectedTypeValue) {
-    const allPropertyTypes = ['apartment', 'house', 'business', 'garage', 'land'];
-    const selectedType = selectedTypeValue.toLowerCase();
-
-    // Hide all fields
-    document.querySelectorAll('.property-type-main')
-        .forEach(el => el.classList.add('hidden'));
-
-    allPropertyTypes.forEach(type => {
-        document.querySelectorAll(`.property-type-${type}`)
-            .forEach(el => el.classList.add('hidden'))
     });
 
-    // Show main and selected fields
-    if (allPropertyTypes.includes(selectedType)) {
-        document.querySelectorAll(`.property-type-main, .property-type-${selectedType}`)
-            .forEach(el => el.classList.remove('hidden'));
+    confirmDeleteButton.addEventListener('click', function () {
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    });
+
+    cancelDeleteButton.addEventListener('click', function () {
+        closeModal(modal);
+        formToSubmit = null;
+    })
+
+    function openModal(modal) {
+        modal.style.display="block";
     }
-}
+
+    function closeModal(modal) {
+        modal.style.display="none";
+    }
+});
