@@ -253,6 +253,17 @@
                             </div>
                         </div>
 
+                        <!-- Heating type-->
+                        <div class="flex-row gap-1" th:if="${property.propertyType.name().equals('APARTMENT')
+                                                        or property.propertyType.name().equals('HOUSE')
+                                                        or property.propertyType.name().equals('BUSINESS')}">
+                            <div class="w-30 white-space-nowrap" th:text="#{property.heating-type} + ':'">Тип
+                                отопление:</div>
+                            <div class="w-60"
+                                 th:text="#{'heatingType.' + ${property.heatingType.name()}}">газ
+                            </div>
+                        </div>
+
                         <!-- Has elevator -->
                         <div class="flex-row gap-1" th:if="${property.propertyType.name().equals('APARTMENT')
                                                         or property.propertyType.name().equals('BUSINESS')}">

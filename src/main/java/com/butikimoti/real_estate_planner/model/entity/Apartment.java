@@ -29,6 +29,9 @@ public class Apartment extends BaseProperty {
     @Column(name = "building_floors", nullable = false)
     private int buildingFloors;
 
+    @Column(name = "heating_type", nullable = false)
+    private HeatingType heatingType;
+
     @Column(name = "has_elevator", nullable = false)
     private boolean hasElevator;
 
@@ -38,7 +41,7 @@ public class Apartment extends BaseProperty {
     public Apartment() {
     }
 
-    public Apartment(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ApartmentType apartmentType, int roomCount, ConstructionType constructionType, int year, int floor, int buildingFloors, boolean hasElevator, String facing) {
+    public Apartment(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ApartmentType apartmentType, int roomCount, ConstructionType constructionType, int year, int floor, int buildingFloors, HeatingType heatingType, boolean hasElevator, String facing) {
         super(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.apartmentType = apartmentType;
         this.roomCount = roomCount;
@@ -46,6 +49,7 @@ public class Apartment extends BaseProperty {
         this.year = year;
         this.floor = floor;
         this.buildingFloors = buildingFloors;
+        this.heatingType = heatingType;
         this.hasElevator = hasElevator;
         this.facing = facing;
     }
@@ -96,6 +100,14 @@ public class Apartment extends BaseProperty {
 
     public void setBuildingFloors(int buildingFloors) {
         this.buildingFloors = buildingFloors;
+    }
+
+    public HeatingType getHeatingType() {
+        return heatingType;
+    }
+
+    public void setHeatingType(HeatingType heatingType) {
+        this.heatingType = heatingType;
     }
 
     public boolean isHasElevator() {

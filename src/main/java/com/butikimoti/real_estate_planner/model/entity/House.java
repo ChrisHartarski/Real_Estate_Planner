@@ -20,6 +20,9 @@ public class House extends BaseProperty {
     @Column
     private int year;
 
+    @Column(name = "heating_type", nullable = false)
+    private HeatingType heatingType;
+
     @Column(name = "yard_area", nullable = false)
     private int yardArea;
 
@@ -36,11 +39,12 @@ public class House extends BaseProperty {
     public House() {
     }
 
-    public House(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, HouseType houseType, ConstructionType constructionType, int year, int yardArea, AreaUnit yardAreaUnit, int floorsCount, String additionalStructures) {
+    public House(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, HouseType houseType, ConstructionType constructionType, int year, HeatingType heatingType, int yardArea, AreaUnit yardAreaUnit, int floorsCount, String additionalStructures) {
         super(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.houseType = houseType;
         this.constructionType = constructionType;
         this.year = year;
+        this.heatingType = heatingType;
         this.yardArea = yardArea;
         this.yardAreaUnit = yardAreaUnit;
         this.floorsCount = floorsCount;
@@ -69,6 +73,14 @@ public class House extends BaseProperty {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public HeatingType getHeatingType() {
+        return heatingType;
+    }
+
+    public void setHeatingType(HeatingType heatingType) {
+        this.heatingType = heatingType;
     }
 
     public int getYardArea() {

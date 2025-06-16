@@ -55,6 +55,8 @@ public class PropertyDTO {
 
     private String facing;
 
+    private HeatingType heatingType;
+
     //apartment
     private ApartmentType apartmentType;
 
@@ -267,6 +269,14 @@ public class PropertyDTO {
 
     public void setFacing(String facing) {
         this.facing = facing;
+    }
+
+    public HeatingType getHeatingType() {
+        return heatingType;
+    }
+
+    public void setHeatingType(HeatingType heatingType) {
+        this.heatingType = heatingType;
     }
 
     public ApartmentType getApartmentType() {

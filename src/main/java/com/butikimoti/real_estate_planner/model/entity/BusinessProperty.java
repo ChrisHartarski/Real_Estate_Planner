@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import com.butikimoti.real_estate_planner.model.enums.BusinessPropertyType;
 import com.butikimoti.real_estate_planner.model.enums.ConstructionType;
+import com.butikimoti.real_estate_planner.model.enums.HeatingType;
 import jakarta.persistence.*;
 
 @Entity
@@ -26,6 +27,9 @@ public class BusinessProperty extends BaseProperty {
 
     @Column(name = "building_floors", nullable = false)
     private int buildingFloors;
+
+    @Column(name = "heating_type", nullable = false)
+    private HeatingType heatingType;
 
     public BusinessProperty() {
     }
@@ -76,5 +80,13 @@ public class BusinessProperty extends BaseProperty {
 
     public void setBuildingFloors(int buildingFloors) {
         this.buildingFloors = buildingFloors;
+    }
+
+    public HeatingType getHeatingType() {
+        return heatingType;
+    }
+
+    public void setHeatingType(HeatingType heatingType) {
+        this.heatingType = heatingType;
     }
 }

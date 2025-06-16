@@ -66,6 +66,8 @@ public class AddPropertyDTO {
 
     private String facing;
 
+    private HeatingType heatingType;
+
     //apartment
     private ApartmentType apartmentType;
 
@@ -95,7 +97,7 @@ public class AddPropertyDTO {
     public AddPropertyDTO() {
     }
 
-    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
+    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, HeatingType heatingType, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
         this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
         this.city = city;
@@ -117,6 +119,7 @@ public class AddPropertyDTO {
         this.floor = floor;
         this.buildingFloors = buildingFloors;
         this.facing = facing;
+        this.heatingType = heatingType;
         this.apartmentType = apartmentType;
         this.hasElevator = hasElevator;
         this.houseType = houseType;
@@ -295,6 +298,14 @@ public class AddPropertyDTO {
 
     public void setFacing(String facing) {
         this.facing = facing;
+    }
+
+    public HeatingType getHeatingType() {
+        return heatingType;
+    }
+
+    public void setHeatingType(HeatingType heatingType) {
+        this.heatingType = heatingType;
     }
 
     public ApartmentType getApartmentType() {

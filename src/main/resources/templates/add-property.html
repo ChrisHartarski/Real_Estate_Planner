@@ -426,6 +426,26 @@
                             <small th:errors="*{buildingFloors}" class="text-red">Property building floors error!</small>
                         </div>
 
+                        <!-- Heating type select -->
+                        <div class="flex-column w-100 property-type-apartment property-type-house property-type-business hidden" id="heatingTypeSelect">
+                            <div class="flex-row w-100 gap-1">
+                                <div class="w-30 align-right">
+                                    <label for="heatingType"
+                                           th:text="#{property.heating-type} + ':'">Heating type</label>
+                                </div>
+                                <div class="w-70 align-left">
+                                    <select class="w-70" id="heatingType" th:field="*{heatingType}">
+                                        <option
+                                                th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.HeatingType).values()}"
+                                                th:value="${type}"
+                                                th:text="#{${'heatingType.' + type.name()}}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <small th:errors="*{heatingType}" class="text-red">Heating type error!</small>
+                        </div>
+
                         <!-- Facing input -->
                         <div class="flex-column w-100 property-type-apartment hidden" id="facingInput">
                             <div class="flex-row w-100 gap-1">
