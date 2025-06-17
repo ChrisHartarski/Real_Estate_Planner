@@ -7,9 +7,11 @@ import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
 import com.butikimoti.real_estate_planner.service.*;
+import com.butikimoti.real_estate_planner.specifications.BasePropertySpecifications;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +44,30 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent) {
+    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent) {
         UUID ownerCompanyId = userEntityService.getCurrentUser().getCompany().getId();
         Page<BaseProperty> properties = basePropertyRepository.findByOwnerCompanyIdAndOfferType(ownerCompanyId, pageable, saleOrRent);
 
-        return new PagedModel<>(properties.map(this::mapBasePropertyToPropertyDTO));
+        return properties.map(this::mapBasePropertyToPropertyDTO);
+    }
+
+    @Override
+    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice) {
+        UserEntity currentUser = userEntityService.getCurrentUser();
+
+        if (currentUser == null) {
+            throw new RuntimeException("No logged in user");
+        }
+
+        Company ownerCompany = currentUser.getCompany();
+        if (ownerCompany == null) {
+            throw new RuntimeException("User does not have a company");
+        }
+
+        Specification<BaseProperty> specification = BasePropertySpecifications.withFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+        Page<BaseProperty> properties = basePropertyRepository.findAll(specification, pageable);
+
+        return properties.map(this::mapBasePropertyToPropertyDTO);
     }
 
     @Override

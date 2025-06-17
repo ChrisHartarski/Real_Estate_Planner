@@ -4,14 +4,16 @@ import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
+import com.butikimoti.real_estate_planner.model.enums.PropertyType;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedModel;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public interface BasePropertyService {
-    PagedModel<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent);
+    Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent);
+    Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice);
     BaseProperty savePropertyToDB(AddPropertyDTO addPropertyDTO);
     BaseProperty getPropertyByID(UUID id);
     BaseProperty updateProperty(BaseProperty property);

@@ -6,11 +6,13 @@ import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
+import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -46,19 +48,34 @@ public class PropertyController {
     }
 
     @GetMapping("/sales")
-    public String viewSales(@PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+    public String viewSales(
+            @RequestParam(value = "propertyType", required = false) PropertyType propertyType,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "neighbourhood", required = false) String neighbourhood,
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "minPrice", required = false) Double minPrice,
+            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE);
-        model.addAttribute("properties", properties);
+//        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE);
+
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+        model.addAttribute("properties", new PagedModel<>(properties));
         model.addAttribute("page", "sales");
         return "properties";
     }
 
     @GetMapping("/rents")
-    public String viewRents(@PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+    public String viewRents(@RequestParam(value = "propertyType", required = false) PropertyType propertyType,
+                            @RequestParam(value = "city", required = false) String city,
+                            @RequestParam(value = "neighbourhood", required = false) String neighbourhood,
+                            @RequestParam(value = "address", required = false) String address,
+                            @RequestParam(value = "minPrice", required = false) Double minPrice,
+                            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+                            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        PagedModel<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.RENT);
-        model.addAttribute("properties", properties);
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.RENT, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+        model.addAttribute("properties", new PagedModel<>(properties));
         model.addAttribute("page", "rents");
         return "properties";
     }
