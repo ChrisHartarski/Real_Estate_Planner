@@ -32,27 +32,80 @@
 <!--        Filter and Sort -->
         <div class="filter-sort-section w-70">
             <div class="card">
-                <div class="row">
-                    <div class="filer-section">
-                        <label th:text="Филтър" for="filter-input"></label>
-                        <input id="filter-input">
-                    </div>
-                    <div class="sort-section">
-                        <label th:text="Сортирай-по" for="sort-select"></label>
-                        <select id="sort-select">
-                            <option>Актуализиран най-скоро</option>
-                            <option>Актуализиран най-отдавна</option>
-                            <option>Цена възходяща</option>
-                            <option>Цена низходяща</option>
-                            <option>Тип</option>
-                            <option>Създаден най-скоро</option>
-                            <option>Създаден най-отдавна</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <button class="btn btn-blue center">Приложи</button>
-                </div>
+                <details class="flex-column">
+                    <summary th:text="#{property.filter}">Филтър</summary>
+                    <form class="flex-column filter-section gap-1"
+                          th:action="@{'/properties/' + ${page}}"
+                          th:method="GET">
+                        <div class="flex-row w-100">
+                            <!--                    Property Type-->
+                            <div class="w-50">
+                                <label class="display-inline-block w-40" th:text="#{property.property-type}"
+                                       for="filter-propertyType"></label>
+                                <select class="w-50" id="filter-propertyType" name="propertyType">
+                                    <option
+                                            value=""
+                                            th:text="#{property.all-placeholder}">
+                                    </option>
+                                    <option
+                                            th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.PropertyType).values()}"
+                                            th:value="${type}"
+                                            th:text="#{${'propertyType.' + type.name()}}"
+                                            th:selected="${type} == ${propertyTypeParam}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!--                    City-->
+                            <div class="w-50">
+                                <label class="display-inline-block w-40" th:text="#{property.city}" for="filter-city"></label>
+                                <input class="w-50" id="filter-city" name="city"
+                                       th:placeholder="#{property.city-placeholder}"
+                                       th:value="${cityParam}"/>
+                            </div>
+                        </div>
+                        <div class="flex-row w-100">
+                            <!--                            Neighbourhood-->
+                            <div class="w-50">
+                                <label class="display-inline-block w-40" th:text="#{property.neighbourhood}"
+                                       for="filter-neighbourhood"></label>
+                                <input class="w-50" id="filter-neighbourhood" name="neighbourhood"
+                                       th:placeholder="#{property.neighbourhood-placeholder}"
+                                       th:value="${neighbourhoodParam}"/>
+                            </div>
+
+                            <!--                            Address-->
+                            <div class="w-50">
+                                <label class="display-inline-block w-40" th:text="#{property.address}" for="filter-address"></label>
+                                <input class="w-50" id="filter-address" name="address"
+                                       th:placeholder="#{property.address-placeholder}"
+                                       th:value="${addressParam}"/>
+                            </div>
+                        </div>
+                        <div class="flex-row w-100">
+                            <!--                            Min Price-->
+                            <div class="w-50">
+                                <label class="display-inline-block w-40" th:text="#{property.min-price}"
+                                       for="filter-min-price"></label>
+                                <input class="w-50" id="filter-min-price" name="minPrice" type="number" step="1" min="0"
+                                       th:placeholder="#{property.address-placeholder}"
+                                       th:value="${addressParam}"/>
+                            </div>
+
+                            <!--                            Max Price-->
+                            <div class="w-50">
+                                <label class="display-inline-block w-40" th:text="#{property.max-price}"
+                                       for="filter-max-price"></label>
+                                <input class="w-50" id="filter-max-price" name="maxPrice" type="number" step="1" min="0"
+                                       th:placeholder="#{property.address-placeholder}"
+                                       th:value="${addressParam}"/>
+                            </div>
+                        </div>
+                        <div class="flex-row w-100">
+                            <button class="btn btn-blue center">Приложи</button>
+                        </div>
+                    </form>
+                </details>
             </div>
         </div>
 
@@ -62,7 +115,9 @@
                 <div class="card flex-row">
                     <div class="image-section">
                         <a th:href="@{'/properties/' + ${property.id}}">
-                            <img th:if="${!property.getPictures().isEmpty()}" th:src="@{${property.getPictures().getFirst().getPictureLink()}}" alt="property image">
+                            <img th:if="${!property.pictures.isEmpty()}"
+                                 th:src="@{${property.pictures[0].getPictureLink()}}"
+                                 alt="property image">
                             <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
                         </a>
                     </div>
@@ -175,7 +230,56 @@
                 </div>
             </div>
         </div>
+
+
+
+        <!-- Page Select -->
+
+        <div class="pagination flex-row gap-2 center">
+            <!-- Go to first page -->
+            <a th:if="${properties.number > 0}"
+               th:href="@{'/sales'(page=0)}">&laquo;</a>
+
+            <!-- Previous page -->
+            <a th:if="${properties.number > 0}"
+               th:href="@{'/sales'(page=${properties.number - 1})}"
+               th:text="${properties.number}"></a>
+
+            <!-- Current page (highlighted) -->
+            <span class="current-page" th:text="${properties.number + 1}"></span>
+
+            <!-- Next page -->
+            <a th:if="${properties.number < properties.totalPages - 1}"
+               th:href="@{'/sales'(page=${properties.number + 1})}"
+               th:text="${properties.number + 2}"></a>
+
+            <!-- Go to last page -->
+            <a th:if="${properties.number < properties.totalPages - 1}"
+               th:href="@{'/sales'(page=${properties.totalPages - 1})}">&raquo;</a>
+        </div>
+<!--        <div class="text-center" th:if="${properties.metadata.totalElements() > 0}">-->
+<!--            <div class="justify-content-center btn-group">-->
+<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() > 1}"-->
+<!--                   th:href="@{'/parts/all?page=0&searchPartCode=' + ${searchPartCode}}"-->
+<!--                   th:text="'<<' + #{paging_first}">{First}</a>-->
+<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() > 0}"-->
+<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.number() - 1} + '&searchPartCode=' + ${searchPartCode}}"-->
+<!--                   th:text="${properties.metadata.number()}">{Previous}</a>-->
+<!--                <a class="btn btn-warning active"-->
+<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.number()} + '&searchPartCode=' + ${searchPartCode}}"-->
+<!--                   th:text="${properties.metadata.number() + 1}">{current}</a>-->
+<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() < properties.metadata.totalPages() - 1}"-->
+<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.number() + 1} + '&searchPartCode=' + ${searchPartCode}}"-->
+<!--                   th:text="${properties.metadata.number() + 2}">{Next}</a>-->
+<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() < properties.metadata.totalPages() - 2} "-->
+<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.totalPages() - 1} + '&searchPartCode=' + ${searchPartCode}}"-->
+<!--                   th:text="'>>' + #{paging_last}">{Last}</a>-->
+<!--            </div>-->
+<!--        </div>-->
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
+
+    <!-- Initialize scriptFilter.js to remove unused query parameters from url -->
+    <script th:src="@{/js/scriptFilter.js}"></script>
 </body>
 </html>

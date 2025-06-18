@@ -60,8 +60,15 @@ public class PropertyController {
 //        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE);
 
         Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice);
-        model.addAttribute("properties", new PagedModel<>(properties));
+        model.addAttribute("properties", properties);
         model.addAttribute("page", "sales");
+        model.addAttribute("propertyTypeParam", propertyType);
+        model.addAttribute("cityParam", city);
+        model.addAttribute("neighbourhoodParam", neighbourhood);
+        model.addAttribute("addressParam", address);
+        model.addAttribute("minPriceParam", minPrice);
+        model.addAttribute("maxPriceParam", maxPrice);
+
         return "properties";
     }
 
