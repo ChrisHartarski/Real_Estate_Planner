@@ -4,27 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
-    <title th:if="${page.equals('sales')}">Sales</title>
-    <title th:if="${page.equals('rents')}">Rents</title>
+    <title th:if="${pageType.equals('sales')}">Sales</title>
+    <title th:if="${pageType.equals('rents')}">Rents</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
     <!-- Core theme CSS -->
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <th:block th:if="${page.equals('sales')}">
+    <th:block th:if="${pageType.equals('sales')}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'sales'})}"></header>
     </th:block>
-    <th:block th:if="${page.equals('rents')}">
+    <th:block th:if="${pageType.equals('rents')}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'rents'})}"></header>
     </th:block>
 
     <main>
-        <h1 th:if="${page.equals('sales')}"
+        <h1 th:if="${pageType.equals('sales')}"
             th:text="#{property.page-header-sales}"
                 class="white text-center page-title">Продажби
         </h1>
-        <h1 th:if="${page.equals('rents')}"
+        <h1 th:if="${pageType.equals('rents')}"
             th:text="#{property.page-header-rents}"
             class="white text-center page-title">Наеми
         </h1>
@@ -35,7 +35,7 @@
                 <details class="flex-column">
                     <summary th:text="#{property.filter}">Филтър</summary>
                     <form class="flex-column filter-section gap-1"
-                          th:action="@{'/properties/' + ${page}}"
+                          th:action="@{'/properties/' + ${pageType}}"
                           th:method="GET">
                         <div class="flex-row w-100">
                             <!--                    Property Type-->
@@ -231,32 +231,56 @@
             </div>
         </div>
 
-
-
         <!-- Page Select -->
+        <div class="flex-row justify-content-center">
+            <div class="pagination">
+                <!-- Go to first page -->
+                <a th:if="${properties.number > 0}"
+                   th:href="@{${'/properties/' + pageType}(page=0,
+                          propertyType=${propertyTypeParam},
+                          city=${cityParam},
+                          neighbourhood=${neighbourhoodParam},
+                          address=${addressParam},
+                          minPrice=${minPriceParam},
+                          maxPrice=${maxPriceParam})}">&laquo;</a>
 
-        <div class="pagination flex-row gap-2 center">
-            <!-- Go to first page -->
-            <a th:if="${properties.number > 0}"
-               th:href="@{'/sales'(page=0)}">&laquo;</a>
+                <!-- Previous page -->
+                <a th:if="${properties.number > 0}"
+                   th:href="@{${'/properties/' + pageType}(page=${properties.number - 1},
+                          propertyType=${propertyTypeParam},
+                          city=${cityParam},
+                          neighbourhood=${neighbourhoodParam},
+                          address=${addressParam},
+                          minPrice=${minPriceParam},
+                          maxPrice=${maxPriceParam})}"
+                   th:text="${properties.number}"></a>
 
-            <!-- Previous page -->
-            <a th:if="${properties.number > 0}"
-               th:href="@{'/sales'(page=${properties.number - 1})}"
-               th:text="${properties.number}"></a>
+                <!-- Current page (highlighted) -->
+                <span class="current-page" th:text="${properties.number + 1}"></span>
 
-            <!-- Current page (highlighted) -->
-            <span class="current-page" th:text="${properties.number + 1}"></span>
+                <!-- Next page -->
+                <a th:if="${properties.number < properties.totalPages - 1}"
+                   th:href="@{${'/properties/' + pageType}(page=${properties.number + 1},
+                          propertyType=${propertyTypeParam},
+                          city=${cityParam},
+                          neighbourhood=${neighbourhoodParam},
+                          address=${addressParam},
+                          minPrice=${minPriceParam},
+                          maxPrice=${maxPriceParam})}"
+                   th:text="${properties.number + 2}"></a>
 
-            <!-- Next page -->
-            <a th:if="${properties.number < properties.totalPages - 1}"
-               th:href="@{'/sales'(page=${properties.number + 1})}"
-               th:text="${properties.number + 2}"></a>
-
-            <!-- Go to last page -->
-            <a th:if="${properties.number < properties.totalPages - 1}"
-               th:href="@{'/sales'(page=${properties.totalPages - 1})}">&raquo;</a>
+                <!-- Go to last page -->
+                <a th:if="${properties.number < properties.totalPages - 1}"
+                   th:href="@{${'/properties/' + pageType}(page=${properties.totalPages - 1},
+                          propertyType=${propertyTypeParam},
+                          city=${cityParam},
+                          neighbourhood=${neighbourhoodParam},
+                          address=${addressParam},
+                          minPrice=${minPriceParam},
+                          maxPrice=${maxPriceParam})}">&raquo;</a>
+            </div>
         </div>
+
 <!--        <div class="text-center" th:if="${properties.metadata.totalElements() > 0}">-->
 <!--            <div class="justify-content-center btn-group">-->
 <!--                <a class="btn btn-warning" th:if="${properties.metadata.number() > 1}"-->

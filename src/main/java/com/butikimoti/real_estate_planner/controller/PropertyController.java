@@ -57,19 +57,10 @@ public class PropertyController {
             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-//        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE);
 
-        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice);
-        model.addAttribute("properties", properties);
-        model.addAttribute("page", "sales");
-        model.addAttribute("propertyTypeParam", propertyType);
-        model.addAttribute("cityParam", city);
-        model.addAttribute("neighbourhoodParam", neighbourhood);
-        model.addAttribute("addressParam", address);
-        model.addAttribute("minPriceParam", minPrice);
-        model.addAttribute("maxPriceParam", maxPrice);
+        model.addAttribute("pageType", "sales");
 
-        return "properties";
+        return viewProperties(propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/rents")
@@ -81,10 +72,10 @@ public class PropertyController {
                             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
                             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
-        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.RENT, propertyType, city, neighbourhood, address, minPrice, maxPrice);
-        model.addAttribute("properties", new PagedModel<>(properties));
-        model.addAttribute("page", "rents");
-        return "properties";
+
+        model.addAttribute("pageType", "rents");
+
+        return viewProperties(propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/add")
@@ -164,6 +155,19 @@ public class PropertyController {
         basePropertyService.deletePicture(id, pictureId);
 
         return "redirect:/properties/" + id;
+    }
+
+    private String viewProperties(PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice, Pageable pageable, Model model) {
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+        model.addAttribute("properties", properties);
+        model.addAttribute("propertyTypeParam", propertyType);
+        model.addAttribute("cityParam", city);
+        model.addAttribute("neighbourhoodParam", neighbourhood);
+        model.addAttribute("addressParam", address);
+        model.addAttribute("minPriceParam", minPrice);
+        model.addAttribute("maxPriceParam", maxPrice);
+
+        return "properties";
     }
 
     private PropertyDTO getPropertyDTOById(UUID id) {

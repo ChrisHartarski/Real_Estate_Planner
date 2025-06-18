@@ -402,19 +402,21 @@ a {
 }
 
 /*Pagination*/
+.pagination {
+    display: flex;
+    background-color: #FFFFFF;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
 .pagination a {
     padding: 0.5rem;
     text-decoration: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #007bff;
 }
 .pagination .current-page {
     padding: 0.5rem;
     font-weight: bold;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-    background-color: #e0f0ff;
 }
 
 /* Property page */
