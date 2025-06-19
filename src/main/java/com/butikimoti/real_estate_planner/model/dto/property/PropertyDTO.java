@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
 import com.butikimoti.real_estate_planner.model.dto.HasPropertyType;
+import com.butikimoti.real_estate_planner.model.entity.Comment;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.enums.*;
 
@@ -42,6 +43,8 @@ public class PropertyDTO implements HasPropertyType {
     private LocalDateTime createdOn;
 
     private LocalDateTime updatedOn;
+
+    private List<Comment> comments;
 
     //common
     private ConstructionType constructionType;
@@ -222,6 +225,14 @@ public class PropertyDTO implements HasPropertyType {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public ConstructionType getConstructionType() {

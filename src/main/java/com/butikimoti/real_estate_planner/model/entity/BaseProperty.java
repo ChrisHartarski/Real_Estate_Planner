@@ -69,13 +69,17 @@ public abstract class BaseProperty {
     @Column(name = "updated_on", nullable = false)
     private LocalDateTime updatedOn;
 
+    @OneToMany(mappedBy = "property", orphanRemoval = true)
+    private List<Comment> comments;
+
     protected BaseProperty() {
         this.pictures = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+        this();
         this.id = id;
-        this.pictures = new ArrayList<>();
         this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
         this.city = city;
@@ -93,9 +97,10 @@ public abstract class BaseProperty {
         this.updatedOn = updatedOn;
     }
 
-    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, List<Comment> comments) {
         this(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.pictures = pictures;
+        this.comments = comments;
     }
 
     public UUID getId() {
@@ -232,6 +237,14 @@ public abstract class BaseProperty {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public double getPricePerSqMeter() {
