@@ -12,7 +12,7 @@ import java.util.List;
 
 public class BasePropertySpecifications {
 
-    public static Specification<BaseProperty> withFilters(
+    public static Specification<BaseProperty> propertiesPageFilters(
             Company company,
             OfferType offerType,
             PropertyType propertyType,

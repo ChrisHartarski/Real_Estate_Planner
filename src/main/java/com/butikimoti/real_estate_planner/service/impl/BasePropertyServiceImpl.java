@@ -51,7 +51,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             throw new RuntimeException("User does not have a company");
         }
 
-        Specification<BaseProperty> specification = BasePropertySpecifications.withFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhood, address, minPrice, maxPrice);
         Page<BaseProperty> properties = basePropertyRepository.findAll(specification, pageable);
 
         return properties.map(this::mapBasePropertyToPropertyDTO);
