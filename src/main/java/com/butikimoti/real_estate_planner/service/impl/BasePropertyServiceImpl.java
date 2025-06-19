@@ -44,14 +44,6 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent) {
-        UUID ownerCompanyId = userEntityService.getCurrentUser().getCompany().getId();
-        Page<BaseProperty> properties = basePropertyRepository.findByOwnerCompanyIdAndOfferType(ownerCompanyId, pageable, saleOrRent);
-
-        return properties.map(this::mapBasePropertyToPropertyDTO);
-    }
-
-    @Override
     public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice) {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
@@ -77,8 +69,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         addPropertyDTO.setUpdatedOn(LocalDateTime.now());
 
         if (addPropertyDTO.getPropertyType() == PropertyType.APARTMENT) {
-            Apartment apartment = modelMapper.map(addPropertyDTO, Apartment.class);
-            return apartmentService.updateApartment(apartment);
+            return apartmentService.saveApartment(addPropertyDTO);
         }
         if (addPropertyDTO.getPropertyType() == PropertyType.BUSINESS) {
             return businessPropertyService.saveBusinessProperty(addPropertyDTO);
