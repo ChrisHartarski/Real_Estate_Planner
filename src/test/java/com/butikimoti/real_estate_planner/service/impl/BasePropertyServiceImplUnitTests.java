@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.web.PagedModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -78,7 +77,6 @@ public class BasePropertyServiceImplUnitTests {
     @Test
     public void testGetAllPropertiesByCompany_returnsCorrectData() {
         List<BaseProperty> properties = List.of(TEST_APARTMENT, TEST_HOUSE, TEST_LAND);
-        Specification<BaseProperty> specification = BasePropertySpecifications.withFilters(TEST_COMPANY, OfferType.SALE, null, null, null, null, null, null);
         Pageable pageable = PageRequest.of(1, 10, Sort.by(Sort.Direction.DESC, "updatedOn"));
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
