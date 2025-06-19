@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 public class GarageServiceImplUnitTests {
     private GarageServiceImpl serviceToTest;
     private static final Company TEST_COMPANY = new Company("test_name", "test_company_address", "+359000000000", "test@email.com");
-    private static final AddPropertyDTO TEST_GARAGE_DTO = new AddPropertyDTO(PropertyType.GARAGE, TEST_COMPANY, "test_address", 25000.00, 25, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 000 000 000", "contact@mail.com", "test_description", LocalDateTime.now(), LocalDateTime.now(), null, null, null, null, null, null, null, false, null, null, null, null, null, GarageType.GARAGE, null, null);
+    private static final AddPropertyDTO TEST_GARAGE_DTO = new AddPropertyDTO(PropertyType.GARAGE, TEST_COMPANY, "test_city", "test_neighbourhood", "test_address", 25000.00, 25, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 000 000 000", "contact@mail.com", "test_description", LocalDateTime.now(), LocalDateTime.now(), null, null, null, null, null, null, null, null, false, null, null, null, null, null, GarageType.GARAGE, null, null);
 
     @Mock
     private GarageRepository garageRepository;
@@ -49,6 +49,8 @@ public class GarageServiceImplUnitTests {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(TEST_GARAGE_DTO.getPropertyType(), actual.getPropertyType());
         Assertions.assertEquals(TEST_GARAGE_DTO.getOwnerCompany().getName(), actual.getOwnerCompany().getName());
+        Assertions.assertEquals(TEST_GARAGE_DTO.getCity(), actual.getCity());
+        Assertions.assertEquals(TEST_GARAGE_DTO.getNeighbourhood(), actual.getNeighbourhood());
         Assertions.assertEquals(TEST_GARAGE_DTO.getAddress(), actual.getAddress());
         Assertions.assertEquals(TEST_GARAGE_DTO.getPrice(), actual.getPrice());
         Assertions.assertEquals(TEST_GARAGE_DTO.getArea(), actual.getArea());

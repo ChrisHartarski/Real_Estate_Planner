@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 public class ApartmentServiceImplUnitTests {
     private ApartmentServiceImpl serviceToTest;
     private static final Company TEST_COMPANY = new Company("test_name", "test_company_address", "+359000000000", "test@email.com");
-    private static final AddPropertyDTO TEST_APARTMENT_DTO = new AddPropertyDTO(PropertyType.APARTMENT, TEST_COMPANY, "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 893 333 595", "contact@mail.com", "test_description", LocalDateTime.now(), LocalDateTime.now(), ConstructionType.BRICK, 2020, 3, 4, 8, "test_facing", ApartmentType.THREE_ROOM, true, null, null, null, null, null, null, null, null);
+    private static final AddPropertyDTO TEST_APARTMENT_DTO = new AddPropertyDTO(PropertyType.APARTMENT, TEST_COMPANY, "test_city", "test_neighbourhood", "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 893 333 595", "contact@mail.com", "test_description", LocalDateTime.now(), LocalDateTime.now(), ConstructionType.BRICK, 2020, 3, 4, 8, "test_facing", HeatingType.GAS, ApartmentType.THREE_ROOM, true, null, null, null, null, null, null, null, null);
 
     @Mock
     private ApartmentRepository apartmentRepository;
@@ -46,6 +46,8 @@ public class ApartmentServiceImplUnitTests {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(TEST_APARTMENT_DTO.getPropertyType(), actual.getPropertyType());
         Assertions.assertEquals(TEST_APARTMENT_DTO.getOwnerCompany().getName(), actual.getOwnerCompany().getName());
+        Assertions.assertEquals(TEST_APARTMENT_DTO.getCity(), actual.getCity());
+        Assertions.assertEquals(TEST_APARTMENT_DTO.getNeighbourhood(), actual.getNeighbourhood());
         Assertions.assertEquals(TEST_APARTMENT_DTO.getAddress(), actual.getAddress());
         Assertions.assertEquals(TEST_APARTMENT_DTO.getPrice(), actual.getPrice());
         Assertions.assertEquals(TEST_APARTMENT_DTO.getArea(), actual.getArea());
@@ -65,5 +67,6 @@ public class ApartmentServiceImplUnitTests {
         Assertions.assertEquals(TEST_APARTMENT_DTO.getFacing(), actual.getFacing());
         Assertions.assertEquals(TEST_APARTMENT_DTO.getApartmentType(), actual.getApartmentType());
         Assertions.assertEquals(TEST_APARTMENT_DTO.isHasElevator(), actual.isHasElevator());
+        Assertions.assertEquals(TEST_APARTMENT_DTO.getHeatingType(), actual.getHeatingType());
     }
 }

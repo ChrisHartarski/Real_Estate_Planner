@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 public class BusinessPropertyServiceImplUnitTests {
     private BusinessPropertyServiceImpl serviceToTest;
     private static final Company TEST_COMPANY = new Company("test_name", "test_company_address", "+359000000000", "test@email.com");
-    private static final AddPropertyDTO TEST_BUSINESS_PROPERTY_DTO = new AddPropertyDTO(PropertyType.BUSINESS, TEST_COMPANY, "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.RENT, "contact_name", "+359000000000", "contact@mail.com", "description", LocalDateTime.now(), LocalDateTime.now(), ConstructionType.BRICK, 2000, 2, 2, 5, null, null, false, null, null, null, null, null, null, null, BusinessPropertyType.OFFICE);
+    private static final AddPropertyDTO TEST_BUSINESS_PROPERTY_DTO = new AddPropertyDTO(PropertyType.BUSINESS, TEST_COMPANY, "test_city", "test_neighbourhood", "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.RENT, "contact_name", "+359000000000", "contact@mail.com", "description", LocalDateTime.now(), LocalDateTime.now(), ConstructionType.BRICK, 2000, 2, 2, 5, null,  HeatingType.NONE, null, false, null, null, null, null, null, null, null, BusinessPropertyType.OFFICE);
 
     @Mock
     private BusinessPropertyRepository businessPropertyRepository;
@@ -46,6 +46,8 @@ public class BusinessPropertyServiceImplUnitTests {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(actual.getPropertyType(), TEST_BUSINESS_PROPERTY_DTO.getPropertyType());
         Assertions.assertEquals(actual.getOwnerCompany().getName(), TEST_BUSINESS_PROPERTY_DTO.getOwnerCompany().getName());
+        Assertions.assertEquals(actual.getCity(), TEST_BUSINESS_PROPERTY_DTO.getCity());
+        Assertions.assertEquals(actual.getNeighbourhood(), TEST_BUSINESS_PROPERTY_DTO.getNeighbourhood());
         Assertions.assertEquals(actual.getAddress(), TEST_BUSINESS_PROPERTY_DTO.getAddress());
         Assertions.assertEquals(actual.getPrice(), TEST_BUSINESS_PROPERTY_DTO.getPrice());
         Assertions.assertEquals(actual.getArea(), TEST_BUSINESS_PROPERTY_DTO.getArea());
@@ -61,5 +63,6 @@ public class BusinessPropertyServiceImplUnitTests {
         Assertions.assertEquals(actual.getYear(), TEST_BUSINESS_PROPERTY_DTO.getYear());
         Assertions.assertEquals(actual.getRoomCount(), TEST_BUSINESS_PROPERTY_DTO.getRoomCount());
         Assertions.assertEquals(actual.getBusinessPropertyType(), TEST_BUSINESS_PROPERTY_DTO.getBusinessPropertyType());
+        Assertions.assertEquals(actual.getHeatingType(), TEST_BUSINESS_PROPERTY_DTO.getHeatingType());
     }
 }

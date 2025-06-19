@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 public class HouseServiceImplUnitTests {
     private HouseServiceImpl serviceToTest;
     private static final Company TEST_COMPANY = new Company("test_name", "test_company_address", "+359000000000", "test@email.com");
-    private static final AddPropertyDTO TEST_HOUSE_DTO = new AddPropertyDTO(PropertyType.HOUSE, TEST_COMPANY, "test_address", 45000.00, 120, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359000000000", "contact@mail.com", "test_description", LocalDateTime.now(), LocalDateTime.now(), ConstructionType.JOIST, 1984, 3, null, null, null, null, false, HouseType.HOUSE, 500, AreaUnit.SQUARE_METER, 2, "additional_structures", null, null, null);
+    private static final AddPropertyDTO TEST_HOUSE_DTO = new AddPropertyDTO(PropertyType.HOUSE, TEST_COMPANY, "test_city", "test_neighbourhood", "test_address", 45000.00, 120, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359000000000", "contact@mail.com", "test_description", LocalDateTime.now(), LocalDateTime.now(), ConstructionType.JOIST, 1984, 3, null, null, null, HeatingType.HARD_FUEL, null, false, HouseType.HOUSE, 500, AreaUnit.SQUARE_METER, 2, "additional_structures", null, null, null);
 
     @Mock
     private HouseRepository houseRepository;
@@ -46,6 +46,8 @@ public class HouseServiceImplUnitTests {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(TEST_HOUSE_DTO.getPropertyType(), actual.getPropertyType());
         Assertions.assertEquals(TEST_HOUSE_DTO.getOwnerCompany().getName(), actual.getOwnerCompany().getName());
+        Assertions.assertEquals(TEST_HOUSE_DTO.getCity(), actual.getCity());
+        Assertions.assertEquals(TEST_HOUSE_DTO.getNeighbourhood(), actual.getNeighbourhood());
         Assertions.assertEquals(TEST_HOUSE_DTO.getAddress(), actual.getAddress());
         Assertions.assertEquals(TEST_HOUSE_DTO.getPrice(), actual.getPrice());
         Assertions.assertEquals(TEST_HOUSE_DTO.getArea(), actual.getArea());
@@ -64,5 +66,6 @@ public class HouseServiceImplUnitTests {
         Assertions.assertEquals(TEST_HOUSE_DTO.getYardAreaUnit(), actual.getYardAreaUnit());
         Assertions.assertEquals(TEST_HOUSE_DTO.getAdditionalStructures(), actual.getAdditionalStructures());
         Assertions.assertEquals(TEST_HOUSE_DTO.getHouseType(), actual.getHouseType());
+        Assertions.assertEquals(TEST_HOUSE_DTO.getHeatingType(), actual.getHeatingType());
     }
 }
