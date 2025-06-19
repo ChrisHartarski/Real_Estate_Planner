@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
-    <title>Add Property</title>
+    <title>Edit Property</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
     <!-- Core theme CSS -->
@@ -15,11 +15,11 @@
     <main>
         <div class="w-70 center">
             <div class="card flex-column">
-                <h1 class="text-center" th:text="#{property.add-heading}">Добави имот</h1>
+                <h1 class="text-center" th:text="#{property.edit-heading}">Промени имот</h1>
                 <form class="flex-column gap-1" id="add_property_form"
-                        th:action="@{/properties/add}"
-                        th:method="POST"
-                        th:object="${addPropertyData}">
+                        th:action="@{'/properties/' + ${editPropertyData.id}}"
+                        th:method="PATCH"
+                        th:object="${editPropertyData}">
 
                     <div class="flex-column gap-1 text-center">
                         <!-- Property type input-->
@@ -542,10 +542,10 @@
 
                     </div>
 
-                    <!-- Register Button-->
+                    <!-- Submit Button-->
                     <div class="center">
                         <button class="btn btn-blue" id="submitButton" type="submit"
-                                th:text="#{register-company.button}">Регистрирай</button>
+                                th:text="#{property.edit-submit-button}">Потвърди промените</button>
                     </div>
                 </form>
             </div>

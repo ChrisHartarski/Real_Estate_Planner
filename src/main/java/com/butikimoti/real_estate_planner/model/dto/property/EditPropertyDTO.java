@@ -8,14 +8,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class PropertyDTO implements HasPropertyType {
+public class EditPropertyDTO implements HasPropertyType {
     private UUID id;
 
-    private List<PropertyPicture> pictures;
-
     private PropertyType propertyType;
-
-    private String ownerCompanyName;
 
     private String city;
 
@@ -38,8 +34,6 @@ public class PropertyDTO implements HasPropertyType {
     private String contactEmail;
 
     private String description;
-
-    private LocalDateTime createdOn;
 
     private LocalDateTime updatedOn;
 
@@ -85,7 +79,7 @@ public class PropertyDTO implements HasPropertyType {
 
 
 
-    public PropertyDTO() {
+    public EditPropertyDTO() {
     }
 
     public UUID getId() {
@@ -96,28 +90,12 @@ public class PropertyDTO implements HasPropertyType {
         this.id = id;
     }
 
-    public List<PropertyPicture> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<PropertyPicture> pictures) {
-        this.pictures = pictures;
-    }
-
     public PropertyType getPropertyType() {
         return propertyType;
     }
 
     public void setPropertyType(PropertyType propertyType) {
         this.propertyType = propertyType;
-    }
-
-    public String getOwnerCompanyName() {
-        return ownerCompanyName;
-    }
-
-    public void setOwnerCompanyName(String ownerCompanyName) {
-        this.ownerCompanyName = ownerCompanyName;
     }
 
     public String getCity() {
@@ -206,14 +184,6 @@ public class PropertyDTO implements HasPropertyType {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
     }
 
     public LocalDateTime getUpdatedOn() {

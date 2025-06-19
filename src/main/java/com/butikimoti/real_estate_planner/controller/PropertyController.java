@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
@@ -93,12 +94,13 @@ public class PropertyController {
         }
 
         BaseProperty savedProperty = basePropertyService.saveNewPropertyToDB(addPropertyData);
-        if (savedProperty != null) {
-            redirectAttributes.addFlashAttribute("propertySaved", true);
-        } else {
+
+        if (savedProperty == null) {
             redirectAttributes.addFlashAttribute("propertySaved", false);
+            return "redirect:/";
         }
-        return "redirect:/";
+
+        return "redirect:/properties/" + savedProperty.getId();
     }
 
     @GetMapping("/property-page")
@@ -118,6 +120,26 @@ public class PropertyController {
         return "property-page";
     }
 
+    @PatchMapping("/{id}")
+    public String editProperty(@PathVariable UUID id,
+                               @Valid EditPropertyDTO editPropertyData,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("editPropertyData", editPropertyData);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editPropertyData", bindingResult);
+            return "redirect:/properties/" + id + "/edit";
+        }
+
+        BaseProperty editedProperty = basePropertyService.editPropertyAndAddToDB(editPropertyData);
+
+        if(editedProperty == null) {
+            throw new RuntimeException("Error in saving property.");
+        }
+
+        return "redirect:/properties/" + editedProperty.getId();
+    }
+
     @DeleteMapping("/{id}")
     public String deleteProperty(@PathVariable UUID id) throws IOException {
         OfferType offerType = basePropertyService.getPropertyByID(id).getOfferType();
@@ -132,6 +154,15 @@ public class PropertyController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editProperty(@PathVariable UUID id, Model model) {
+        EditPropertyDTO editPropertyData = getEditPropertyDTOById(id);
+
+        model.addAttribute("editPropertyData", editPropertyData);
+
+        return "edit-property";
     }
 
     @PostMapping("/{id}/upload-picture")
@@ -171,6 +202,10 @@ public class PropertyController {
 
     private PropertyDTO getPropertyDTOById(UUID id) {
         return modelMapper.map(basePropertyService.getPropertyByID(id), PropertyDTO.class);
+    }
+
+    private EditPropertyDTO getEditPropertyDTOById(UUID id) {
+        return modelMapper.map(basePropertyService.getPropertyByID(id), EditPropertyDTO.class);
     }
 
     private boolean isCompanyMatching(PropertyDTO property) {

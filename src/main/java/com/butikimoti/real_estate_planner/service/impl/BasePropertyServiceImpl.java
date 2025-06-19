@@ -1,6 +1,8 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
+import com.butikimoti.real_estate_planner.model.dto.HasPropertyType;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.*;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
@@ -11,6 +13,7 @@ import com.butikimoti.real_estate_planner.service.PropertyPictureService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.specifications.BasePropertySpecifications;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -72,19 +75,25 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             throw new RuntimeException("No such property type: " + addPropertyDTO.getPropertyType());
         }
 
-        BaseProperty property = switch (addPropertyDTO.getPropertyType()) {
-            case APARTMENT -> modelMapper.map(addPropertyDTO, Apartment.class);
-            case BUSINESS -> modelMapper.map(addPropertyDTO, BusinessProperty.class);
-            case GARAGE -> modelMapper.map(addPropertyDTO, Garage.class);
-            case HOUSE -> modelMapper.map(addPropertyDTO, House.class);
-            case LAND -> modelMapper.map(addPropertyDTO, Land.class);
-            default -> throw new RuntimeException("No such property type: " + addPropertyDTO.getPropertyType());
-        };
+        BaseProperty property = getBasePropertyFromDTO(addPropertyDTO);
 
         Company ownerCompany = getOwnerCompany(addPropertyDTO);
         property.setOwnerCompany(ownerCompany);
 
         property.setCreatedOn(LocalDateTime.now());
+
+        return savePropertyToDB(property);
+    }
+
+    @Override
+    public BaseProperty editPropertyAndAddToDB(EditPropertyDTO editPropertyDTO) {
+        BaseProperty property = basePropertyRepository.findById(editPropertyDTO.getId()).orElse(null);
+
+        if (property == null) {
+            throw new RuntimeException("Property not found");
+        }
+
+        applyEditPropertyDTOToProperty(property, editPropertyDTO);
 
         return savePropertyToDB(property);
     }
@@ -132,5 +141,30 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             throw new RuntimeException("User does not have a company");
         }
         return ownerCompany;
+    }
+
+    private BaseProperty getBasePropertyFromDTO(HasPropertyType dto) {
+        return  switch (dto.getPropertyType()) {
+            case APARTMENT -> modelMapper.map(dto, Apartment.class);
+            case BUSINESS -> modelMapper.map(dto, BusinessProperty.class);
+            case GARAGE -> modelMapper.map(dto, Garage.class);
+            case HOUSE -> modelMapper.map(dto, House.class);
+            case LAND -> modelMapper.map(dto, Land.class);
+            default -> throw new RuntimeException("No such property type: " + dto.getPropertyType());
+        };
+    }
+
+    private void applyEditPropertyDTOToProperty(BaseProperty property, EditPropertyDTO editPropertyDTO) {
+        Configuration configuration = modelMapper.getConfiguration();
+        boolean isSkipNullEnabled = configuration.isSkipNullEnabled();
+
+        try {
+            configuration.setSkipNullEnabled(true);
+            modelMapper.map(editPropertyDTO, property);
+        } finally {
+            configuration.setSkipNullEnabled(isSkipNullEnabled);
+        }
+
+        property.setUpdatedOn(LocalDateTime.now());
     }
 }

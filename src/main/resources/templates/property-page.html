@@ -313,18 +313,18 @@
                     <div class="created-on-updated-on-section flex-column gap-0-5">
                         <div class="flex-row gap-1">
                             <div class="w-30">Създаден&nbsp;на:</div>
-                            <div class="w-60">05.05.2025 г.</div>
+                            <div class="w-60" th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025 г.</div>
                         </div>
                         <div class="flex-row gap-1">
                             <div class="w-30">Последна актуализация:</div>
-                            <div class="w-60">10.05.2025 г.</div>
+                            <div class="w-60" th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025 г.</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="buttons-section flex-row" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
                     <div class="w-50 text-center">
-                        <a th:href="@{/properties/edit/{id}(id=${property.id})}">
+                        <a th:href="@{/properties/{id}/edit(id=${property.id})}">
                             <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
                         </a>
                     </div>
