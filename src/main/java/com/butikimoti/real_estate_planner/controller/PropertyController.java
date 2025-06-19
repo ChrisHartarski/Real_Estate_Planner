@@ -92,7 +92,7 @@ public class PropertyController {
             return "redirect:/properties/add";
         }
 
-        BaseProperty savedProperty = basePropertyService.savePropertyToDB(addPropertyData);
+        BaseProperty savedProperty = basePropertyService.saveNewPropertyToDB(addPropertyData);
         if (savedProperty != null) {
             redirectAttributes.addFlashAttribute("propertySaved", true);
         } else {
@@ -144,7 +144,7 @@ public class PropertyController {
 
         PropertyPicture picture = new PropertyPicture(imageUrl, property, imagePublicId);
         property.getPictures().add(picture);
-        basePropertyService.updateProperty(property);
+        basePropertyService.savePropertyToDB(property);
 
         return "redirect:/properties/" + id;
     }

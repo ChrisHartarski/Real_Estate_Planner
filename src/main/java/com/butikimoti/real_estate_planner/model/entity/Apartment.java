@@ -29,6 +29,7 @@ public class Apartment extends BaseProperty {
     @Column(name = "building_floors", nullable = false)
     private int buildingFloors;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "heating_type", nullable = false)
     private HeatingType heatingType;
 

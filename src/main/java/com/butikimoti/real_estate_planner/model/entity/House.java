@@ -20,6 +20,7 @@ public class House extends BaseProperty {
     @Column
     private int year;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "heating_type", nullable = false)
     private HeatingType heatingType;
 

@@ -6,7 +6,6 @@ import com.butikimoti.real_estate_planner.model.entity.*;
 import com.butikimoti.real_estate_planner.model.enums.*;
 import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
 import com.butikimoti.real_estate_planner.service.*;
-import com.butikimoti.real_estate_planner.specifications.BasePropertySpecifications;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class BasePropertyServiceImplUnitTests {
     private BasePropertyService serviceToTest;
+    private final ModelMapper modelMapper = new ModelMapper();
     private static final UUID TEST_COMPANY_ID = UUID.randomUUID();
     private static final UUID TEST_USER_ID = UUID.randomUUID();
     private static final UUID TEST_APARTMENT_ID = UUID.randomUUID();
@@ -48,29 +48,14 @@ public class BasePropertyServiceImplUnitTests {
     private UserEntityService userEntityService;
 
     @Mock
-    private ApartmentService apartmentService;
-
-    @Mock
-    private BusinessPropertyService businessPropertyService;
-
-    @Mock
-    private GarageService garageService;
-
-    @Mock
-    private HouseService houseService;
-
-    @Mock
-    private LandService landService;
-
-    @Mock
     private PropertyPictureService propertyPictureService;
 
     @Captor
-    private ArgumentCaptor<AddPropertyDTO> captor;
+    private ArgumentCaptor<BaseProperty> captor;
 
     @BeforeEach
     void setUp() {
-        serviceToTest = new BasePropertyServiceImpl(basePropertyRepository, userEntityService, apartmentService, businessPropertyService, garageService, houseService, landService, propertyPictureService, new ModelMapper());
+        serviceToTest = new BasePropertyServiceImpl(basePropertyRepository, userEntityService, propertyPictureService, new ModelMapper());
     }
 
     @SuppressWarnings("unchecked")
@@ -140,131 +125,149 @@ public class BasePropertyServiceImplUnitTests {
     }
 
     @Test
-    public void testSavePropertyToDB_apartmentInvokesMethodInApartmentService() {
-        AddPropertyDTO propertyDTO = new AddPropertyDTO();
-        propertyDTO.setPropertyType(PropertyType.APARTMENT);
+    public void testSaveNewPropertyToDB_savesApartmentCorrectly() {
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO();
+        addPropertyDTO.setPropertyType(PropertyType.APARTMENT);
+        addPropertyDTO.setAddress("address");
+        addPropertyDTO.setOfferType(OfferType.SALE);
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        serviceToTest.savePropertyToDB(propertyDTO);
+        serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
-        verify(apartmentService).saveApartment(propertyDTO);
-        verify(businessPropertyService, never()).saveBusinessProperty(propertyDTO);
-        verify(houseService, never()).saveHouse(propertyDTO);
-        verify(landService, never()).saveLand(propertyDTO);
-        verify(garageService, never()).saveGarage(propertyDTO);
+        verify(basePropertyRepository).saveAndFlush(captor.capture());
+        Assertions.assertEquals(captor.getValue().getClass(), Apartment.class);
+        Apartment actual = (Apartment) captor.getValue();
+        Apartment expected = modelMapper.map(addPropertyDTO, Apartment.class);
+        Assertions.assertEquals(actual.getPropertyType(), expected.getPropertyType());
+        Assertions.assertEquals(actual.getAddress(), expected.getAddress());
+        Assertions.assertEquals(actual.getOfferType(), expected.getOfferType());
     }
 
     @Test
-    public void testSavePropertyToDB_businessPropertyInvokesMethodInBusinessPropertyService() {
-        AddPropertyDTO propertyDTO = new AddPropertyDTO();
-        propertyDTO.setPropertyType(PropertyType.BUSINESS);
+    public void testSavePropertyToDB_savesBusinessNewPropertyCorrectly() {
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO();
+        addPropertyDTO.setPropertyType(PropertyType.BUSINESS);
+        addPropertyDTO.setAddress("address");
+        addPropertyDTO.setOfferType(OfferType.SALE);
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        serviceToTest.savePropertyToDB(propertyDTO);
+        serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
-        verify(apartmentService, never()).saveApartment(propertyDTO);
-        verify(businessPropertyService).saveBusinessProperty(propertyDTO);
-        verify(houseService, never()).saveHouse(propertyDTO);
-        verify(landService, never()).saveLand(propertyDTO);
-        verify(garageService, never()).saveGarage(propertyDTO);
+        verify(basePropertyRepository).saveAndFlush(captor.capture());
+        Assertions.assertEquals(captor.getValue().getClass(), BusinessProperty.class);
+        BusinessProperty actual = (BusinessProperty) captor.getValue();
+        BusinessProperty expected = modelMapper.map(addPropertyDTO, BusinessProperty.class);
+        Assertions.assertEquals(actual.getPropertyType(), expected.getPropertyType());
+        Assertions.assertEquals(actual.getAddress(), expected.getAddress());
+        Assertions.assertEquals(actual.getOfferType(), expected.getOfferType());
     }
 
     @Test
-    public void testSavePropertyToDB_houseInvokesMethodInHouseService() {
-        AddPropertyDTO propertyDTO = new AddPropertyDTO();
-        propertyDTO.setPropertyType(PropertyType.HOUSE);
+    public void testSaveNewPropertyToDB_savesHouseCorrectly() {
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO();
+        addPropertyDTO.setPropertyType(PropertyType.HOUSE);
+        addPropertyDTO.setAddress("address");
+        addPropertyDTO.setOfferType(OfferType.SALE);
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        serviceToTest.savePropertyToDB(propertyDTO);
+        serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
-        verify(apartmentService, never()).saveApartment(propertyDTO);
-        verify(businessPropertyService, never()).saveBusinessProperty(propertyDTO);
-        verify(houseService).saveHouse(propertyDTO);
-        verify(landService, never()).saveLand(propertyDTO);
-        verify(garageService, never()).saveGarage(propertyDTO);
+        verify(basePropertyRepository).saveAndFlush(captor.capture());
+        Assertions.assertEquals(captor.getValue().getClass(), House.class);
+        House actual = (House) captor.getValue();
+        House expected = modelMapper.map(addPropertyDTO, House.class);
+        Assertions.assertEquals(actual.getPropertyType(), expected.getPropertyType());
+        Assertions.assertEquals(actual.getAddress(), expected.getAddress());
+        Assertions.assertEquals(actual.getOfferType(), expected.getOfferType());
     }
 
     @Test
-    public void testSavePropertyToDB_landInvokesMethodInLandService() {
-        AddPropertyDTO propertyDTO = new AddPropertyDTO();
-        propertyDTO.setPropertyType(PropertyType.LAND);
+    public void testSaveNewPropertyToDB_savesLandCorrectly() {
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO();
+        addPropertyDTO.setPropertyType(PropertyType.LAND);
+        addPropertyDTO.setAddress("address");
+        addPropertyDTO.setOfferType(OfferType.SALE);
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        serviceToTest.savePropertyToDB(propertyDTO);
+        serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
-        verify(apartmentService, never()).saveApartment(propertyDTO);
-        verify(businessPropertyService, never()).saveBusinessProperty(propertyDTO);
-        verify(houseService, never()).saveHouse(propertyDTO);
-        verify(landService).saveLand(propertyDTO);
-        verify(garageService, never()).saveGarage(propertyDTO);
+        verify(basePropertyRepository).saveAndFlush(captor.capture());
+        Assertions.assertEquals(captor.getValue().getClass(), Land.class);
+        Land actual = (Land) captor.getValue();
+        Land expected = modelMapper.map(addPropertyDTO, Land.class);
+        Assertions.assertEquals(actual.getPropertyType(), expected.getPropertyType());
+        Assertions.assertEquals(actual.getAddress(), expected.getAddress());
+        Assertions.assertEquals(actual.getOfferType(), expected.getOfferType());
     }
 
     @Test
-    public void testSavePropertyToDB_garageInvokesMethodInGarageService() {
-        AddPropertyDTO propertyDTO = new AddPropertyDTO();
-        propertyDTO.setPropertyType(PropertyType.GARAGE);
+    public void testSaveNewPropertyToDB_savesGarageCorrectly() {
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO();
+        addPropertyDTO.setPropertyType(PropertyType.GARAGE);
+        addPropertyDTO.setAddress("address");
+        addPropertyDTO.setOfferType(OfferType.SALE);
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        serviceToTest.savePropertyToDB(propertyDTO);
+        serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
-        verify(apartmentService, never()).saveApartment(propertyDTO);
-        verify(businessPropertyService, never()).saveBusinessProperty(propertyDTO);
-        verify(houseService, never()).saveHouse(propertyDTO);
-        verify(landService, never()).saveLand(propertyDTO);
-        verify(garageService).saveGarage(propertyDTO);
+        verify(basePropertyRepository).saveAndFlush(captor.capture());
+        Assertions.assertEquals(captor.getValue().getClass(), Garage.class);
+        Garage actual = (Garage) captor.getValue();
+        Garage expected = modelMapper.map(addPropertyDTO, Garage.class);
+        Assertions.assertEquals(actual.getPropertyType(), expected.getPropertyType());
+        Assertions.assertEquals(actual.getAddress(), expected.getAddress());
+        Assertions.assertEquals(actual.getOfferType(), expected.getOfferType());
     }
 
     @Test
-    public void testSavePropertyToDB_throwsExceptionIfPropertyTypeIsNullOrNotCorrect() {
+    public void testSavePropertyToDB_throwsExceptionIfNewPropertyTypeIsNullOrNotCorrect() {
         AddPropertyDTO propertyDTO = new AddPropertyDTO();
 
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.savePropertyToDB(propertyDTO));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.saveNewPropertyToDB(propertyDTO));
     }
 
     @Test
-    public void testSavePropertyToDB_setsCreatedOnUpdatedOnAndCompanyInDTO() {
-        AddPropertyDTO propertyDTO = new AddPropertyDTO(PropertyType.APARTMENT, null, "test_city", "test_neighbourhood", "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 893 333 595", "contact@mail.com", "test_description", null, null, ConstructionType.BRICK, 2020, 3, 4, 8, "test_facing", HeatingType.GAS, ApartmentType.THREE_ROOM, true, null, null, null, null, null, null, null, null);
-
+    public void testSaveNewPropertyToDB_setsCreatedOnUpdatedOnAndCompanyInDTO() {
         when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
 
-        serviceToTest.savePropertyToDB(propertyDTO);
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO(PropertyType.APARTMENT, null, "test_city", "test_neighbourhood", "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 893 333 595", "contact@mail.com", "test_description", null, null, ConstructionType.BRICK, 2020, 3, 4, 8, "test_facing", HeatingType.GAS, ApartmentType.THREE_ROOM, true, null, null, null, null, null, null, null, null);
+        serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
-        verify(apartmentService).saveApartment(captor.capture());
-        AddPropertyDTO actual = captor.getValue();
+        verify(basePropertyRepository).saveAndFlush((Apartment) captor.capture());
+        Apartment actual = (Apartment) captor.getValue();
 
         Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(actual);
-        Assertions.assertEquals(propertyDTO.getPropertyType(), actual.getPropertyType());
+        Assertions.assertEquals(addPropertyDTO.getPropertyType(), actual.getPropertyType());
         Assertions.assertEquals(TEST_USER.getCompany().getName(), actual.getOwnerCompany().getName());
-        Assertions.assertEquals(propertyDTO.getCity(), actual.getCity());
-        Assertions.assertEquals(propertyDTO.getNeighbourhood(), actual.getNeighbourhood());
-        Assertions.assertEquals(propertyDTO.getAddress(), actual.getAddress());
-        Assertions.assertEquals(propertyDTO.getPrice(), actual.getPrice());
-        Assertions.assertEquals(propertyDTO.getArea(), actual.getArea());
-        Assertions.assertEquals(propertyDTO.getAreaUnit(), actual.getAreaUnit());
-        Assertions.assertEquals(propertyDTO.getOfferType(), actual.getOfferType());
-        Assertions.assertEquals(propertyDTO.getContactName(), actual.getContactName());
-        Assertions.assertEquals(propertyDTO.getContactPhone(), actual.getContactPhone());
-        Assertions.assertEquals(propertyDTO.getContactEmail(), actual.getContactEmail());
-        Assertions.assertEquals(propertyDTO.getDescription(), actual.getDescription());
+        Assertions.assertEquals(addPropertyDTO.getCity(), actual.getCity());
+        Assertions.assertEquals(addPropertyDTO.getNeighbourhood(), actual.getNeighbourhood());
+        Assertions.assertEquals(addPropertyDTO.getAddress(), actual.getAddress());
+        Assertions.assertEquals(addPropertyDTO.getPrice(), actual.getPrice());
+        Assertions.assertEquals(addPropertyDTO.getArea(), actual.getArea());
+        Assertions.assertEquals(addPropertyDTO.getAreaUnit(), actual.getAreaUnit());
+        Assertions.assertEquals(addPropertyDTO.getOfferType(), actual.getOfferType());
+        Assertions.assertEquals(addPropertyDTO.getContactName(), actual.getContactName());
+        Assertions.assertEquals(addPropertyDTO.getContactPhone(), actual.getContactPhone());
+        Assertions.assertEquals(addPropertyDTO.getContactEmail(), actual.getContactEmail());
+        Assertions.assertEquals(addPropertyDTO.getDescription(), actual.getDescription());
         Assertions.assertNotNull(actual.getCreatedOn());
         Assertions.assertNotNull(actual.getUpdatedOn());
-        Assertions.assertEquals(propertyDTO.getConstructionType(), actual.getConstructionType());
-        Assertions.assertEquals(propertyDTO.getYear(), actual.getYear());
-        Assertions.assertEquals(propertyDTO.getRoomCount(), actual.getRoomCount());
-        Assertions.assertEquals(propertyDTO.getFloor(), actual.getFloor());
-        Assertions.assertEquals(propertyDTO.getBuildingFloors(), actual.getBuildingFloors());
-        Assertions.assertEquals(propertyDTO.getFacing(), actual.getFacing());
-        Assertions.assertEquals(propertyDTO.getApartmentType(), actual.getApartmentType());
-        Assertions.assertEquals(propertyDTO.isHasElevator(), actual.isHasElevator());
-        Assertions.assertEquals(propertyDTO.getHeatingType(), actual.getHeatingType());
+        Assertions.assertEquals(addPropertyDTO.getConstructionType(), actual.getConstructionType());
+        Assertions.assertEquals(addPropertyDTO.getYear(), actual.getYear());
+        Assertions.assertEquals(addPropertyDTO.getRoomCount(), actual.getRoomCount());
+        Assertions.assertEquals(addPropertyDTO.getFloor(), actual.getFloor());
+        Assertions.assertEquals(addPropertyDTO.getBuildingFloors(), actual.getBuildingFloors());
+        Assertions.assertEquals(addPropertyDTO.getFacing(), actual.getFacing());
+        Assertions.assertEquals(addPropertyDTO.getApartmentType(), actual.getApartmentType());
+        Assertions.assertEquals(addPropertyDTO.isHasElevator(), actual.isHasElevator());
+        Assertions.assertEquals(addPropertyDTO.getHeatingType(), actual.getHeatingType());
     }
 
     @Test
