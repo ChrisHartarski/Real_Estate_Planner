@@ -320,8 +320,42 @@
                             <div class="w-60" th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025 г.</div>
                         </div>
                     </div>
-
                 </div>
+
+                <div class="comments-section">
+                    <details class="flex-column gap-1">
+                        <summary th:text="#{property.comments}">Коментари</summary>
+                        <div class="comments-list">
+                            <div class="comment-item" th:each="comment : ${property.comments}">
+                                <div class="comment-col w-20"
+                                     th:text="${comment.user.firstName + ' ' + comment.user.lastName}"></div>
+                                <div class="comment-col w-20"
+                                     th:text="${#temporals.format(comment.date, 'dd.MM.yyyy')}"></div>
+                                <div class="comment-col w-60" th:text="${comment.commentText}"></div>
+                            </div>
+                        </div>
+                        <div class="add-comment-section">
+                            <details>
+                                <summary class="text-center" th:text="#{property.add-comment-header}">Добави нов
+                                    коментар</summary>
+                                <form th:action="@{/properties/{id}/add-comment(id=${property.id})}"
+                                      th:method="POST"
+                                      th:object="${addCommentData}"
+                                      class="flex-row gap-0-5 justify-content-center">
+                                    <label for="add-comment-text"
+                                           th:text="#{property.add-comment} + ':'">Коментар</label>
+                                    <textarea class="w-70" name="add-comment-text" id="add-comment-text" rows="5"
+                                              th:placeholder="#{property.add-comment-placeholder}"
+                                              th:field="*{commentText}">
+                                </textarea>
+                                    <button class="btn btn-blue" type="submit" th:text="#{property.button-add-comment}">Добави коментар
+                                    </button>
+                                </form>
+                            </details>
+                        </div>
+                    </details>
+                </div>
+
                 <div class="buttons-section flex-row" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
                     <div class="w-50 text-center">
                         <a th:href="@{/properties/{id}/edit(id=${property.id})}">

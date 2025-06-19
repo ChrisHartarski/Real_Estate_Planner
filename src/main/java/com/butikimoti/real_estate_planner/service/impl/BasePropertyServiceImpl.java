@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.dto.HasPropertyType;
+import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;

@@ -1,11 +1,13 @@
 package com.butikimoti.real_estate_planner.service;
 
+import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

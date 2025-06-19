@@ -1,14 +1,17 @@
 package com.butikimoti.real_estate_planner.controller;
 
+import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
+import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
+import com.butikimoti.real_estate_planner.service.CommentService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import jakarta.validation.Valid;
@@ -32,12 +35,14 @@ import java.util.UUID;
 public class PropertyController {
     private final BasePropertyService basePropertyService;
     private final UserEntityService userEntityService;
+    private final CommentService commentService;
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
-    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
+    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.basePropertyService = basePropertyService;
         this.userEntityService = userEntityService;
+        this.commentService = commentService;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
     }
@@ -45,6 +50,11 @@ public class PropertyController {
     @ModelAttribute("addPropertyData")
     public AddPropertyDTO addPropertyData() {
         return new AddPropertyDTO();
+    }
+
+    @ModelAttribute("addCommentData")
+    public AddCommentDTO addCommentData() {
+        return new AddCommentDTO();
     }
 
     @GetMapping("/sales")
@@ -176,6 +186,34 @@ public class PropertyController {
         PropertyPicture picture = new PropertyPicture(imageUrl, property, imagePublicId);
         property.getPictures().add(picture);
         basePropertyService.savePropertyToDB(property);
+
+        return "redirect:/properties/" + id;
+    }
+
+    @PostMapping("/{id}/add-comment")
+    public String addComment(@PathVariable UUID id,
+                             @Valid AddCommentDTO addCommentData,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addCommentData", addCommentData);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addCommentData", bindingResult);
+            return "redirect:/properties/" + id;
+        }
+
+        UserEntity user = userEntityService.getCurrentUser();
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        addCommentData.setUser(user);
+
+        BaseProperty property = basePropertyService.getPropertyByID(id);
+        if (property == null) {
+            throw new RuntimeException("Property not found");
+        }
+        addCommentData.setProperty(property);
+
+        commentService.addComment(addCommentData);
 
         return "redirect:/properties/" + id;
     }
