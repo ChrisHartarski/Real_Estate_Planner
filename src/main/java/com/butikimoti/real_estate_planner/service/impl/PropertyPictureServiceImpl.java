@@ -4,7 +4,6 @@ import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.repository.PropertyPictureRepository;
 import com.butikimoti.real_estate_planner.service.PropertyPictureService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

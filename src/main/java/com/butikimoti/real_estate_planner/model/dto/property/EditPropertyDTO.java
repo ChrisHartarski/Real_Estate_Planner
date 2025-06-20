@@ -1,11 +1,8 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
-import com.butikimoti.real_estate_planner.model.dto.HasPropertyType;
-import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.enums.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 public class EditPropertyDTO implements HasPropertyType {

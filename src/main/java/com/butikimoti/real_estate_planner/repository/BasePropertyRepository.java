@@ -1,9 +1,6 @@
 package com.butikimoti.real_estate_planner.repository;
 
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
-import com.butikimoti.real_estate_planner.model.enums.OfferType;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -12,5 +9,4 @@ import java.util.UUID;
 
 @Repository
 public interface BasePropertyRepository extends JpaRepository<BaseProperty, UUID>, JpaSpecificationExecutor<BaseProperty> {
-    Page<BaseProperty> findByOwnerCompanyIdAndOfferType(UUID ownerCompanyId, Pageable pageable, OfferType offerType);
 }

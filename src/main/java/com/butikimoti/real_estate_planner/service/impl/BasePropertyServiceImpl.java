@@ -1,7 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.HasPropertyType;
-import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.HasPropertyType;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
@@ -77,10 +76,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         }
 
         BaseProperty property = getBasePropertyFromDTO(addPropertyDTO);
-
-        Company ownerCompany = getOwnerCompany(addPropertyDTO);
-        property.setOwnerCompany(ownerCompany);
-
+        property.setOwnerCompany(getOwnerCompany());
         property.setCreatedOn(LocalDateTime.now());
 
         return savePropertyToDB(property);
@@ -131,7 +127,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         return modelMapper.map(baseProperty, PropertyDTO.class);
     }
 
-    private Company getOwnerCompany(AddPropertyDTO addPropertyDTO) {
+    private Company getOwnerCompany() {
         UserEntity currentUser = userEntityService.getCurrentUser();
         if (currentUser == null) {
             throw new RuntimeException("No logged in user");
@@ -141,6 +137,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         if (ownerCompany == null) {
             throw new RuntimeException("User does not have a company");
         }
+
         return ownerCompany;
     }
 

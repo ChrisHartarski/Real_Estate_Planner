@@ -1,6 +1,5 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
-import com.butikimoti.real_estate_planner.model.dto.HasPropertyType;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.enums.*;
 import jakarta.validation.constraints.*;

@@ -66,7 +66,7 @@ public class PropertyController {
             @RequestParam(value = "minPrice", required = false) Double minPrice,
             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
-                            Model model) {
+            Model model) {
 
         model.addAttribute("pageType", "sales");
 
