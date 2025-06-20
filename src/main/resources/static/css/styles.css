@@ -529,11 +529,12 @@ a {
 
 .comment-item {
     display: flex;
+    gap: 1rem;
     font-size: 0.9rem;
     width: 100%;
     border: solid 1px black;
     border-radius: 5px;
-    padding: 0 1rem;
+    padding: 1rem;
 }
 
 .add-comment-section {
