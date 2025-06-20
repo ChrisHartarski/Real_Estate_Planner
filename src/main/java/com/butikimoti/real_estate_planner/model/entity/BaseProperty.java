@@ -70,6 +70,7 @@ public abstract class BaseProperty {
     private LocalDateTime updatedOn;
 
     @OneToMany(mappedBy = "property", orphanRemoval = true)
+    @OrderBy("date DESC")
     private List<Comment> comments;
 
     protected BaseProperty() {
