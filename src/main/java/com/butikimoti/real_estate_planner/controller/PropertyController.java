@@ -14,7 +14,9 @@ import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import com.butikimoti.real_estate_planner.service.CommentService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
+import jakarta.validation.Validator;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,11 +25,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -38,13 +42,15 @@ public class PropertyController {
     private final CommentService commentService;
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
+    private final Validator validator;
 
-    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
+    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, ModelMapper modelMapper, Validator validator) {
         this.basePropertyService = basePropertyService;
         this.userEntityService = userEntityService;
         this.commentService = commentService;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
+        this.validator = validator;
     }
 
     @ModelAttribute("addPropertyData")
@@ -97,12 +103,18 @@ public class PropertyController {
     public String addProperty(@Valid AddPropertyDTO addPropertyData,
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) {
+
+        //Validations of fields depending on propertyType
+        validateWithGroup(addPropertyData, bindingResult);
+
+        //Display messages depending on errors
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addPropertyData", addPropertyData);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPropertyData", bindingResult);
             return "redirect:/properties/add";
         }
 
+        //add property to DB
         BaseProperty savedProperty = basePropertyService.saveNewPropertyToDB(addPropertyData);
 
         if (savedProperty == null) {
@@ -138,6 +150,7 @@ public class PropertyController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editPropertyData", editPropertyData);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editPropertyData", bindingResult);
+
             return "redirect:/properties/" + id + "/edit";
         }
 
@@ -250,5 +263,31 @@ public class PropertyController {
         String userCompanyName = userEntityService.getCurrentUser().getCompany().getName();
 
         return userCompanyName.equalsIgnoreCase(property.getOwnerCompanyName());
+    }
+
+    private void validateWithGroup(AddPropertyDTO addPropertyData, BindingResult bindingResult) {
+        //determine the group by PropertyType
+        Class<?> group = determineValidationGroup(addPropertyData.getPropertyType());
+
+        //get the violations
+        Set<ConstraintViolation<AddPropertyDTO>> constraintViolations = validator.validate(addPropertyData, group);
+
+        //add the violations to bindingResult
+        for (ConstraintViolation<AddPropertyDTO> violation : constraintViolations) {
+            String field = violation.getPropertyPath().toString();
+            String message = violation.getMessage();
+            bindingResult.addError(new FieldError(bindingResult.getObjectName(), field, message));
+        }
+    }
+
+    private Class<?> determineValidationGroup(PropertyType propertyType) {
+        return switch (propertyType) {
+            case PropertyType.APARTMENT -> AddPropertyDTO.ApartmentGroup.class;
+            case PropertyType.BUSINESS -> AddPropertyDTO.BusinessPropertyGroup.class;
+            case PropertyType.HOUSE -> AddPropertyDTO.HouseGroup.class;
+            case PropertyType.GARAGE -> AddPropertyDTO.GarageGroup.class;
+            case PropertyType.LAND -> AddPropertyDTO.LandGroup.class;
+            default -> throw new RuntimeException("Unknown property type");
+        };
     }
 }
