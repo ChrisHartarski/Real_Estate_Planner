@@ -24,7 +24,7 @@ public class House extends BaseProperty {
     @Column(name = "heating_type", nullable = false)
     private HeatingType heatingType;
 
-    @Column(name = "yard_area", nullable = false)
+    @Column(name = "yard_area")
     private int yardArea;
 
     @Enumerated(EnumType.STRING)

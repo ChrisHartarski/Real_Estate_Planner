@@ -7,12 +7,18 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 public class AddPropertyDTO implements HasPropertyType {
+    public interface ApartmentGroup {}
+    public interface BusinessPropertyGroup {}
+    public interface HouseGroup {}
+    public interface GarageGroup {}
+    public interface LandGroup {}
 
     @NotNull(message = "{propertyType.notEmpty}")
     private PropertyType propertyType;
 
     private Company ownerCompany;
 
+    @NotNull(message = "{propertyCity.notEmpty}")
     private String city;
 
     private String neighbourhood;
@@ -54,43 +60,56 @@ public class AddPropertyDTO implements HasPropertyType {
     private LocalDateTime updatedOn;
 
     //common
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyConstructionType.notEmpty}")
     private ConstructionType constructionType;
 
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyYear.notEmpty}")
+    @Positive(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyYear.positive}")
     private Integer year;
 
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyRoomCount.notEmpty}")
     private Integer roomCount;
 
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class}, message = "{propertyFloor.notEmpty}")
     private Integer floor;
 
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class}, message = "{propertyBuildingFloors.notEmpty}")
     private Integer buildingFloors;
 
     private String facing;
 
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyHeatingType.notEmpty}")
     private HeatingType heatingType;
 
     //apartment
+    @NotNull(groups = ApartmentGroup.class, message = "{propertyApartmentType.notEmpty}")
     private ApartmentType apartmentType;
 
     private boolean hasElevator;
 
     //house
+    @NotNull(groups = HouseGroup.class, message = "{propertyHouseType.notEmpty}")
     private HouseType houseType;
 
     private Integer yardArea;
 
     private AreaUnit yardAreaUnit;
 
+    @NotNull(groups = HouseGroup.class, message = "{propertyFloorsCount.notEmpty}")
     private Integer floorsCount;
 
     private String additionalStructures;
 
     //garage
+    @NotNull(groups = GarageGroup.class, message = "{propertyGarageType.notEmpty}")
     private GarageType garageType;
 
     //land
+    @NotNull(groups = LandGroup.class, message = "{propertyLandType.notEmpty}")
     private LandType landType;
 
     //business property
+    @NotNull(groups = BusinessPropertyGroup.class, message = "{propertyBusinessPropertyType.notEmpty}")
     private BusinessPropertyType businessPropertyType;
 
 
