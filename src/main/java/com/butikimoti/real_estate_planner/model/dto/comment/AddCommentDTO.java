@@ -13,6 +13,12 @@ public class AddCommentDTO {
     public AddCommentDTO() {
     }
 
+    public AddCommentDTO(String commentText, UserEntity user, BaseProperty property) {
+        this.commentText = commentText;
+        this.user = user;
+        this.property = property;
+    }
+
     @NotNull(message = "{comment.notEmpty}")
     @Size(max = 1000, message = "{comment.length}")
     public String getCommentText() {

@@ -1,9 +1,7 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
-import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.Comment;
-import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.repository.CommentRepository;
 import com.butikimoti.real_estate_planner.service.CommentService;
 import org.modelmapper.ModelMapper;
