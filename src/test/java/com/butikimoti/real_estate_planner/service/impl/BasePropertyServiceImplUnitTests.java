@@ -228,8 +228,6 @@ public class BasePropertyServiceImplUnitTests {
     public void testSavePropertyToDB_throwsExceptionIfNewPropertyTypeIsNullOrNotCorrect() {
         AddPropertyDTO propertyDTO = new AddPropertyDTO();
 
-        when(userEntityService.getCurrentUser()).thenReturn(TEST_USER);
-
         Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.saveNewPropertyToDB(propertyDTO));
     }
 
