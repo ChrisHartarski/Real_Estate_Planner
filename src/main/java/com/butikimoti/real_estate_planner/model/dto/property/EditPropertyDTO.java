@@ -79,6 +79,40 @@ public class EditPropertyDTO implements HasPropertyType {
     public EditPropertyDTO() {
     }
 
+    public EditPropertyDTO(UUID id, PropertyType propertyType, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime updatedOn, ConstructionType constructionType, int year, int roomCount, int floor, int buildingFloors, String facing, HeatingType heatingType, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, int yardArea, AreaUnit yardAreaUnit, int floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
+        this.id = id;
+        this.propertyType = propertyType;
+        this.city = city;
+        this.neighbourhood = neighbourhood;
+        this.address = address;
+        this.price = price;
+        this.area = area;
+        this.areaUnit = areaUnit;
+        this.offerType = offerType;
+        this.contactName = contactName;
+        this.contactPhone = contactPhone;
+        this.contactEmail = contactEmail;
+        this.description = description;
+        this.updatedOn = updatedOn;
+        this.constructionType = constructionType;
+        this.year = year;
+        this.roomCount = roomCount;
+        this.floor = floor;
+        this.buildingFloors = buildingFloors;
+        this.facing = facing;
+        this.heatingType = heatingType;
+        this.apartmentType = apartmentType;
+        this.hasElevator = hasElevator;
+        this.houseType = houseType;
+        this.yardArea = yardArea;
+        this.yardAreaUnit = yardAreaUnit;
+        this.floorsCount = floorsCount;
+        this.additionalStructures = additionalStructures;
+        this.garageType = garageType;
+        this.landType = landType;
+        this.businessPropertyType = businessPropertyType;
+    }
+
     public UUID getId() {
         return id;
     }
