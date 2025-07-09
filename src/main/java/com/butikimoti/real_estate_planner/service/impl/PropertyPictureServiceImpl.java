@@ -7,6 +7,7 @@ import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,11 +28,13 @@ public class PropertyPictureServiceImpl implements PropertyPictureService {
 
     @Override
     public void deletePictureFromCloud(UUID id) throws IOException {
-        if (!propertyPictureRepository.existsById(id)) {
+        Optional<PropertyPicture> pictureOptional = propertyPictureRepository.findById(id);
+
+        if (pictureOptional.isEmpty()) {
             throw new RuntimeException("Property picture with id " + id + " does not exist");
         }
 
-        String publicID = propertyPictureRepository.findById(id).get().getPublicID();
+        String publicID = pictureOptional.get().getPublicID();
         cloudinaryService.deletePicture(publicID);
     }
 }
