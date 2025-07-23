@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bg"
-       xmlns:th="http://www.thymeleaf.org">
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
@@ -13,12 +14,15 @@
 <body>
     <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'home'})}"></header>
     <main>
-<!--No logged user section-->
-        <div>Моля влезте с потребител и парола или се регистрирайте</div>
+        <div id="unauthorized-view" sec:authorize="!isAuthenticated()">
+            <div class="white text-center">Моля <a th:href="@{/users/login}" class="link-white">влезте с потребител и парола</a> или <a th:href="@{/users/register}" class="link-white">се регистрирайте</a></div>
+        </div>
 
-        <div>Последен ред</div>
-<!--        Logged user section-->
-<!--        buttons for different sections-->
+        <div id="authorized-view" class="flex-row gap-1 justify-content-center" sec:authorize="isAuthenticated()">
+            <a class="btn btn-white" th:href="@{/properties/sales}">Продажби</a>
+            <a class="btn btn-white" th:href="@{/properties/rents}">Наеми</a>
+        </div>
+
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
 </body>

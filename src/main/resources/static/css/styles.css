@@ -192,6 +192,18 @@ a {
     border: solid 2px red;
 }
 
+.btn-white {
+    background-color: white;
+    color: #263143;
+    border: solid 2px white;
+}
+
+.btn-white:hover {
+    color: white;
+    background-color: #263143;
+    border: solid 2px white;
+}
+
 .btn-transparent {
     border: none;
     background-color: transparent;
@@ -240,6 +252,7 @@ a {
     color: blue;
 }
 
+.link-white,
 .link-red,
 .link-black,
 .link-blue {
