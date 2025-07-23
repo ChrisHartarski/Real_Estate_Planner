@@ -76,7 +76,7 @@ public class PropertyController {
 
         model.addAttribute("pageType", "sales");
 
-        return viewProperties(propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/rents")
@@ -91,7 +91,7 @@ public class PropertyController {
 
         model.addAttribute("pageType", "rents");
 
-        return viewProperties(propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.RENT, propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/add")
@@ -238,8 +238,8 @@ public class PropertyController {
         return "redirect:/properties/" + id;
     }
 
-    private String viewProperties(PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice, Pageable pageable, Model model) {
-        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+    private String viewProperties(OfferType offerType, PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice, Pageable pageable, Model model) {
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, offerType, propertyType, city, neighbourhood, address, minPrice, maxPrice);
         model.addAttribute("properties", properties);
         model.addAttribute("propertyTypeParam", propertyType);
         model.addAttribute("cityParam", city);
