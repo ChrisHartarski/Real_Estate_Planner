@@ -2,9 +2,6 @@ package com.butikimoti.real_estate_planner.init;
 
 import com.butikimoti.real_estate_planner.model.dto.company.RegisterCompanyDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
-import com.butikimoti.real_estate_planner.model.entity.Apartment;
-import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
-import com.butikimoti.real_estate_planner.model.entity.House;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
