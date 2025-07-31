@@ -791,28 +791,48 @@ a {
     justify-content: space-between;
 }
 
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.info-left-column {
+    width: 30%;
+    white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+    .info-left-column {
+        width: 35%;
+        flex-wrap: wrap;
+        white-space: normal;
+    }
+}
+
+.info-right-column {
+    width: 60%;
+}
+
+.price-column {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media (max-width: 1000px) {
+    .price-column {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
 .page-heading > h1 {
     padding: 0;
-}
-
-.images-section > .main-image,
-.images-section > .secondary-images{
-    width: calc(50% - 1rem);
-}
-
-.images-section > .secondary-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: space-between;
-}
-
-.main-image > img {
-    max-width: 100%;
-}
-
-.secondary-images > img {
-    max-width: calc(100%/3 - 0.5rem);
 }
 
 .image-container {
@@ -823,6 +843,12 @@ a {
     align-items: center;
     overflow: hidden;
     position: relative;
+}
+
+@media (max-width: 1000px) {
+    .image-container {
+        height: 16rem;
+    }
 }
 
 .image-container img {
@@ -850,12 +876,41 @@ a {
     z-index: 10;
 }
 
+@media (max-width: 1000px) {
+    .glide__arrow--left {
+        left: 5px;
+    }
+}
+
 .glide__arrow--right {
     position: absolute;
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
     z-index: 10;
+}
+
+@media (max-width: 1000px) {
+    .glide__arrow--right {
+        right: 5px;
+    }
+}
+
+.upload-image-form {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+@media (max-width: 1000px) {
+    .upload-image-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .upload-image-form > * {
+        width: 100%;
+    }
 }
 
 .custom-file-upload {
@@ -892,6 +947,42 @@ a {
     padding: 1rem;
 }
 
+@media (max-width: 1000px) {
+    .comment-item {
+        font-size: 0.7rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+.comment-col-name,
+.comment-col-date {
+    width: 20%;
+    font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+    .comment-col-name {
+        width: 60%;
+        flex-grow: 1;
+    }
+
+    .comment-col-date {
+        width: 30%;
+        flex-grow: 1;
+    }
+}
+
+.comment-col-comment {
+    width: 60%;
+}
+
+@media (max-width: 1000px) {
+    .comment-col-comment {
+        width: 100%;
+    }
+}
+
 .add-comment-section {
     display: flex;
     flex-direction: column;
@@ -903,6 +994,34 @@ a {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.add-comment-form {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+@media (max-width: 1000px) {
+    .add-comment-form {
+        flex-direction: column;
+    }
+}
+
+.page-container .buttons-section {
+    display: flex;
+    gap: 1rem;
+}
+
+.page-container .buttons-section > div {
+    width: calc(50% - 0.5rem);
+    text-align: center;
+}
+
+@media (max-width: 1000px) {
+    .page-container .buttons-section .btn {
+        padding: 0.5rem;
+    }
 }
 
 #modal {
