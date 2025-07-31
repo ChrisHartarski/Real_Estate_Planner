@@ -359,19 +359,18 @@ a {
 }
 
 /* Main */
-
-/* Login */
-.login-user-container {
+.page-container {
     width: 70%;
     margin: auto;
 }
 
 @media (max-width: 1000px) {
-    .login-user-container {
+    .page-container {
         width: 90%;
     }
 }
 
+/* Login */
 #login_form {
     gap: 1rem;
     text-align: center;

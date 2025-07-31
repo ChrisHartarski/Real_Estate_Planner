@@ -13,7 +13,7 @@
 <body>
     <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'login'})}"></header>
     <main>
-        <div class="login-user-container">
+        <div class="page-container">
             <div class="card flex-column">
                 <h1 class="text-center" th:text="#{login.heading}">Вход</h1>
                 <form class="flex-column" id="login_form"
