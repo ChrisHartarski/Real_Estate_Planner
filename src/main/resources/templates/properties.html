@@ -30,19 +30,20 @@
         </h1>
 
 <!--        Filter and Sort -->
-        <div class="filter-sort-section w-70">
+        <div class="filter-sort-section">
             <div class="card">
                 <details class="flex-column">
                     <summary th:text="#{property.filter}">Филтър</summary>
                     <form class="flex-column filter-section gap-1"
                           th:action="@{'/properties/' + ${pageType}}"
                           th:method="GET">
-                        <div class="flex-row w-100">
+                        <div class="filter-items-container">
                             <!--                    Property Type-->
-                            <div class="w-50">
-                                <label class="display-inline-block w-40" th:text="#{property.property-type}"
+                            <div class="filter-item">
+                                <label class="filter-left-column" th:text="#{property.property-type}"
                                        for="filter-propertyType"></label>
-                                <select class="w-50" id="filter-propertyType" name="propertyType">
+
+                                <select class="filter-right-column" id="filter-propertyType" name="propertyType">
                                     <option
                                             value=""
                                             th:text="#{property.all-placeholder}">
@@ -57,47 +58,47 @@
                             </div>
 
                             <!--                    City-->
-                            <div class="w-50">
-                                <label class="display-inline-block w-40" th:text="#{property.city}" for="filter-city"></label>
-                                <input class="w-50" id="filter-city" name="city"
+                            <div class="filter-item">
+                                <label class="filter-left-column" th:text="#{property.city}" for="filter-city"></label>
+                                <input class="filter-right-column" id="filter-city" name="city"
                                        th:placeholder="#{property.city-placeholder}"
                                        th:value="${cityParam}"/>
                             </div>
                         </div>
-                        <div class="flex-row w-100">
+                        <div class="filter-items-container">
                             <!--                            Neighbourhood-->
-                            <div class="w-50">
-                                <label class="display-inline-block w-40" th:text="#{property.neighbourhood}"
+                            <div class="filter-item">
+                                <label class="filter-left-column" th:text="#{property.neighbourhood}"
                                        for="filter-neighbourhood"></label>
-                                <input class="w-50" id="filter-neighbourhood" name="neighbourhood"
+                                <input class="filter-right-column" id="filter-neighbourhood" name="neighbourhood"
                                        th:placeholder="#{property.neighbourhood-placeholder}"
                                        th:value="${neighbourhoodParam}"/>
                             </div>
 
                             <!--                            Address-->
-                            <div class="w-50">
-                                <label class="display-inline-block w-40" th:text="#{property.address}" for="filter-address"></label>
-                                <input class="w-50" id="filter-address" name="address"
+                            <div class="filter-item">
+                                <label class="filter-left-column" th:text="#{property.address}" for="filter-address"></label>
+                                <input class="filter-right-column" id="filter-address" name="address"
                                        th:placeholder="#{property.address-placeholder}"
                                        th:value="${addressParam}"/>
                             </div>
                         </div>
-                        <div class="flex-row w-100">
+                        <div class="filter-items-container">
                             <!--                            Min Price-->
-                            <div class="w-50">
-                                <label class="display-inline-block w-40" th:text="#{property.min-price}"
+                            <div class="filter-item">
+                                <label class="filter-left-column" th:text="#{property.min-price}"
                                        for="filter-min-price"></label>
-                                <input class="w-50" id="filter-min-price" name="minPrice" type="number" step="1" min="0"
-                                       th:placeholder="#{property.address-placeholder}"
+                                <input class="filter-right-column" id="filter-min-price" name="minPrice" type="number" step="1" min="0"
+                                       th:placeholder="#{property.min-price-placeholder}"
                                        th:value="${addressParam}"/>
                             </div>
 
                             <!--                            Max Price-->
-                            <div class="w-50">
-                                <label class="display-inline-block w-40" th:text="#{property.max-price}"
+                            <div class="filter-item">
+                                <label class="filter-left-column" th:text="#{property.max-price}"
                                        for="filter-max-price"></label>
-                                <input class="w-50" id="filter-max-price" name="maxPrice" type="number" step="1" min="0"
-                                       th:placeholder="#{property.address-placeholder}"
+                                <input class="filter-right-column" id="filter-max-price" name="maxPrice" type="number" step="1" min="0"
+                                       th:placeholder="#{property.max-price-placeholder}"
                                        th:value="${addressParam}"/>
                             </div>
                         </div>
@@ -112,119 +113,121 @@
 <!--        Offers-list -->
         <div class="offer-list-section w-70" id="offerListSection">
             <div th:each="property : ${properties.getContent()}">
-                <div class="card flex-row">
-                    <div class="image-section">
-                        <a th:href="@{'/properties/' + ${property.id}}">
-                            <img th:if="${!property.pictures.isEmpty()}"
-                                 th:src="@{${property.pictures[0].getPictureLink()}}"
-                                 alt="property image">
-                            <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
-                        </a>
-                    </div>
-                    <div class="content-section">
-                        <div class="content-header">
-                            <div class="flex-column">
-                                <div class="header">
-                                    <a th:href="@{'/properties/' + ${property.id}}">
-                                        <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
-                                            th:text="#{'apartmentType.' + ${property.apartmentType.name()}}">тип
-                                            апартамент</h2>
-                                        <h2 th:if="${property.propertyType.name() == 'HOUSE'}"
-                                            th:text="#{'houseType.' + ${property.houseType.name()}}">тип
-                                            къща</h2>
-                                        <h2 th:if="${property.propertyType.name() == 'BUSINESS'}"
-                                            th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">тип
-                                            бизнес имот</h2>
-                                        <h2 th:if="${property.propertyType.name() == 'GARAGE'}"
-                                            th:text="#{'garageType.' + ${property.garageType.name()}}">тип
-                                            гараж</h2>
-                                        <h2 th:if="${property.propertyType.name() == 'LAND'}"
-                                            th:text="#{'landType.' + ${property.landType.name()}}">тип
-                                            парцел</h2>
-                                    </a>
-                                </div>
-                                <p th:if="${property.neighbourhood.isEmpty() or property.neighbourhood.equalsIgnoreCase('')}" th:text="${property.city} + ', ' + ${property.address}">Русе, ул. Солун 26</p>
-                                <p th:if="${!property.neighbourhood.isEmpty() and !property.neighbourhood.equalsIgnoreCase('')}" th:text="${property.city} + ', ' + ${property.neighbourhood} + ', ' + ${property.address}">Русе, Възраждане, ул. Солун 26</p>
-                            </div>
-                            <div class="flex-column">
-                                <h3>
-                                    <span th:text="#{property.price} + ': '">Цена: </span>
-                                    <span th:text="'€ ' + ${#numbers.formatDecimal(property.price, 1, 'POINT', 0, 'COMMA')}">€70000</span>
-                                </h3>
-
-                                <p class="grayed-out"
-                                    th:text="'(€ ' + ${#numbers.formatDecimal(property.price / property.area, 1, 'POINT', 0, 'COMMA')} + ' / ' + #{'areaUnit.' + ${property.areaUnit}} + ')'">(€1000 / кв
-                                    .м)</p>
-                            </div>
+                <div class="card">
+                    <div class="offers-card-container">
+                        <div class="image-section">
+                            <a th:href="@{'/properties/' + ${property.id}}">
+                                <img th:if="${!property.pictures.isEmpty()}"
+                                     th:src="@{${property.pictures[0].getPictureLink()}}"
+                                     alt="property image">
+                                <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
+                            </a>
                         </div>
-                        <div class="content-description">
-                            <div class="flex-row gap-1 w-50"
-                                 th:if="${property.propertyType.name() == 'APARTMENT'
+                        <div class="content-section">
+                            <div class="content-header">
+                                <div class="flex-column">
+                                    <div class="header">
+                                        <a th:href="@{'/properties/' + ${property.id}}">
+                                            <h2 th:if="${property.propertyType.name() == 'APARTMENT'}"
+                                                th:text="#{'apartmentType.' + ${property.apartmentType.name()}}">тип
+                                                апартамент</h2>
+                                            <h2 th:if="${property.propertyType.name() == 'HOUSE'}"
+                                                th:text="#{'houseType.' + ${property.houseType.name()}}">тип
+                                                къща</h2>
+                                            <h2 th:if="${property.propertyType.name() == 'BUSINESS'}"
+                                                th:text="#{'businessPropertyType.' + ${property.businessPropertyType.name()}}">тип
+                                                бизнес имот</h2>
+                                            <h2 th:if="${property.propertyType.name() == 'GARAGE'}"
+                                                th:text="#{'garageType.' + ${property.garageType.name()}}">тип
+                                                гараж</h2>
+                                            <h2 th:if="${property.propertyType.name() == 'LAND'}"
+                                                th:text="#{'landType.' + ${property.landType.name()}}">тип
+                                                парцел</h2>
+                                        </a>
+                                    </div>
+                                    <p th:if="${property.neighbourhood.isEmpty() or property.neighbourhood.equalsIgnoreCase('')}" th:text="${property.city} + ', ' + ${property.address}">Русе, ул. Солун 26</p>
+                                    <p th:if="${!property.neighbourhood.isEmpty() and !property.neighbourhood.equalsIgnoreCase('')}" th:text="${property.city} + ', ' + ${property.neighbourhood} + ', ' + ${property.address}">Русе, Възраждане, ул. Солун 26</p>
+                                </div>
+                                <div class="flex-column">
+                                    <h3>
+                                        <span th:text="#{property.price} + ': '">Цена: </span>
+                                        <span th:text="'€ ' + ${#numbers.formatDecimal(property.price, 1, 'POINT', 0, 'COMMA')}">€70000</span>
+                                    </h3>
+
+                                    <p class="grayed-out"
+                                       th:text="'(€ ' + ${#numbers.formatDecimal(property.price / property.area, 1, 'POINT', 0, 'COMMA')} + ' / ' + #{'areaUnit.' + ${property.areaUnit}} + ')'">(€1000 / кв
+                                        .м)</p>
+                                </div>
+                            </div>
+                            <div class="content-description">
+                                <div class="content-row"
+                                     th:if="${property.propertyType.name() == 'APARTMENT'
                                            or property.propertyType.name() == 'HOUSE'
                                            or property.propertyType.name() == 'BUSINESS'}">
-                                <div th:text="#{property.construction-type} + ': '">Тип:</div>
-                                <div class="bold"
-                                      th:text="#{${'constructionType.' + property.constructionType.name()}}">тухла
+                                    <div th:text="#{property.construction-type} + ': '">Тип:</div>
+                                    <div class="bold"
+                                         th:text="#{${'constructionType.' + property.constructionType.name()}}">тухла
+                                    </div>
+                                </div>
+                                <div class="content-row">
+                                    <div th:text="#{property.area} + ': '">Квадратура: </div>
+                                    <div class="bold"
+                                         th:text="${property.area} + ' ' + #{${'areaUnit.' + property.areaUnit.name()}}">70 кв
+                                        .м</div>
+                                </div>
+                                <div class="content-row"
+                                     th:if="${property.propertyType.name() == 'APARTMENT'
+                                           or property.propertyType.name() == 'BUSINESS'}">
+                                    <div th:text="#{property.floor} + ':'"></div>
+                                    <div class="bold"
+                                         th:text="${property.floor} + ' ' + #{property.floor-from} + ' ' + ${property.buildingFloors}"></div>
+                                </div>
+                                <div class="content-row"
+                                     th:if="${property.propertyType.name() == 'HOUSE'}">
+                                    <div th:text="#{property.floors-count} + ':'">Брой етажи: </div>
+                                    <div class="bold"
+                                         th:text="${property.floorsCount}"></div>
+                                </div>
+                                <div class="content-row"
+                                     th:if="${property.propertyType.name() == 'HOUSE'}">
+                                    <div th:text="#{property.yard-area} + ': '">Площ двор: </div>
+                                    <div class="bold"
+                                         th:text="${property.yardArea} + ' ' + #{${'areaUnit.' + property.yardAreaUnit.name()}}">70 кв
+                                        .м</div>
+                                </div>
+                                <div class="content-row"
+                                     th:if="${property.propertyType.name() == 'APARTMENT'
+                                           or property.propertyType.name() == 'HOUSE'}">
+                                    <div th:text="#{property.year} + ': '">Година: </div>
+                                    <div class="bold"
+                                         th:text="${property.year}">1972</div>
                                 </div>
                             </div>
-                            <div class="flex-row gap-1 w-50">
-                                <div th:text="#{property.area} + ': '">Квадратура: </div>
-                                <div class="bold"
-                                        th:text="${property.area} + ' ' + #{${'areaUnit.' + property.areaUnit.name()}}">70 кв
-                                    .м</div>
+                            <div class="content-contact">
+                                <div class="flex-row w-100 gap-1">
+                                    <div th:text="#{property.contact-name} + ': '">Контакт: </div>
+                                    <div class="bold" th:text="${property.contactName}">Иван Иванов</div>
+                                </div>
+                                <div class="flex-row w-100 gap-1">
+                                    <div th:text="#{property.contact-phone} + ': '">Тел: </div>
+                                    <div class="bold" th:text="${property.contactPhone}">0888 888 888</div>
+                                </div>
+                                <div class="flex-row w-100 gap-1">
+                                    <div th:text="#{property.contact-email} + ': '">Имейл: </div>
+                                    <div class="bold" th:text="${property.contactEmail}">ivan_ivanov@gmail.com</div>
+                                </div>
                             </div>
-                            <div class="flex-row gap-1 w-50"
-                                 th:if="${property.propertyType.name() == 'APARTMENT'
-                                           or property.propertyType.name() == 'BUSINESS'}">
-                                <div th:text="#{property.floor} + ':'"></div>
-                                <div class="bold"
-                                        th:text="${property.floor} + ' ' + #{property.floor-from} + ' ' + ${property.buildingFloors}"></div>
+                            <div class="content-footer">
+                                <div class="content-footer-column">
+                                    <div th:text="#{property.updatedOn} + ': '">Актуализиран на: </div>
+                                    <div th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025</div>
+                                </div>
+                                <div class="content-footer-column">
+                                    <div th:text="#{property.createdOn} + ': '">Създаден на: </div>
+                                    <div th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025</div>
+                                </div>
+                                <a class="link-blue" th:href="@{'/properties/' + ${property.id}}" th:text="#{property.more-details} + '...'">Повече информация...</a>
                             </div>
-                            <div class="flex-row gap-1 w-50"
-                                 th:if="${property.propertyType.name() == 'HOUSE'}">
-                                <div th:text="#{property.floors-count} + ':'">Брой етажи: </div>
-                                <div class="bold"
-                                     th:text="${property.floorsCount}"></div>
-                            </div>
-                            <div class="flex-row gap-1 w-50"
-                                 th:if="${property.propertyType.name() == 'HOUSE'}">
-                                <div th:text="#{property.yard-area} + ': '">Площ двор: </div>
-                                <div class="bold"
-                                     th:text="${property.yardArea} + ' ' + #{${'areaUnit.' + property.yardAreaUnit.name()}}">70 кв
-                                    .м</div>
-                            </div>
-                            <div class="flex-row gap-1 w-50"
-                                 th:if="${property.propertyType.name() == 'APARTMENT'
-                                           or property.propertyType.name() == 'HOUSE'}">
-                                <div th:text="#{property.year} + ': '">Година: </div>
-                                <div class="bold"
-                                      th:text="${property.year}">1972</div>
-                            </div>
-                        </div>
-                        <div class="flex-row w-100 content-contact">
-                            <div class="flex-row w-100 gap-1">
-                                <div th:text="#{property.contact-name} + ': '">Контакт: </div>
-                                <div class="bold" th:text="${property.contactName}">Иван Иванов</div>
-                            </div>
-                            <div class="flex-row w-100 gap-1">
-                                <div th:text="#{property.contact-phone} + ': '">Тел: </div>
-                                <div class="bold" th:text="${property.contactPhone}">0888 888 888</div>
-                            </div>
-                            <div class="flex-row w-100 gap-1">
-                                <div th:text="#{property.contact-email} + ': '">Имейл: </div>
-                                <div class="bold" th:text="${property.contactEmail}">ivan_ivanov@gmail.com</div>
-                            </div>
-                        </div>
-                        <div class="content-footer">
-                            <div class="flex-row w-30 gap-1">
-                                <div th:text="#{property.updatedOn} + ': '">Актуализиран на: </div>
-                                <div th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025</div>
-                            </div>
-                            <div class="flex-row w-30 gap-1">
-                                <div th:text="#{property.createdOn} + ': '">Създаден на: </div>
-                                <div th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025</div>
-                            </div>
-                            <a class="link-blue" th:href="@{'/properties/' + ${property.id}}" th:text="#{property.more-details} + '...'">Повече информация...</a>
                         </div>
                     </div>
                 </div>
@@ -232,7 +235,7 @@
         </div>
 
         <!-- Page Select -->
-        <div class="flex-row justify-content-center">
+        <div class="page-select-container">
             <div class="pagination">
                 <!-- Go to first page -->
                 <a th:if="${properties.number > 0}"
@@ -280,26 +283,6 @@
                           maxPrice=${maxPriceParam})}">&raquo;</a>
             </div>
         </div>
-
-<!--        <div class="text-center" th:if="${properties.metadata.totalElements() > 0}">-->
-<!--            <div class="justify-content-center btn-group">-->
-<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() > 1}"-->
-<!--                   th:href="@{'/parts/all?page=0&searchPartCode=' + ${searchPartCode}}"-->
-<!--                   th:text="'<<' + #{paging_first}">{First}</a>-->
-<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() > 0}"-->
-<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.number() - 1} + '&searchPartCode=' + ${searchPartCode}}"-->
-<!--                   th:text="${properties.metadata.number()}">{Previous}</a>-->
-<!--                <a class="btn btn-warning active"-->
-<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.number()} + '&searchPartCode=' + ${searchPartCode}}"-->
-<!--                   th:text="${properties.metadata.number() + 1}">{current}</a>-->
-<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() < properties.metadata.totalPages() - 1}"-->
-<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.number() + 1} + '&searchPartCode=' + ${searchPartCode}}"-->
-<!--                   th:text="${properties.metadata.number() + 2}">{Next}</a>-->
-<!--                <a class="btn btn-warning" th:if="${properties.metadata.number() < properties.metadata.totalPages() - 2} "-->
-<!--                   th:href="@{'/parts/all?page=' + ${properties.metadata.totalPages() - 1} + '&searchPartCode=' + ${searchPartCode}}"-->
-<!--                   th:text="'>>' + #{paging_last}">{Last}</a>-->
-<!--            </div>-->
-<!--        </div>-->
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
 
