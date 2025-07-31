@@ -13,7 +13,7 @@
 <body>
     <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'register'})}"></header>
     <main>
-        <div class="w-70 center">
+        <div class="page-container">
             <div class="card flex-column">
                 <h1 class="text-center" th:text="#{register-company.heading }">Регистрирай фирма</h1>
                 <form class="flex-column gap-1" id="register_company_form"
@@ -22,12 +22,12 @@
                         th:object="${companyData}">
                     <!-- Company name input-->
                     <div class="flex-column text-center">
-                        <div class="flex-row w-100 gap-1">
-                            <div class="w-50 align-right">
+                        <div class="login-row">
+                            <div class="login-left-column">
                                 <label for="name" th:text="#{register-company.name} + ':'">Company name</label>
                             </div>
-                            <div class="w-50 align-left">
-                                <input class="w-70" name="name" id="name" type="text"
+                            <div class="login-right-column">
+                                <input class="login-input" name="name" id="name" type="text"
                                        placeholder="Наименование на фирма" th:field="*{name}"/>
                             </div>
                         </div>
@@ -38,12 +38,12 @@
 
                     <!-- Company address input-->
                     <div class="flex-column text-center">
-                        <div class="flex-row w-100 gap-1">
-                            <div class="w-50 align-right">
+                        <div class="login-row">
+                            <div class="login-left-column">
                                 <label for="address" th:text="#{register-company.address} + ':'">Company name</label>
                             </div>
-                            <div class="w-50 align-left">
-                                <input class="w-70" name="address" id="address" type="text"
+                            <div class="login-right-column">
+                                <input class="login-input" name="address" id="address" type="text"
                                        placeholder="Адрес на фирма" th:field="*{address}"/>
                             </div>
                         </div>
@@ -52,12 +52,12 @@
 
                     <!-- Company phone input-->
                     <div class="flex-column text-center">
-                        <div class="flex-row w-100 gap-1">
-                            <div class="w-50 align-right">
+                        <div class="login-row">
+                            <div class="login-left-column">
                                 <label for="phone" th:text="#{register-company.phone} + ':'">Company name</label>
                             </div>
-                            <div class="w-50 align-left">
-                                <input class="w-70" name="phone" id="phone" type="text" placeholder="+359000000000"
+                            <div class="login-right-column">
+                                <input class="login-input" name="phone" id="phone" type="text" placeholder="+359000000000"
                                        th:field="*{phone}"/>
                             </div>
                         </div>
@@ -66,12 +66,12 @@
 
                     <!-- Company email input-->
                     <div class="flex-column text-center">
-                        <div class="flex-row w-100 gap-1">
-                            <div class="w-50 align-right">
+                        <div class="login-row">
+                            <div class="login-left-column">
                                 <label for="email" th:text="#{register-company.email} + ':'">Имейл</label>
                             </div>
-                            <div class="w-50 align-left">
-                                <input class="w-70" name="email" id="email" type="email" placeholder="name@example.com"
+                            <div class="login-right-column">
+                                <input class="login-input" name="email" id="email" type="email" placeholder="name@example.com"
                                         th:field="*{email}"/>
                             </div>
                         </div>
