@@ -308,10 +308,23 @@ a {
     padding: 1rem 5rem 1rem 5rem;
     box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
     background-color: #FFFFFF;
+    gap: 1rem;
+}
+
+@media (max-width: 1000px) {
+    .navbar {
+        padding: 1rem;
+    }
 }
 
 .logo {
     max-width: 10rem;
+}
+
+@media (max-width: 1000px) {
+    .logo {
+        max-width: 7rem;
+    }
 }
 
 .menu-section > ul {
@@ -320,12 +333,25 @@ a {
     gap: 1rem;
 }
 
+@media (max-width: 1000px) {
+    .menu-section > ul {
+        gap: 0.5rem
+    }
+}
+
 .nav-item,
 .footer-text {
     font-size: 0.9rem;
     font-weight: 500;
     color: #263143;
     /*font-family: "Roboto", sans-serif;*/
+}
+
+@media (max-width: 1000px) {
+    .nav-item,
+    .footer-text {
+        font-size: 0.7rem;
+    }
 }
 
 /* Main */
