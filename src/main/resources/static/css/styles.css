@@ -370,10 +370,16 @@ a {
     }
 }
 
-/* Login */
+/* Login and Register */
 #login_form {
     gap: 1rem;
     text-align: center;
+}
+
+.login-row {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
 }
 
 .login-left-column {
