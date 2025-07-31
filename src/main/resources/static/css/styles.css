@@ -18,10 +18,14 @@ body {
 
 @media (max-width: 1000px) {
     body,
-    p,
-    input,
-    select {
+    p {
         font-size: 0.8rem;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 0.75rem;
     }
 }
 
@@ -432,66 +436,66 @@ a {
 }
 
 /* Add property page */
-.add-property-main {
+.property-main {
     width: 70%;
     margin: auto;
 }
 
 @media (max-width: 1000px) {
-    .add-property-main {
+    .property-main {
         width: 100%;
     }
 }
 
-.add-property-input-section {
+.property-input-section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     text-align: center;
 }
 
-.add-property-input {
+.property-input {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.add-property-input-line {
+.property-input-line {
     display: flex;
     width: 100%;
     gap: 1rem;
 }
 
-.add-property-input-left-column {
+.property-input-left-column {
     width: 30%;
     text-align: right;
 }
 
-.add-property-input-right-column {
+.property-input-right-column {
     width: 70%;
     text-align: left;
 }
 
-.add-property-input-fill-long {
+.property-input-fill-long {
     width: 70%;
 }
 
 @media (max-width: 1000px) {
-    .add-property-input-fill-long {
+    .property-input-fill-long {
         width: 90%;
     }
 }
 
-.add-property-input-fill-mid {
+.property-input-fill-mid {
     width: 50%;
 }
 
-.add-property-input-fill-small {
+.property-input-fill-small {
     width: 20%;
 }
 
 @media (max-width: 1000px) {
-    .add-property-input-fill-small {
+    .property-input-fill-small {
         width: 30%;
     }
 }
