@@ -30,7 +30,7 @@
                                            th:text="#{property.property-type} + ':'">Тип имот</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="propertyType" th:field="*{propertyType}">
+                                    <select class="add-property-input-fill-long" id="propertyType" th:field="*{propertyType}">
                                         <option
                                                 value=""
                                                 th:text="#{property.property-type-placeholder}">
@@ -56,7 +56,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="city" id="city" type="text"
+                                    <input class="add-property-input-fill-long" name="city" id="city" type="text"
                                            th:placeholder="#{property.city-placeholder}"
                                            th:field="*{city}"/>
                                 </div>
@@ -73,7 +73,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="neighbourhood" id="neighbourhood" type="text"
+                                    <input class="add-property-input-fill-long" name="neighbourhood" id="neighbourhood" type="text"
                                            th:placeholder="#{property.neighbourhood-placeholder}"
                                            th:field="*{neighbourhood}"/>
                                 </div>
@@ -89,7 +89,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="address" id="address" type="text"
+                                    <input class="add-property-input-fill-long" name="address" id="address" type="text"
                                            th:placeholder="#{property.address-placeholder}"
                                            th:field="*{address}"/>
                                 </div>
@@ -106,7 +106,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="price" id="price" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-long" name="price" id="price" type="number" step="1" min="0"
                                            th:placeholder="#{property.price-placeholder}"
                                            th:field="*{price}"/>
                                 </div>
@@ -123,10 +123,10 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-50" name="area" id="area" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-mid" name="area" id="area" type="number" step="1" min="0"
                                            th:placeholder="#{property.area-placeholder}"
                                            th:field="*{area}"/>
-                                    <select class="w-20" id="areaUnit" th:field="*{areaUnit}">
+                                    <select class="add-property-input-fill-small" id="areaUnit" th:field="*{areaUnit}">
                                         <option
                                                 th:each="areaUnit : ${T(com.butikimoti.real_estate_planner.model.enums.AreaUnit).values()}"
                                                 th:value="${areaUnit}"
@@ -147,7 +147,7 @@
                                            th:text="#{property.offer-type} + ':'">Offer type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="offerType" th:field="*{offerType}">
+                                    <select class="add-property-input-fill-long" id="offerType" th:field="*{offerType}">
                                         <option
                                                 th:value="${T(com.butikimoti.real_estate_planner.model.enums.OfferType).SALE}"
                                                 th:text="#{offerType.SALE}">
@@ -171,7 +171,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="contactName" id="contactName" type="text"
+                                    <input class="add-property-input-fill-long" name="contactName" id="contactName" type="text"
                                            th:placeholder="#{property.contact-name-placeholder}"
                                            th:field="*{contactName}"/>
                                 </div>
@@ -186,7 +186,7 @@
                                     <label for="contactPhone" th:text="#{property.contact-phone} + ':'">Property contact phone</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="contactPhone" id="contactPhone" type="text" placeholder="+359000000000"
+                                    <input class="add-property-input-fill-long" name="contactPhone" id="contactPhone" type="text" placeholder="+359000000000"
                                            th:field="*{contactPhone}"/>
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="contactEmail" id="contactEmail" type="email"
+                                    <input class="add-property-input-fill-long" name="contactEmail" id="contactEmail" type="email"
                                            placeholder="name@email.com"
                                            th:field="*{contactEmail}"/>
                                 </div>
@@ -219,7 +219,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                <textarea class="w-70" name="description" id="description" rows="5"
+                                <textarea class="add-property-input-fill-long" name="description" id="description" rows="5"
                                           th:placeholder="#{property.description-placeholder}"
                                           th:field="*{description}">
                                 </textarea>
@@ -241,7 +241,7 @@
                                            th:text="#{property.apartment-type} + ':'">Apartment type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="apartmentType" th:field="*{apartmentType}">
+                                    <select class="add-property-input-fill-long" id="apartmentType" th:field="*{apartmentType}">
                                         <option
                                                 value=""
                                                 th:text="#{property.apartment-type-placeholder}">
@@ -265,7 +265,7 @@
                                            th:text="#{property.house-type} + ':'">House type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="houseType" th:field="*{houseType}">
+                                    <select class="add-property-input-fill-long" id="houseType" th:field="*{houseType}">
                                         <option
                                                 value=""
                                                 th:text="#{property.house-type-placeholder}">
@@ -289,7 +289,7 @@
                                            th:text="#{property.garage-type} + ':'">Garage type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="garageType" th:field="*{garageType}">
+                                    <select class="add-property-input-fill-long" id="garageType" th:field="*{garageType}">
                                         <option
                                                 value=""
                                                 th:text="#{property.garage-type-placeholder}">
@@ -313,7 +313,7 @@
                                            th:text="#{property.land-type} + ':'">Land type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="landType" th:field="*{landType}">
+                                    <select class="add-property-input-fill-long" id="landType" th:field="*{landType}">
                                         <option
                                                 value=""
                                                 th:text="#{property.land-type-placeholder}">
@@ -337,7 +337,7 @@
                                            th:text="#{property.business-property-type} + ':'">Business property type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="businessPropertyType" th:field="*{businessPropertyType}">
+                                    <select class="add-property-input-fill-long" id="businessPropertyType" th:field="*{businessPropertyType}">
                                         <option
                                                 value=""
                                                 th:text="#{property.business-property-type-placeholder}">
@@ -361,7 +361,7 @@
                                            th:text="#{property.construction-type} + ':'">Construction type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="constructionType" th:field="*{constructionType}">
+                                    <select class="add-property-input-fill-long" id="constructionType" th:field="*{constructionType}">
                                         <option
                                                 th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.ConstructionType).values()}"
                                                 th:value="${type}"
@@ -382,7 +382,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-20" name="year" id="year" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-small" name="year" id="year" type="number" step="1" min="0"
                                            th:placeholder="#{property.year-placeholder}"
                                            th:field="*{year}"/>
                                 </div>
@@ -399,7 +399,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-10" name="roomCount" id="roomCount" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-small" name="roomCount" id="roomCount" type="number" step="1" min="0"
                                            th:field="*{roomCount}"/>
                                 </div>
                             </div>
@@ -415,10 +415,10 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-10" name="floor" id="floor" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-small" name="floor" id="floor" type="number" step="1" min="0"
                                            th:field="*{floor}"/>
                                     <span th:text="#{property.floor-from}">from</span>
-                                    <input class="w-10" name="buildingFloors" id="buildingFloors" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-small" name="buildingFloors" id="buildingFloors" type="number" step="1" min="0"
                                            th:field="*{buildingFloors}"/>
                                 </div>
                             </div>
@@ -434,7 +434,7 @@
                                            th:text="#{property.heating-type} + ':'">Heating type</label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-70" id="heatingType" th:field="*{heatingType}">
+                                    <select class="add-property-input-fill-long" id="heatingType" th:field="*{heatingType}">
                                         <option
                                                 th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.HeatingType).values()}"
                                                 th:value="${type}"
@@ -455,7 +455,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-70" name="facing" id="facing" type="text"
+                                    <input class="add-property-input-fill-long" name="facing" id="facing" type="text"
                                            th:placeholder="#{property.facing-placeholder}"
                                            th:field="*{facing}"/>
                                 </div>
@@ -472,7 +472,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <select class="w-10" id="hasElevator" name="hasElevator" th:field="*{hasElevator}">
+                                    <select class="add-property-input-fill-small" id="hasElevator" name="hasElevator" th:field="*{hasElevator}">
                                         <option value="false" th:text="#{property.has-elevator-false}"></option>
                                         <option value="true" th:text="#{property.has-elevator-true}"></option>
                                     </select>
@@ -490,10 +490,10 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-50" name="yardArea" id="yardArea" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-mid" name="yardArea" id="yardArea" type="number" step="1" min="0"
                                            th:placeholder="#{property.yard-area-placeholder}"
                                            th:field="*{yardArea}"/>
-                                    <select class="w-20" id="yardAreaUnit" th:field="*{yardAreaUnit}">
+                                    <select class="add-property-input-fill-small" id="yardAreaUnit" th:field="*{yardAreaUnit}">
                                         <option
                                                 th:each="areaUnit : ${T(com.butikimoti.real_estate_planner.model.enums.AreaUnit).values()}"
                                                 th:value="${areaUnit}"
@@ -515,7 +515,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                    <input class="w-10" name="floorsCount" id="floorsCount" type="number" step="1" min="0"
+                                    <input class="add-property-input-fill-small" name="floorsCount" id="floorsCount" type="number" step="1" min="0"
                                            th:field="*{floorsCount}"/>
                                 </div>
                             </div>
@@ -531,7 +531,7 @@
                                     </label>
                                 </div>
                                 <div class="add-property-input-right-column">
-                                <textarea class="w-70" name="additionalStructures" id="additionalStructures" rows="5"
+                                <textarea class="add-property-input-fill-long" name="additionalStructures" id="additionalStructures" rows="5"
                                           th:placeholder="#{property.additional-structures-placeholder}"
                                           th:field="*{additionalStructures}">
                                 </textarea>
