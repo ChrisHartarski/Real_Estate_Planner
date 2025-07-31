@@ -19,11 +19,11 @@
         </div>
 
         <div id="authorized-view" class="flex-column gap-1" sec:authorize="isAuthenticated()">
-            <div class="flex-row gap-1 justify-content-center">
+            <div class="btn-group">
                 <a class="btn btn-white" th:href="@{/properties/sales}">Продажби</a>
                 <a class="btn btn-white" th:href="@{/properties/rents}">Наеми</a>
             </div>
-            <div class="flex-row gap-1 justify-content-center">
+            <div class="btn-group">
                 <a class="btn btn-white" th:href="@{/properties/add}">Създай нова обява</a>
             </div>
 

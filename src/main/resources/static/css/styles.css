@@ -236,6 +236,12 @@ a {
     outline-offset: 2px;
 }
 
+.btn-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
 .text-red,
 .link-red {
     color: red;
