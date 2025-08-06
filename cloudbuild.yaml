@@ -1,0 +1,36 @@
+steps:
+  # Step 1: Build the Spring Boot app using Gradle
+  - name: 'gcr.io/cloud-builders/gradle'
+    entrypoint: 'gradle'
+    args: ['clean', 'build']
+
+  # Step 2: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev',
+      '.'
+    ]
+
+  # Step 3: Push the Docker image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev'
+    ]
+
+  # Step 4: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      [
+        'run', 'deploy', 'real-estate-planner-dev',
+        '--image', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev',
+        '--region', 'europe-west1',
+        '--platform', 'managed',
+        '--allow-unauthenticated',
+        '--timeout', '300'
+      ]
+
+images:
+  - 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev'
