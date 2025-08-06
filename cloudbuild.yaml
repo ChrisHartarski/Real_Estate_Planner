@@ -34,3 +34,6 @@ steps:
 
 images:
   - 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
