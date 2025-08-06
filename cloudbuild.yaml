@@ -29,7 +29,7 @@ steps:
         '--region', 'europe-west1',
         '--platform', 'managed',
         '--allow-unauthenticated',
-        '--timeout', '3000'
+        '--timeout', '900'
       ]
 
 images:
