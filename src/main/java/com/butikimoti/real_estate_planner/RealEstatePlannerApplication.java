@@ -11,6 +11,7 @@ public class RealEstatePlannerApplication {
         // load .env file
         Dotenv dotenv = Dotenv.configure()
                 .filename("variables.env")
+                .ignoreIfMissing()
                 .load();
 
         dotenv.entries().forEach(entry ->
