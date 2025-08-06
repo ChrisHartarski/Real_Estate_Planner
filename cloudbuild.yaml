@@ -8,7 +8,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev',
+      '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest',
       '.'
     ]
 
