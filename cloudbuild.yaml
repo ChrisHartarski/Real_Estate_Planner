@@ -1,11 +1,13 @@
 steps:
   # Step 1: Build the Spring Boot app using Gradle
-  - name: 'gradle:8.7.0-jdk21'
+  - id: 'Build Spring Boot app with Gradle'
+    name: 'gradle:8.7.0-jdk21'
     entrypoint: 'gradle'
     args: ['clean', 'build']
 
   # Step 2: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
+  - id: 'Build the Docker image'
+    name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
       '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest',
@@ -13,14 +15,16 @@ steps:
     ]
 
   # Step 3: Push the Docker image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
+  - id: 'Push Docker image to Artifact Registry'
+    name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
       'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest'
     ]
 
   # Step 4: Deploy to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - id: 'Deploy to Cloud Run'
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       [
@@ -29,11 +33,11 @@ steps:
         '--region', 'europe-west1',
         '--platform', 'managed',
         '--allow-unauthenticated',
-        '--timeout', '3000'
+        '--timeout', '900'
       ]
 
 images:
-  - 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev'
+  - 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev'
 
 options:
   logging: CLOUD_LOGGING_ONLY

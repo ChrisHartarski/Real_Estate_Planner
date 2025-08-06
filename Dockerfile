@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY build/libs/Real_Estate_Planner.jar app.jar
 EXPOSE 8080
