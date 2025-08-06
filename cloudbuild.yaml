@@ -1,6 +1,6 @@
 steps:
   # Step 1: Build the Spring Boot app using Gradle
-  - name: 'gcr.io/cloud-builders/gradle'
+  - name: 'gradle:8.7.0-jdk21'
     entrypoint: 'gradle'
     args: ['clean', 'build']
 
