@@ -8,7 +8,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev',
+      '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest',
       '.'
     ]
 
@@ -16,7 +16,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev'
+      'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest'
     ]
 
   # Step 4: Deploy to Cloud Run
@@ -25,7 +25,7 @@ steps:
     args:
       [
         'run', 'deploy', 'real-estate-planner-dev',
-        '--image', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev',
+        '--image', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest',
         '--region', 'europe-west1',
         '--platform', 'managed',
         '--allow-unauthenticated',
