@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.init;
 
 import com.butikimoti.real_estate_planner.model.dto.company.CompanyDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
+import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
@@ -35,13 +36,16 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         //Add admin, company_admin and normal user on startup for test purposes
         if (!userEntityService.userExists(FIRST_ADMIN_USER.getEmail())) {
-            userEntityService.registerUser(FIRST_ADMIN_USER);
+            Company adminCompany = companyService.getCompany(FIRST_ADMIN_USER.getCompanyName());
+            userEntityService.registerUser(FIRST_ADMIN_USER, adminCompany);
         }
         if (!userEntityService.userExists(TEST_USER_1.getEmail())) {
-            userEntityService.registerUser(TEST_USER_1);
+            Company user1Company = companyService.getCompany(TEST_USER_1.getCompanyName());
+            userEntityService.registerUser(TEST_USER_1, user1Company);
         }
         if (!userEntityService.userExists(TEST_USER_2.getEmail())) {
-            userEntityService.registerUser(TEST_USER_2);
+            Company user2Company = companyService.getCompany(TEST_USER_2.getCompanyName());
+            userEntityService.registerUser(TEST_USER_2, user2Company);
         }
     }
 }

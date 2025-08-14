@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
+import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
@@ -18,13 +19,11 @@ import java.time.LocalDateTime;
 @Service
 public class UserEntityServiceImpl implements UserEntityService {
     private final UserEntityRepository userEntityRepository;
-    private final CompanyService companyService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserEntityServiceImpl(UserEntityRepository userEntityRepository, CompanyService companyService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserEntityServiceImpl(UserEntityRepository userEntityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
-        this.companyService = companyService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -36,14 +35,14 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     @Transactional
-    public void registerUser(UserDTO userDTO) {
+    public void registerUser(UserDTO userDTO, Company company) {
         if (userExists(userDTO.getEmail())) {
             throw new RuntimeException("User with email " + userDTO.getEmail() + " already exists");
         }
 
         UserEntity user = modelMapper.map(userDTO, UserEntity.class);
 
-        setCompany(user, userDTO.getCompanyName());
+        user.setCompany(company);
         setUserRole(user);
         user.setRegisteredOn(LocalDateTime.now());
 
@@ -59,10 +58,6 @@ public class UserEntityServiceImpl implements UserEntityService {
     private void encodePassAndSaveUser(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntityRepository.saveAndFlush(user);
-    }
-
-    private void setCompany(UserEntity user, String companyName) {
-        user.setCompany(companyService.getCompany(companyName));
     }
 
     private void setUserRole(UserEntity user) {

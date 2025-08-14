@@ -23,19 +23,19 @@ public class UserEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "user_role", nullable = false)
     private UserRole userRole;
 
-    @Column(nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
+    @Column(name = "registered_on", nullable = false)
     private LocalDateTime registeredOn;
 
     public UserEntity() {

@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
+import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
@@ -63,7 +64,8 @@ public class UserController {
             return "redirect:/users/register";
         }
 
-        userEntityService.registerUser(registerUserData);
+        Company company = companyService.getCompany(registerUserData.getCompanyName());
+        userEntityService.registerUser(registerUserData, company);
         return "redirect:/";
     }
 

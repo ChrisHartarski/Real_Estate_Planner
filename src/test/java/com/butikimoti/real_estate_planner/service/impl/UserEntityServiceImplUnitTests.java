@@ -73,7 +73,7 @@ public class UserEntityServiceImplUnitTests {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
         when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_EMPTY);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO);
+        serviceToTest.registerUser(REGISTER_USER_DTO, );
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
@@ -93,7 +93,7 @@ public class UserEntityServiceImplUnitTests {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
         when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO);
+        serviceToTest.registerUser(REGISTER_USER_DTO, );
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
@@ -112,7 +112,7 @@ public class UserEntityServiceImplUnitTests {
     void testRegisterUserThrowsExceptionIfUserExists() {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(true);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerUser(REGISTER_USER_DTO));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerUser(REGISTER_USER_DTO, ));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class UserEntityServiceImplUnitTests {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
         when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO_ADMIN);
+        serviceToTest.registerUser(REGISTER_USER_DTO_ADMIN, );
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
@@ -140,7 +140,7 @@ public class UserEntityServiceImplUnitTests {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
         when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO_COMPANY_ADMIN);
+        serviceToTest.registerUser(REGISTER_USER_DTO_COMPANY_ADMIN, );
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
