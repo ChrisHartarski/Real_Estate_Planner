@@ -7,10 +7,14 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CompanyDTO {
+    private UUID id;
+
     private List<UserEntity> users;
 
     @NotEmpty(message = "{companyName.notEmpty}")
@@ -31,6 +35,8 @@ public class CompanyDTO {
 
     private List<BaseProperty> properties;
 
+    private LocalDateTime registeredOn;
+
     public CompanyDTO() {
         this.users = new ArrayList<>();
         this.properties = new ArrayList<>();
@@ -42,6 +48,14 @@ public class CompanyDTO {
         this.address = address;
         this.phone = phone;
         this.email = email;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public List<UserEntity> getUsers() {
@@ -90,5 +104,13 @@ public class CompanyDTO {
 
     public void setProperties(List<BaseProperty> properties) {
         this.properties = properties;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
     }
 }

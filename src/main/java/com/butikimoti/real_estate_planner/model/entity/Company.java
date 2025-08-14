@@ -14,7 +14,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
     private List<UserEntity> users;
 
     @Column(unique = true, nullable = false)
@@ -32,7 +32,7 @@ public class Company {
     @OneToMany(mappedBy = "ownerCompany")
     private List<BaseProperty> properties;
 
-    @Column(nullable = false)
+    @Column(name = "registered_on", nullable = false)
     private LocalDateTime registeredOn;
 
     public Company() {

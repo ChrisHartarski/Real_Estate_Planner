@@ -23,7 +23,7 @@ public class SecurityConfig {
                                 //access to all users
                                 .requestMatchers("/", "/users/login", "users/login-error").permitAll()
                                 //access to ADMIN role users
-                                .requestMatchers("/admin-panel", "/users/register", "/companies/register", "/users/edit", "/companies/edit").hasRole("ADMIN")
+                                .requestMatchers("/admin-panel", "/users/register", "/companies/register", "/users/edit", "/companies/edit", "/companies", "/users").hasRole("ADMIN")
                                 //access to COMPANY_ADMIN role users
                                 .requestMatchers("/companies/edit", "/properties/add", "/properties/{id}", "/properties/sales", "/properties/rents").hasRole("COMPANY_ADMIN")
                                 //access to USER role users

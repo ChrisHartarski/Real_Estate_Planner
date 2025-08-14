@@ -459,19 +459,22 @@ a {
     }
 }
 
-.image-section {
+.image-section,
+.company-logo-section {
     display: flex;
     align-items: center;
     width: calc(30% - 1rem);
 }
 
 @media (max-width: 1000px) {
-    .image-section {
+    .image-section,
+    .company-logo-section {
         width: 100%;
     }
 }
 
-.image-section img {
+.image-section img,
+.company-logo-section img{
     min-width: 50%;
     max-width: 100%;
 }
