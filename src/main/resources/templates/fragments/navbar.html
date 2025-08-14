@@ -22,21 +22,21 @@
                     <a th:text="#{navbar.home}" th:href="@{/}">Начало</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'sales'}? 'active' : ''"
-                    sec:authorize="isAuthenticated()">
+                    sec:authorize="hasAnyRole('COMPANY_ADMIN', 'USER')">
                     <a th:text="#{navbar.sales}" th:href="@{/properties/sales}">Продажби</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'rents'}? 'active' : ''"
-                    sec:authorize="isAuthenticated()">
+                    sec:authorize="hasAnyRole('COMPANY_ADMIN', 'USER')">
                     <a th:text="#{navbar.rents}" th:href="@{/properties/rents}">Наеми</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeLink == 'login'}? 'active' : ''"
                     sec:authorize="!isAuthenticated()">
                     <a th:text="#{navbar.login}" th:href="@{/users/login}">Влез</a>
                 </li>
-                <li class="nav-item" th:classappend="${activeLink == 'register'}? 'active' : ''"
-                    sec:authorize="!isAuthenticated()">
-                    <a th:text="#{navbar.register}" th:href="@{/users/register}">Регистрирай се</a>
-                </li>
+<!--                <li class="nav-item" th:classappend="${activeLink == 'register'}? 'active' : ''"-->
+<!--                    sec:authorize="!isAuthenticated()">-->
+<!--                    <a th:text="#{navbar.register}" th:href="@{/users/register}">Регистрирай се</a>-->
+<!--                </li>-->
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/users/logout}"
                           th:method="post">
