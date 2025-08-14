@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UserEntityServiceImpl implements UserEntityService {
     private final UserEntityRepository userEntityRepository;
@@ -43,6 +45,7 @@ public class UserEntityServiceImpl implements UserEntityService {
 
         setCompany(user, registerUserDTO.getCompanyName());
         setUserRole(user);
+        user.setRegisteredOn(LocalDateTime.now());
 
         encodePassAndSaveUser(user);
     }

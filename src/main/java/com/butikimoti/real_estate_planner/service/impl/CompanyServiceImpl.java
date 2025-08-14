@@ -7,6 +7,8 @@ import com.butikimoti.real_estate_planner.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
@@ -29,6 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         Company company = modelMapper.map(registerCompanyDTO, Company.class);
+        company.setRegisteredOn(LocalDateTime.now());
         companyRepository.saveAndFlush(company);
     }
 

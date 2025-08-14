@@ -3,6 +3,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +34,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
+    private LocalDateTime registeredOn;
 
     public UserEntity() {
     }
@@ -118,5 +122,13 @@ public class UserEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
     }
 }

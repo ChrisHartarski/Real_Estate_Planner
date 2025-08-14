@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +31,9 @@ public class Company {
 
     @OneToMany(mappedBy = "ownerCompany")
     private List<BaseProperty> properties;
+
+    @Column(nullable = false)
+    private LocalDateTime registeredOn;
 
     public Company() {
         this.users = new ArrayList<>();
@@ -114,5 +118,13 @@ public class Company {
 
     public void setProperties(List<BaseProperty> properties) {
         this.properties = properties;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
     }
 }
