@@ -1,6 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
+import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
@@ -36,14 +36,14 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     @Transactional
-    public void registerUser(RegisterUserDTO registerUserDTO) {
-        if (userExists(registerUserDTO.getEmail())) {
-            throw new RuntimeException("User with email " + registerUserDTO.getEmail() + " already exists");
+    public void registerUser(UserDTO userDTO) {
+        if (userExists(userDTO.getEmail())) {
+            throw new RuntimeException("User with email " + userDTO.getEmail() + " already exists");
         }
 
-        UserEntity user = modelMapper.map(registerUserDTO, UserEntity.class);
+        UserEntity user = modelMapper.map(userDTO, UserEntity.class);
 
-        setCompany(user, registerUserDTO.getCompanyName());
+        setCompany(user, userDTO.getCompanyName());
         setUserRole(user);
         user.setRegisteredOn(LocalDateTime.now());
 

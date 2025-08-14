@@ -1,6 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
+import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Apartment;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.House;
@@ -32,9 +32,9 @@ public class UserEntityServiceImplUnitTests {
     private static final Company TEST_COMPANY_EMPTY = new Company("Test Company", "Test Address", "+359000000000", "test@email.com");
     private static final Company TEST_COMPANY_FULL = new Company(List.of(new UserEntity(), new UserEntity()), "Test Company", "Test Address", "+359000000000", "test@email.com", List.of(new Apartment(), new House()));
     private static final UserEntity TEST_USER = new UserEntity("test@email.com", TEST_COMPANY_EMPTY, "MyStrongPassword_12", "First name", "Last Name", "+359111111111");
-    private static final RegisterUserDTO REGISTER_USER_DTO = new RegisterUserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone());
-    private static final RegisterUserDTO REGISTER_USER_DTO_ADMIN = new RegisterUserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone(), UserRole.ADMIN);
-    private static final RegisterUserDTO REGISTER_USER_DTO_COMPANY_ADMIN = new RegisterUserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone(), UserRole.COMPANY_ADMIN);
+    private static final UserDTO REGISTER_USER_DTO = new UserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone());
+    private static final UserDTO REGISTER_USER_DTO_ADMIN = new UserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone(), UserRole.ADMIN);
+    private static final UserDTO REGISTER_USER_DTO_COMPANY_ADMIN = new UserDTO(TEST_USER.getEmail(), TEST_USER.getPassword(), TEST_USER.getPassword(), TEST_USER.getCompany().getName(), TEST_USER.getFirstName(), TEST_USER.getLastName(), TEST_USER.getPhone(), UserRole.COMPANY_ADMIN);
 
     @Mock
     private UserEntityRepository userEntityRepository;

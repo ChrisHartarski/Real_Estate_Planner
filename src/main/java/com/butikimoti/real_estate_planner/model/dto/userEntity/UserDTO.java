@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class RegisterUserDTO {
+public class UserDTO {
 
     @NotEmpty(message = "{email.notEmpty}")
     @Email(message = "{email.invalid}")
@@ -37,11 +37,11 @@ public class RegisterUserDTO {
 
     private UserRole userRole;
 
-    public RegisterUserDTO() {
+    public UserDTO() {
         this.userRole = UserRole.USER;
     }
 
-    public RegisterUserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone) {
+    public UserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone) {
         this();
         this.email = email;
         this.password = password;
@@ -52,7 +52,7 @@ public class RegisterUserDTO {
         this.phone = phone;
     }
 
-    public RegisterUserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone, UserRole userRole) {
+    public UserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone, UserRole userRole) {
         this(email, password, confirmPassword, companyName, firstName, lastName, phone);
         this.userRole = userRole;
     }

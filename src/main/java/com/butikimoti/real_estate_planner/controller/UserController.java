@@ -1,7 +1,6 @@
 package com.butikimoti.real_estate_planner.controller;
 
-import com.butikimoti.real_estate_planner.model.dto.userEntity.RegisterUserDTO;
-import com.butikimoti.real_estate_planner.model.enums.UserRole;
+import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
@@ -26,8 +25,8 @@ public class UserController {
     }
 
     @ModelAttribute("registerUserData")
-    public RegisterUserDTO registerUserData() {
-        return new RegisterUserDTO();
+    public UserDTO registerUserData() {
+        return new UserDTO();
     }
 
     @GetMapping("/register")
@@ -36,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid RegisterUserDTO registerUserData,
+    public String register(@Valid UserDTO registerUserData,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
 
