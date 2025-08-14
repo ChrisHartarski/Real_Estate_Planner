@@ -140,6 +140,25 @@
                         <small th:errors="*{phone}" class="text-red">Phone input errors!</small>
                     </div>
 
+                    <!-- User Role -->
+                    <div class="flex-column text-center">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="userRole" th:text="#{register-user.userRole} + ':'">Роля</label>
+                            </div>
+                            <div class="login-right-column">
+                                <select class="login-input" id="userRole" th:field="*{userRole}">
+                                    <option
+                                        th:each="role : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
+                                        th:value="${role}"
+                                        th:text="#{${'userRole.' + role.name()}}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <small th:errors="*{userRole}" class="text-red">Phone input errors!</small>
+                    </div>
+
                     <!-- Register Button-->
                     <div class="center">
                         <button class="btn btn-blue" id="submitButton" type="submit"

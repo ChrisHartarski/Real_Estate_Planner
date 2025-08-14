@@ -65,7 +65,7 @@ public class UserController {
         }
 
         userEntityService.registerUser(registerUserData);
-        return "redirect:/users/login";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
