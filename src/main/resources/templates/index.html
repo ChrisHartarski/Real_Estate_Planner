@@ -18,15 +18,30 @@
             <div class="white text-center">Моля <a th:href="@{/users/login}" class="link-white">влезте с потребител и парола</a> или <a th:href="@{/users/register}" class="link-white">се регистрирайте</a></div>
         </div>
 
-        <div id="authorized-view" class="flex-column gap-1" sec:authorize="isAuthenticated()">
+        <div id="admin-view" class="flex-column gap-1" sec:authorize="hasRole('ADMIN')">
+            <h2 class="text-center white" th:text="#{index.admin-panel}">Администраторски панел</h2>
             <div class="btn-group">
-                <a class="btn btn-white" th:href="@{/properties/sales}">Продажби</a>
-                <a class="btn btn-white" th:href="@{/properties/rents}">Наеми</a>
+                <a class="btn btn-white" th:href="@{/companies/register}"
+                   th:text="#{index.company-register}">Регистрирай
+                    компания</a>
+                <a class="btn btn-white" th:href="@{/users/register}" th:text="#{index.user-register}">Регистрирай
+                    потребител</a>
+                <a class="btn btn-white" th:href="@{/users/register}" th:text="#{index.company-edit}">Промени
+                    компания</a>
+                <a class="btn btn-white" th:href="@{/users/register}" th:text="#{index.user-edit}">Промени
+                    потребител</a>
+            </div>
+        </div>
+
+        <div id="authorized-view" class="flex-column gap-1" sec:authorize="hasAnyRole('COMPANY_ADMIN', 'USER')">
+            <h2 class="text-center white" th:text="#{index.user-panel}">Потребителски панел</h2>
+            <div class="btn-group">
+                <a class="btn btn-white" th:href="@{/properties/sales}" th:text="#{index.sales}">Продажби</a>
+                <a class="btn btn-white" th:href="@{/properties/rents}" th:text="#{index.rents}">Наеми</a>
             </div>
             <div class="btn-group">
                 <a class="btn btn-white" th:href="@{/properties/add}">Създай нова обява</a>
             </div>
-
         </div>
 
     </main>
