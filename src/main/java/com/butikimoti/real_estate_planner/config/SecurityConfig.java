@@ -21,13 +21,13 @@ public class SecurityConfig {
                                 //grant access to static resources
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 //access to all users
-                                .requestMatchers("/", "/users/login", "/users/register", "/companies/register", "/properties").permitAll()
+                                .requestMatchers("/", "/users/login", "users/login-error").permitAll()
                                 //access to ADMIN role users
-                                .requestMatchers("/admin-panel").hasRole("ADMIN")
+                                .requestMatchers("/admin-panel", "/users/register", "/companies/register", "/users/edit", "/companies/edit").hasRole("ADMIN")
                                 //access to COMPANY_ADMIN role users
                                 .requestMatchers("/companies/edit", "/properties/add", "/properties/{id}", "/properties/sales", "/properties/rents").hasRole("COMPANY_ADMIN")
                                 //access to USER role users
-                                .requestMatchers("/properties", "/properties/{id}", "/properties/sales", "/properties/rents").hasRole("USER")
+                                .requestMatchers("/properties/sales", "/properties/rents", "/properties/{id}", "/users/edit").hasRole("USER")
                                 .anyRequest()
                                 .authenticated()
                 )
