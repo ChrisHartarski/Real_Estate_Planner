@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterCompanyDTO {
+public class CompanyDTO {
     private List<UserEntity> users;
 
     @NotEmpty(message = "{companyName.notEmpty}")
@@ -31,12 +31,12 @@ public class RegisterCompanyDTO {
 
     private List<BaseProperty> properties;
 
-    public RegisterCompanyDTO() {
+    public CompanyDTO() {
         this.users = new ArrayList<>();
         this.properties = new ArrayList<>();
     }
 
-    public RegisterCompanyDTO(String name, String address, String phone, String email) {
+    public CompanyDTO(String name, String address, String phone, String email) {
         this();
         this.name = name;
         this.address = address;

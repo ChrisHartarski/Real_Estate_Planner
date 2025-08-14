@@ -1,7 +1,6 @@
 package com.butikimoti.real_estate_planner.controller;
 
-import com.butikimoti.real_estate_planner.model.dto.company.RegisterCompanyDTO;
-import com.butikimoti.real_estate_planner.model.entity.Company;
+import com.butikimoti.real_estate_planner.model.dto.company.CompanyDTO;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -22,8 +21,8 @@ public class CompanyController {
     }
 
     @ModelAttribute("companyData")
-    public RegisterCompanyDTO companyData() {
-        return new RegisterCompanyDTO();
+    public CompanyDTO companyData() {
+        return new CompanyDTO();
     }
 
 
@@ -33,7 +32,7 @@ public class CompanyController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid RegisterCompanyDTO companyData,
+    public String register(@Valid CompanyDTO companyData,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {

@@ -1,6 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.company.RegisterCompanyDTO;
+import com.butikimoti.real_estate_planner.model.dto.company.CompanyDTO;
 import com.butikimoti.real_estate_planner.model.entity.Apartment;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.House;
@@ -26,7 +26,7 @@ public class CompanyServiceImplUnitTests {
     private CompanyServiceImpl serviceToTest;
     private static final Company TEST_COMPANY = new Company("Test Company", "Test Address", "+359000000000", "test@email.com");
     private static final Company TEST_COMPANY_WITH_USERS_AND_PROPERTIES = new Company(List.of(new UserEntity(), new UserEntity()), "Test Company", "Test Address", "+359000000000", "test@email.com", List.of(new Apartment(), new House()));
-    private static final RegisterCompanyDTO REGISTER_COMPANY_DTO = new RegisterCompanyDTO(TEST_COMPANY.getName(), TEST_COMPANY.getAddress(), TEST_COMPANY.getPhone(), TEST_COMPANY.getEmail());
+    private static final CompanyDTO REGISTER_COMPANY_DTO = new CompanyDTO(TEST_COMPANY.getName(), TEST_COMPANY.getAddress(), TEST_COMPANY.getPhone(), TEST_COMPANY.getEmail());
 
     @Mock
     private CompanyRepository companyRepository;

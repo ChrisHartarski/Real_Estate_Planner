@@ -1,6 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.company.RegisterCompanyDTO;
+import com.butikimoti.real_estate_planner.model.dto.company.CompanyDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.repository.CompanyRepository;
 import com.butikimoti.real_estate_planner.service.CompanyService;
@@ -25,12 +25,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void registerCompany(RegisterCompanyDTO registerCompanyDTO) {
-        if(companyExists(registerCompanyDTO.getName())) {
-            throw new RuntimeException("Company " + registerCompanyDTO.getName() + " already exists");
+    public void registerCompany(CompanyDTO companyDTO) {
+        if(companyExists(companyDTO.getName())) {
+            throw new RuntimeException("Company " + companyDTO.getName() + " already exists");
         }
 
-        Company company = modelMapper.map(registerCompanyDTO, Company.class);
+        Company company = modelMapper.map(companyDTO, Company.class);
         company.setRegisteredOn(LocalDateTime.now());
         companyRepository.saveAndFlush(company);
     }
