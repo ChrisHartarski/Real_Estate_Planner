@@ -76,6 +76,6 @@ public class UserController {
     @GetMapping("/login-error")
     public String viewLoginError(Model model) {
         model.addAttribute("wrongUsernameOrPassword", true);
-        return "redirect:/users/login";
+        return "login-user";
     }
 }
