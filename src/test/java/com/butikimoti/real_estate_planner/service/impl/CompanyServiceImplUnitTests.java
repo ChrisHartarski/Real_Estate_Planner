@@ -6,6 +6,7 @@ import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.House;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.repository.CompanyRepository;
+import com.butikimoti.real_estate_planner.service.UserEntityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,12 +32,15 @@ public class CompanyServiceImplUnitTests {
     @Mock
     private CompanyRepository companyRepository;
 
+    @Mock
+    private UserEntityService userEntityService;
+
     @Captor
     private ArgumentCaptor<Company> companyCaptor;
 
     @BeforeEach
     void setUp() {
-        serviceToTest = new CompanyServiceImpl(companyRepository, new ModelMapper());
+        serviceToTest = new CompanyServiceImpl(companyRepository, userEntityService, new ModelMapper());
     }
 
     @Test

@@ -47,7 +47,7 @@ public class UserEntityServiceImplUnitTests {
 
     @BeforeEach
     void setUp() {
-        serviceToTest = new UserEntityServiceImpl(userEntityRepository, companyService, new ModelMapper(), passwordEncoder);
+        serviceToTest = new UserEntityServiceImpl(userEntityRepository, new ModelMapper(), passwordEncoder);
     }
 
     @Test
@@ -71,9 +71,9 @@ public class UserEntityServiceImplUnitTests {
     @Test
     void testRegisterUserAddsUserWithCompanyAdminRoleInEmptyCompany() {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
-        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_EMPTY);
+//        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_EMPTY);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO, );
+        serviceToTest.registerUser(REGISTER_USER_DTO, TEST_COMPANY_EMPTY);
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
@@ -91,9 +91,9 @@ public class UserEntityServiceImplUnitTests {
     @Test
     void testRegisterUserAddsUserWithUserRoleInFullCompany() {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
-        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
+//        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO, );
+        serviceToTest.registerUser(REGISTER_USER_DTO, TEST_COMPANY_FULL);
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
@@ -112,15 +112,15 @@ public class UserEntityServiceImplUnitTests {
     void testRegisterUserThrowsExceptionIfUserExists() {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(true);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerUser(REGISTER_USER_DTO, ));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerUser(REGISTER_USER_DTO, TEST_COMPANY_EMPTY));
     }
 
     @Test
     void testRegisterUserAddsUserWithAdminRoleWhenUserRoleInArguments() {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
-        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
+//        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO_ADMIN, );
+        serviceToTest.registerUser(REGISTER_USER_DTO_ADMIN, TEST_COMPANY_FULL);
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
@@ -138,9 +138,9 @@ public class UserEntityServiceImplUnitTests {
     @Test
     void testRegisterUserAddsUserWithCompanyAdminRoleWhenUserRoleInArguments() {
         when(userEntityRepository.existsByEmail(REGISTER_USER_DTO.getEmail())).thenReturn(false);
-        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
+//        when(companyService.getCompany(REGISTER_USER_DTO.getCompanyName())).thenReturn(TEST_COMPANY_FULL);
 
-        serviceToTest.registerUser(REGISTER_USER_DTO_COMPANY_ADMIN, );
+        serviceToTest.registerUser(REGISTER_USER_DTO_COMPANY_ADMIN, TEST_COMPANY_FULL);
 
         verify(userEntityRepository).saveAndFlush(captor.capture());
         UserEntity actual = captor.getValue();
