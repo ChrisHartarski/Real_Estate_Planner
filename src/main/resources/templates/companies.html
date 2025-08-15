@@ -57,14 +57,14 @@
                 <div class="card">
                     <div class="offers-card-container">
                         <div class="company-logo-section">
-<!--                            <a th:href="@{'/companies/' + ${company.id}}">-->
-<!--                                <img th:if="${!company.logo == null && !company.logo.isEmpty()}"-->
-<!--                                     th:src="@{${company.logo.getPictureLink()}}"-->
-<!--                                     alt="company logo">-->
-<!--                                <img th:if="${company.logo == null}" src="/images/logo.png" alt="logo_real_estate_planner">-->
-<!--                            </a>-->
+                            <a th:href="@{'/companies/' + ${company.id}}">
+                                <img th:if="${company.logo != null}"
+                                     th:src="@{${company.logo.getPictureLink()}}"
+                                     alt="company logo">
+                                <img th:if="${company.logo == null}" src="/images/logo.png" alt="logo_real_estate_planner">
+                            </a>
                         </div>
-                        <div class="content-section">
+                        <div class="company-content-section content-section">
                             <div class="content-header">
                                 <div class="flex-column">
                                     <div class="header">

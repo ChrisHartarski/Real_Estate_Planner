@@ -459,22 +459,20 @@ a {
     }
 }
 
-.image-section,
-.company-logo-section {
+
+.image-section {
     display: flex;
     align-items: center;
     width: calc(30% - 1rem);
 }
 
 @media (max-width: 1000px) {
-    .image-section,
-    .company-logo-section {
+    .image-section {
         width: 100%;
     }
 }
 
-.image-section img,
-.company-logo-section img{
+.image-section img {
     min-width: 50%;
     max-width: 100%;
 }
@@ -641,17 +639,34 @@ a {
 }
 
 /* Company page */
+.company-logo-section {
+    display: flex;
+    align-items: center;
+    width: calc(20% - 1rem);
+    margin: auto;
+}
+
+@media (max-width: 1000px) {
+    .company-logo-section {
+        width: 70%;
+    }
+}
+
+.company-logo-section img{
+    min-width: 50%;
+    max-width: 100%;
+    margin: auto;
+}
+
+.company-content-section {
+    width: calc(80% - 1rem) !important;
+}
+
+
 .logo-container {
     margin: auto;
     padding-top: 1rem;
 }
-
-/*@media (max-width: 1000px) {*/
-/*    .logo-container {*/
-/*        padding-top: 0.5rem;*/
-/*        max-width: 50vw;*/
-/*    }*/
-/*}*/
 
 .logo-container > img {
     max-width: 20vw;
