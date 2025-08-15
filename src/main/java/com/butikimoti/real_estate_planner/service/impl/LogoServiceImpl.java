@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
+import com.butikimoti.real_estate_planner.model.entity.Logo;
 import com.butikimoti.real_estate_planner.repository.LogoRepository;
 import com.butikimoti.real_estate_planner.service.LogoService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
@@ -13,5 +14,10 @@ public class LogoServiceImpl implements LogoService {
     public LogoServiceImpl(LogoRepository logoRepository, CloudinaryService cloudinaryService) {
         this.logoRepository = logoRepository;
         this.cloudinaryService = cloudinaryService;
+    }
+
+    @Override
+    public void saveLogoToDB(Logo logo) {
+        logoRepository.saveAndFlush(logo);
     }
 }

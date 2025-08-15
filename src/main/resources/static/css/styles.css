@@ -640,6 +640,35 @@ a {
     }
 }
 
+/* Company page */
+.logo-container {
+    margin: auto;
+    padding-top: 1rem;
+}
+
+/*@media (max-width: 1000px) {*/
+/*    .logo-container {*/
+/*        padding-top: 0.5rem;*/
+/*        max-width: 50vw;*/
+/*    }*/
+/*}*/
+
+.logo-container > img {
+    max-width: 20vw;
+    max-height: 10vw;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 1000px) {
+    .logo-container > img {
+        max-width: 50vw;
+        max-height: 30vw;
+    }
+}
+
+
 /* Properties page */
 .page-title {
     margin-bottom: 2rem;

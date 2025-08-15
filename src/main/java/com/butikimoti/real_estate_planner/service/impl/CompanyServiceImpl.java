@@ -1,31 +1,43 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.dto.company.CompanyDTO;
+import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
+import com.butikimoti.real_estate_planner.model.entity.Logo;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.CompanyRepository;
 import com.butikimoti.real_estate_planner.service.CompanyService;
+import com.butikimoti.real_estate_planner.service.LogoService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import com.butikimoti.real_estate_planner.specifications.CompanySpecifications;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final UserEntityService userEntityService;
+    private final LogoService logoService;
+    private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, UserEntityService userEntityService, ModelMapper modelMapper) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, UserEntityService userEntityService, LogoService logoService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.companyRepository = companyRepository;
         this.userEntityService = userEntityService;
+        this.logoService = logoService;
+        this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
     }
 
@@ -75,5 +87,81 @@ public class CompanyServiceImpl implements CompanyService {
         Page<Company> companies = companyRepository.findAll(specification, pageable);
 
         return companies.map(company -> modelMapper.map(company, CompanyDTO.class));
+    }
+
+    @Override
+    public CompanyDTO getCompanyDTO(UUID id) {
+        return modelMapper.map(getCompany(id), CompanyDTO.class);
+    }
+
+    @Override
+    public void addLogo(UUID id, MultipartFile file) throws IOException {
+        Company company = getCompany(id);
+
+        CloudinaryImageInfoDTO cloudinaryImageInfoDTO = cloudinaryService.uploadImage(file);
+        String imageUrl = cloudinaryImageInfoDTO.getImageUrl();
+        String imagePublicId = cloudinaryImageInfoDTO.getPublicId();
+
+        Logo logo = new Logo(imageUrl, company, imagePublicId);
+        logoService.saveLogoToDB(logo);
+        company.setLogo(logo);
+        companyRepository.saveAndFlush(company);
+    }
+
+    @Override
+    public void deleteLogo(UUID id) throws IOException {
+        Company company = getCompany(id);
+
+        if (company.getLogo() == null) {
+            return;
+        }
+
+        cloudinaryService.deletePicture(company.getLogo().getPublicId());
+        company.setLogo(null);
+        companyRepository.saveAndFlush(company);
+    }
+
+    @Override
+    public void replaceLogo(UUID id, MultipartFile file) throws IOException {
+        deleteLogo(id);
+        addLogo(id, file);
+    }
+
+    @Override
+    public void deleteCompany(UUID id) throws IOException {
+        if (companyRepository.existsById(id)) {
+            deleteLogo(id);
+            companyRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    public Company editAndSaveCompanyToDB(CompanyDTO editCompanyDTO) {
+        Company company = getCompany(editCompanyDTO.getId());
+        applyEditCompanyDTOToCompany(company, editCompanyDTO);
+
+        return companyRepository.saveAndFlush(company);
+    }
+
+    private Company getCompany(UUID id) {
+        Company company = companyRepository.findById(id).orElse(null);
+
+        if (company == null) {
+            throw new RuntimeException("Company not found");
+        }
+
+        return company;
+    }
+
+    private void applyEditCompanyDTOToCompany(Company company, CompanyDTO editCompanyDTO) {
+        Configuration configuration = modelMapper.getConfiguration();
+        boolean isSkipNullEnabled = configuration.isSkipNullEnabled();
+
+        try {
+            configuration.setSkipNullEnabled(true);
+            modelMapper.map(editCompanyDTO, company);
+        } finally {
+            configuration.setSkipNullEnabled(isSkipNullEnabled);
+        }
     }
 }

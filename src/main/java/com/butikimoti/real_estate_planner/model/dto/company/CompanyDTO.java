@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.model.dto.company;
 
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
+import com.butikimoti.real_estate_planner.model.entity.Logo;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,6 +37,8 @@ public class CompanyDTO {
     private List<BaseProperty> properties;
 
     private LocalDateTime registeredOn;
+
+    private Logo logo;
 
     public CompanyDTO() {
         this.users = new ArrayList<>();
@@ -112,5 +115,13 @@ public class CompanyDTO {
 
     public void setRegisteredOn(LocalDateTime registeredOn) {
         this.registeredOn = registeredOn;
+    }
+
+    public Logo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Logo logo) {
+        this.logo = logo;
     }
 }

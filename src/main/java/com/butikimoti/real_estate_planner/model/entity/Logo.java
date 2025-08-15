@@ -24,6 +24,12 @@ public class Logo {
     public Logo() {
     }
 
+    public Logo(String pictureLink, Company company, String publicId) {
+        this.pictureLink = pictureLink;
+        this.company = company;
+        this.publicId = publicId;
+    }
+
     public UUID getId() {
         return id;
     }
