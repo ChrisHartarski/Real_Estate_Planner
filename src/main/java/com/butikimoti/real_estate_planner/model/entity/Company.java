@@ -29,7 +29,7 @@ public class Company {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "ownerCompany")
+    @OneToMany(mappedBy = "ownerCompany", cascade = CascadeType.REMOVE)
     private List<BaseProperty> properties;
 
     @Column(name = "registered_on", nullable = false)
