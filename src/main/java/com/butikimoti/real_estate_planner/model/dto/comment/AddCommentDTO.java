@@ -1,21 +1,22 @@
 package com.butikimoti.real_estate_planner.model.dto.comment;
 
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
-import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class AddCommentDTO {
     private String commentText;
-    private UserEntity user;
+    private String userFirstName;
+    private String userLastName;
     private BaseProperty property;
 
     public AddCommentDTO() {
     }
 
-    public AddCommentDTO(String commentText, UserEntity user, BaseProperty property) {
+    public AddCommentDTO(String commentText, String userFirstName, String userLastName, BaseProperty property) {
         this.commentText = commentText;
-        this.user = user;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
         this.property = property;
     }
 
@@ -29,12 +30,20 @@ public class AddCommentDTO {
         this.commentText = commentText;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getUserFirstName() {
+        return userFirstName;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public BaseProperty getProperty() {

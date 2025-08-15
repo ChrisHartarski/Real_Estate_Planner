@@ -218,7 +218,8 @@ public class PropertyController {
         if (user == null) {
             throw new RuntimeException("User not found");
         }
-        addCommentData.setUser(user);
+        addCommentData.setUserFirstName(user.getFirstName());
+        addCommentData.setUserLastName(user.getLastName());
 
         BaseProperty property = basePropertyService.getPropertyByID(id);
         if (property == null) {

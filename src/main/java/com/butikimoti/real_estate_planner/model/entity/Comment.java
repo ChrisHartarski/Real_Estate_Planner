@@ -12,8 +12,11 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
-    private UserEntity user;
+    @Column(name = "user_first_name")
+    private String userFirstName;
+
+    @Column(name = "user_last_name")
+    private String userLastName;
 
     @Column(nullable = false)
     private LocalDateTime date;
@@ -27,15 +30,16 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(UserEntity user, LocalDateTime date, BaseProperty property, String commentText) {
-        this.user = user;
+    public Comment(String userFirstName, String userLastName, LocalDateTime date, BaseProperty property, String commentText) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
         this.date = date;
         this.property = property;
         this.commentText = commentText;
     }
 
-    public Comment(UUID id, UserEntity user, LocalDateTime date, BaseProperty property, String commentText) {
-        this(user, date, property, commentText);
+    public Comment(UUID id, String userFirstName, String userLastName, LocalDateTime date, BaseProperty property, String commentText) {
+        this(userFirstName, userLastName, date, property, commentText);
         this.id = id;
     }
 
@@ -47,12 +51,20 @@ public class Comment {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getUserFirstName() {
+        return userFirstName;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public LocalDateTime getDate() {
