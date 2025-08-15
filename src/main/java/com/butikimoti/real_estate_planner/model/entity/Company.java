@@ -35,6 +35,9 @@ public class Company {
     @Column(name = "registered_on", nullable = false)
     private LocalDateTime registeredOn;
 
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Logo logo;
+
     public Company() {
         this.users = new ArrayList<>();
         this.properties = new ArrayList<>();
@@ -126,5 +129,13 @@ public class Company {
 
     public void setRegisteredOn(LocalDateTime registeredOn) {
         this.registeredOn = registeredOn;
+    }
+
+    public Logo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Logo logo) {
+        this.logo = logo;
     }
 }
