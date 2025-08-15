@@ -33,7 +33,7 @@ public class CompanyController {
         return new CompanyDTO();
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String getCompanies(
             @RequestParam(value = "companyName", required = false) String companyName,
             @RequestParam(value = "companyEmail", required = false) String companyEmail,
@@ -106,7 +106,6 @@ public class CompanyController {
     @GetMapping("/{id}/edit")
     public String editCompany(@PathVariable UUID id, Model model) {
         CompanyDTO companyDTO = companyService.getCompanyDTO(id);
-
 
         model.addAttribute("editCompanyData", companyDTO);
 

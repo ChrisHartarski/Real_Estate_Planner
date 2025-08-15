@@ -48,6 +48,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void registerCompany(CompanyDTO companyDTO) {
+        UserEntity currentUser = userEntityService.getCurrentUser();
+        if (!currentUser.getUserRole().equals(UserRole.ADMIN)) {
+            return;
+        }
+
         if(companyExists(companyDTO.getName())) {
             throw new RuntimeException("Company " + companyDTO.getName() + " already exists");
         }
@@ -96,6 +101,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void addLogo(UUID id, MultipartFile file) throws IOException {
+        if (!authorizedUserCheck(id)) {
+            return;
+        }
+
         Company company = getCompany(id);
 
         CloudinaryImageInfoDTO cloudinaryImageInfoDTO = cloudinaryService.uploadImage(file);
@@ -110,6 +119,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void deleteLogo(UUID id) throws IOException {
+        if (!authorizedUserCheck(id)) {
+            return;
+        }
+
         Company company = getCompany(id);
 
         if (company.getLogo() == null) {
@@ -123,12 +136,20 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void replaceLogo(UUID id, MultipartFile file) throws IOException {
+        if (!authorizedUserCheck(id)) {
+            return;
+        }
+
         deleteLogo(id);
         addLogo(id, file);
     }
 
     @Override
     public void deleteCompany(UUID id) throws IOException {
+        if (!authorizedUserCheck(id)) {
+            return;
+        }
+
         if (companyRepository.existsById(id)) {
             deleteLogo(id);
             companyRepository.deleteById(id);
@@ -163,5 +184,20 @@ public class CompanyServiceImpl implements CompanyService {
         } finally {
             configuration.setSkipNullEnabled(isSkipNullEnabled);
         }
+    }
+
+    private boolean authorizedUserCheck(UUID id) {
+        UserEntity currentUser = userEntityService.getCurrentUser();
+
+        if (currentUser.getUserRole().equals(UserRole.ADMIN)) {
+            return true;
+        }
+
+        if (currentUser.getUserRole().equals(UserRole.COMPANY_ADMIN)
+                && currentUser.getCompany().getId().equals(id)) {
+            return true;
+        }
+
+        return false;
     }
 }
