@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogoServiceImpl implements LogoService {
     private final LogoRepository logoRepository;
-    private final CloudinaryService cloudinaryService;
 
-    public LogoServiceImpl(LogoRepository logoRepository, CloudinaryService cloudinaryService) {
+    public LogoServiceImpl(LogoRepository logoRepository) {
         this.logoRepository = logoRepository;
-        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
