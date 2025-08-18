@@ -460,6 +460,20 @@ a {
     }
 }
 
+.user-list-card-container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+}
+
+@media (max-width: 1000px) {
+    .user-list-card-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
 
 .image-section {
     display: flex;
