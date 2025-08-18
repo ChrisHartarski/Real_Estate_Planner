@@ -53,13 +53,21 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     public void registerInitialAdminUser(Company company) {
-        registerNewUser(FIRST_ADMIN_USER, company);
+        if (!userExists(FIRST_ADMIN_USER.getEmail())) {
+            registerNewUser(FIRST_ADMIN_USER, company);
+        }
+
     }
 
     @Override
     public void registerInitialTestUsers(Company company) {
-        registerNewUser(TEST_USER_1, company);
-        registerNewUser(TEST_USER_2, company);
+        if (!userExists(TEST_USER_1.getEmail())) {
+            registerNewUser(TEST_USER_1, company);
+        }
+
+        if (!userExists(TEST_USER_2.getEmail())) {
+            registerNewUser(TEST_USER_2, company);
+        }
     }
 
     @Override
