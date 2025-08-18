@@ -35,7 +35,7 @@ public class UserEntitySpecifications {
 
             if (userEmail != null && !userEmail.trim().isEmpty()) {
                 predicates.add(cb.like(
-                        cb.lower(root.get(userEmail)),
+                        cb.lower(root.get("email")),
                         "%" + userEmail + "%"
                 ));
             }
@@ -49,7 +49,7 @@ public class UserEntitySpecifications {
             }
 
             if (userRole != null && !userRole.toString().isEmpty()) {
-                predicates.add(cb.equal(root.get("role"), userRole));
+                predicates.add(cb.equal(root.get("userRole"), userRole));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

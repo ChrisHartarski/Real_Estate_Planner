@@ -30,7 +30,7 @@
                            <div class="filter-item">
                                <label class="filter-left-column" th:text="#{users.name}"
                                       for="filter-name"></label>
-                               <input class="filter-right-column" id="filter-name" name="userFirstAndLastName"
+                               <input class="filter-right-column" id="filter-name" name="userFirstLastNameParam"
                                        th:placeholder="#{users.name-placeholder}"
                                        th:value="${userFirstLastNameParam}">
                            </div>
@@ -38,7 +38,7 @@
                            <!-- Email filter -->
                            <div class="filter-item">
                                <label class="filter-left-column" th:text="#{users.email}" for="filter-email"></label>
-                               <input class="filter-right-column" id="filter-email" name="userEmail"
+                               <input class="filter-right-column" id="filter-email" name="userEmailParam"
                                       th:placeholder="#{users.email-placeholder}"
                                       th:value="${userEmailParam}"/>
                            </div>
@@ -47,7 +47,7 @@
                            <div class="filter-item">
                                <label class="filter-left-column" th:text="#{users.company}"
                                       for="filter-company"></label>
-                               <input class="filter-right-column" id="filter-company" name="userCompany"
+                               <input class="filter-right-column" id="filter-company" name="userCompanyParam"
                                       th:placeholder="#{users.company-placeholder}"
                                       th:value="${userCompanyParam}">
                            </div>
@@ -56,17 +56,17 @@
                            <div class="filter-item">
                                <label class="filter-left-column" th:text="#{users.role}" for="filter-user-role"></label>
 
-                               <select class="filter-right-column" id="filter-user-role">
+                               <select class="filter-right-column" id="filter-user-role" name="userRoleParam">
                                    <option
                                             value=""
                                             th:text="#{users.role-placeholder}"
                                             th:selected="${userRoleParam == null || userRoleParam == ''}">
                                    </option>
                                    <option
-                                           th:each="role : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
-                                           th:value="${role}"
-                                           th:text="#{${'userRole.' + role.name()}}"
-                                           th:selected="${role.name() == userRoleParam}">
+                                           th:each="userRole : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
+                                           th:value="${userRole}"
+                                           th:text="#{${'userRole.' + userRole.name()}}"
+                                           th:selected="${userRole.name() == userRoleParam}">
                                    </option>
                                </select>
                            </div>
