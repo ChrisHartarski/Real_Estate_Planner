@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanySpecifications {
+
     public static Specification<Company> companiesPageFilters(
             String name,
             String email
