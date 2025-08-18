@@ -58,13 +58,15 @@
 
                                <select class="filter-right-column" id="filter-user-role">
                                    <option
-                                        th:value=""
-                                        th:text="#{users.role-placeholder}">
+                                            value=""
+                                            th:text="#{users.role-placeholder}"
+                                            th:selected="${userRoleParam == null || userRoleParam == ''}">
                                    </option>
                                    <option
                                            th:each="role : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
                                            th:value="${role}"
-                                           th:text="#{${'userRole.' + role.name()}}">
+                                           th:text="#{${'userRole.' + role.name()}}"
+                                           th:selected="${role.name() == userRoleParam}">
                                    </option>
                                </select>
                            </div>
@@ -86,7 +88,7 @@
                             th:text="${user.firstName} + ' ' + ${user.lastName}">
                         </div>
                         <div id="userCompany"
-                             th:text="${user.company.name}">
+                             th:text="${user.companyName}">
                         </div>
                         <div id="userEmail"
                             th:text="${user.email}">
