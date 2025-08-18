@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.controller;
 
+import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
@@ -108,7 +109,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     private String editUser(@PathVariable UUID id,
-                            @Valid UserDTO userDTO,
+                            @Valid EditUserDTO userDTO,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes,
                             Model model) {
@@ -129,7 +130,7 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     private String viewEditUser(@PathVariable UUID id, Model model) {
-        UserDTO userDTO = userEntityService.getUserDTO(id);
+        EditUserDTO userDTO = userEntityService.getEditUserDTO(id);
         model.addAttribute("user", userDTO);
 
         return "edit-user";

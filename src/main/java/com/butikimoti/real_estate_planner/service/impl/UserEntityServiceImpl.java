@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
+import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
@@ -97,7 +98,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     @Override
     public UserEntity getUser(UUID id) {
         UserEntity currentUser = getCurrentUser();
-        if (!currentUser.getId().equals(id) || currentUser.getUserRole() != UserRole.ADMIN) {
+        if (!currentUser.getId().equals(id) && currentUser.getUserRole() != UserRole.ADMIN) {
             throw new RuntimeException("Unauthorized user");
         }
 
@@ -111,6 +112,11 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
+    public EditUserDTO getEditUserDTO(UUID id) {
+        return modelMapper.map(getUser(id), EditUserDTO.class);
+    }
+
+    @Override
     public void deleteUser(UUID id) {
         UserEntity currentUser = getCurrentUser();
         if (currentUser.getUserRole() != UserRole.ADMIN) {
@@ -121,7 +127,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
-    public UserEntity editAndSaveUserToDB(UserDTO userDTO) {
+    public UserEntity editAndSaveUserToDB(EditUserDTO userDTO) {
         UserEntity currentUser = getCurrentUser();
         if (currentUser.getUserRole() != UserRole.ADMIN) {
             throw new RuntimeException("Current user not admin");
@@ -168,7 +174,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         encodePassAndSaveUser(user);
     }
 
-    private void applyEditUserDTOToUser(UserEntity user, UserDTO userDTO) {
+    private void applyEditUserDTOToUser(UserEntity user, EditUserDTO userDTO) {
         Configuration configuration = modelMapper.getConfiguration();
         boolean isSkipNullEnabled = configuration.isSkipNullEnabled();
 

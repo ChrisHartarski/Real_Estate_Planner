@@ -1,5 +1,6 @@
 package com.butikimoti.real_estate_planner.service;
 
+import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
@@ -19,6 +20,8 @@ public interface UserEntityService {
     Page<UserDTO> getAllUsers(Pageable pageable, String userFirstLastName, String userEmail, String userCompanyName, UserRole userRole);
     UserEntity getUser(UUID id);
     UserDTO getUserDTO(UUID id);
+    EditUserDTO getEditUserDTO(UUID id);
     void deleteUser(UUID id);
-    UserEntity editAndSaveUserToDB(@Valid UserDTO userDTO);
+
+    UserEntity editAndSaveUserToDB(@Valid EditUserDTO userDTO);
 }
