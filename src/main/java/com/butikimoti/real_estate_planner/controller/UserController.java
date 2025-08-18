@@ -2,16 +2,18 @@ package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
+import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -28,6 +30,23 @@ public class UserController {
     @ModelAttribute("registerUserData")
     public UserDTO registerUserData() {
         return new UserDTO();
+    }
+
+    @GetMapping("")
+    public String getUsers(@RequestParam(value = "userFirstLastNameParam",required = false) String userFirstLastName,
+                            @RequestParam(value = "userEmailParam", required = false) String userEmail,
+                            @RequestParam(value = "userCompanyParam", required = false) String userCompanyName,
+                            @RequestParam(value = "userRoleParam", required = false) UserRole userRole,
+                            @PageableDefault(size = 10, sort = "registeredOn", direction = Sort.Direction.DESC) Pageable pageable,
+                            Model model) {
+        Page<UserDTO> users = userEntityService.getAllUsers(pageable, userFirstLastName, userEmail, userCompanyName, userRole);
+        model.addAttribute("users", users);
+        model.addAttribute("userFirstLastNameParam", userFirstLastName);
+        model.addAttribute("userEmailParam", userEmail);
+        model.addAttribute("userCompanyParam", userCompanyName);
+        model.addAttribute("userRoleParam", userRole);
+
+        return "users";
     }
 
     @GetMapping("/register")
