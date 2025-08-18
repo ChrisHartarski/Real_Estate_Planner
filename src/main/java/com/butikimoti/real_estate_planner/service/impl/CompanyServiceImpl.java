@@ -90,6 +90,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public Company getTestCompany() {
+        return getCompany(System.getenv("TEST_COMPANY_NAME"));
+    }
+
+    @Override
     public Page<CompanyDTO> getAllCompanies(Pageable pageable, String name, String email) {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
