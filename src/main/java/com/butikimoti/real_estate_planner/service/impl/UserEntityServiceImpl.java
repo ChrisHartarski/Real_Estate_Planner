@@ -25,6 +25,11 @@ public class UserEntityServiceImpl implements UserEntityService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
+    private static final UserDTO FIRST_ADMIN_USER = new UserDTO(System.getenv("ADMIN_USER_EMAIL"), System.getenv("ADMIN_USER_PASS"), System.getenv("ADMIN_USER_PASS"), System.getenv("ADMIN_COMPANY_NAME"), System.getenv("ADMIN_FIRST_NAME"), System.getenv("ADMIN_LAST_NAME"), System.getenv("ADMIN_PHONE"), UserRole.ADMIN);
+    private static final UserDTO TEST_USER_1 = new UserDTO(System.getenv("TEST_USER1_EMAIL"), System.getenv("TEST_USER1_PASS"), System.getenv("TEST_USER1_PASS"), System.getenv("TEST_COMPANY_NAME"), System.getenv("TEST_USER1_FIRST_NAME"), System.getenv("TEST_USER1_LAST_NAME"), System.getenv("TEST_USER1_PHONE"), UserRole.COMPANY_ADMIN);
+    private static final UserDTO TEST_USER_2 = new UserDTO(System.getenv("TEST_USER2_EMAIL"), System.getenv("TEST_USER2_PASS"), System.getenv("TEST_USER2_PASS"), System.getenv("TEST_COMPANY_NAME"), System.getenv("TEST_USER2_FIRST_NAME"), System.getenv("TEST_USER2_LAST_NAME"), System.getenv("TEST_USER2_PHONE"), UserRole.USER);
+
+
     public UserEntityServiceImpl(UserEntityRepository userEntityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
         this.modelMapper = modelMapper;
@@ -39,17 +44,22 @@ public class UserEntityServiceImpl implements UserEntityService {
     @Override
     @Transactional
     public void registerUser(UserDTO userDTO, Company company) {
-        if (userExists(userDTO.getEmail())) {
-            throw new RuntimeException("User with email " + userDTO.getEmail() + " already exists");
+        if (!getCurrentUser().getUserRole().equals(UserRole.ADMIN)) {
+            return;
         }
 
-        UserEntity user = modelMapper.map(userDTO, UserEntity.class);
+        registerNewUser(userDTO, company);
+    }
 
-        user.setCompany(company);
-        setUserRole(user);
-        user.setRegisteredOn(LocalDateTime.now());
+    @Override
+    public void registerInitialAdminUser(Company company) {
+        registerNewUser(FIRST_ADMIN_USER, company);
+    }
 
-        encodePassAndSaveUser(user);
+    @Override
+    public void registerInitialTestUsers(Company company) {
+        registerNewUser(TEST_USER_1, company);
+        registerNewUser(TEST_USER_2, company);
     }
 
     @Override
@@ -93,5 +103,19 @@ public class UserEntityServiceImpl implements UserEntityService {
         } else {
             user.setUserRole(UserRole.USER);
         }
+    }
+
+    private void registerNewUser(UserDTO userDTO, Company company) {
+        if (userExists(userDTO.getEmail())) {
+            throw new RuntimeException("User with email " + userDTO.getEmail() + " already exists");
+        }
+
+        UserEntity user = modelMapper.map(userDTO, UserEntity.class);
+
+        user.setCompany(company);
+        setUserRole(user);
+        user.setRegisteredOn(LocalDateTime.now());
+
+        encodePassAndSaveUser(user);
     }
 }

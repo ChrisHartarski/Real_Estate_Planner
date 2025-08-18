@@ -14,8 +14,11 @@ import java.util.UUID;
 public interface CompanyService {
     boolean companyExists(String companyName);
     void registerCompany(CompanyDTO companyDTO);
+    void registerInitialCompanies();
     boolean companyHasUsers(String companyName);
     Company getCompany(String companyName);
+    Company getInitialAdminCompany();
+    Company getTestCompany();
     Page<CompanyDTO> getAllCompanies(Pageable pageable, String name, String email);
     CompanyDTO getCompanyDTO(UUID id);
     void addLogo(UUID id, MultipartFile file) throws IOException;

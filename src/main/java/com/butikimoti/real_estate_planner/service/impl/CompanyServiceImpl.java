@@ -33,6 +33,9 @@ public class CompanyServiceImpl implements CompanyService {
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
+    private static final CompanyDTO FIRST_COMPANY = new CompanyDTO(System.getenv("ADMIN_COMPANY_NAME"), System.getenv("ADMIN_COMPANY_ADDRESS"), System.getenv("ADMIN_COMPANY_PHONE"), System.getenv("ADMIN_COMPANY_EMAIL"));
+    private static final CompanyDTO TEST_COMPANY = new CompanyDTO(System.getenv("TEST_COMPANY_NAME"), System.getenv("TEST_COMPANY_ADDRESS"), System.getenv("TEST_COMPANY_PHONE"), System.getenv("TEST_COMPANY_EMAIL"));
+
     public CompanyServiceImpl(CompanyRepository companyRepository, UserEntityService userEntityService, LogoService logoService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.companyRepository = companyRepository;
         this.userEntityService = userEntityService;
@@ -53,13 +56,18 @@ public class CompanyServiceImpl implements CompanyService {
             return;
         }
 
-        if(companyExists(companyDTO.getName())) {
-            throw new RuntimeException("Company " + companyDTO.getName() + " already exists");
+        registerNewCompany(companyDTO);
+    }
+
+    @Override
+    public void registerInitialCompanies() {
+        if (!companyExists(FIRST_COMPANY.getName())) {
+            registerNewCompany(FIRST_COMPANY);
         }
 
-        Company company = modelMapper.map(companyDTO, Company.class);
-        company.setRegisteredOn(LocalDateTime.now());
-        companyRepository.saveAndFlush(company);
+        if (!companyExists(TEST_COMPANY.getName())) {
+            registerNewCompany(TEST_COMPANY);
+        }
     }
 
     @Override
@@ -74,6 +82,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company getCompany(String companyName) {
         return companyRepository.findByName(companyName);
+    }
+
+    @Override
+    public Company getInitialAdminCompany() {
+        return getCompany(System.getenv("ADMIN_COMPANY_NAME"));
     }
 
     @Override
@@ -199,5 +212,15 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         return false;
+    }
+
+    private void registerNewCompany(CompanyDTO companyDTO) {
+        if(companyExists(companyDTO.getName())) {
+            throw new RuntimeException("Company " + companyDTO.getName() + " already exists");
+        }
+
+        Company company = modelMapper.map(companyDTO, Company.class);
+        company.setRegisteredOn(LocalDateTime.now());
+        companyRepository.saveAndFlush(company);
     }
 }
