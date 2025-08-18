@@ -4,8 +4,11 @@ import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.UUID;
 
 public interface UserEntityService {
     boolean userExists(String email);
@@ -14,4 +17,8 @@ public interface UserEntityService {
     void registerInitialTestUsers(Company company);
     UserEntity getCurrentUser();
     Page<UserDTO> getAllUsers(Pageable pageable, String userFirstLastName, String userEmail, String userCompanyName, UserRole userRole);
+    UserEntity getUser(UUID id);
+    UserDTO getUserDTO(UUID id);
+    void deleteUser(UUID id);
+    UserEntity editAndSaveUserToDB(@Valid UserDTO userDTO);
 }

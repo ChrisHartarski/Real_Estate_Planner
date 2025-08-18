@@ -9,6 +9,7 @@ import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.specifications.UserEntitySpecifications;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class UserEntityServiceImpl implements UserEntityService {
@@ -92,6 +94,45 @@ public class UserEntityServiceImpl implements UserEntityService {
         return users.map(userEntity -> modelMapper.map(userEntity, UserDTO.class));
     }
 
+    @Override
+    public UserEntity getUser(UUID id) {
+        UserEntity currentUser = getCurrentUser();
+        if (!currentUser.getId().equals(id) || currentUser.getUserRole() != UserRole.ADMIN) {
+            throw new RuntimeException("Unauthorized user");
+        }
+
+        return userEntityRepository.findById(id).orElseThrow(() -> new RuntimeException("No such user"));
+    }
+
+    @Override
+    public UserDTO getUserDTO(UUID id) {
+
+        return modelMapper.map(getUser(id), UserDTO.class);
+    }
+
+    @Override
+    public void deleteUser(UUID id) {
+        UserEntity currentUser = getCurrentUser();
+        if (currentUser.getUserRole() != UserRole.ADMIN) {
+            throw new RuntimeException("Current user not admin");
+        }
+
+        userEntityRepository.deleteById(id);
+    }
+
+    @Override
+    public UserEntity editAndSaveUserToDB(UserDTO userDTO) {
+        UserEntity currentUser = getCurrentUser();
+        if (currentUser.getUserRole() != UserRole.ADMIN) {
+            throw new RuntimeException("Current user not admin");
+        }
+
+        UserEntity user = getUser(userDTO.getId());
+        applyEditUserDTOToUser(user, userDTO);
+
+        return userEntityRepository.saveAndFlush(user);
+    }
+
     private void encodePassAndSaveUser(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntityRepository.saveAndFlush(user);
@@ -125,5 +166,17 @@ public class UserEntityServiceImpl implements UserEntityService {
         user.setRegisteredOn(LocalDateTime.now());
 
         encodePassAndSaveUser(user);
+    }
+
+    private void applyEditUserDTOToUser(UserEntity user, UserDTO userDTO) {
+        Configuration configuration = modelMapper.getConfiguration();
+        boolean isSkipNullEnabled = configuration.isSkipNullEnabled();
+
+        try {
+            configuration.setSkipNullEnabled(true);
+            modelMapper.map(userDTO, user);
+        } finally {
+            configuration.setSkipNullEnabled(isSkipNullEnabled);
+        }
     }
 }

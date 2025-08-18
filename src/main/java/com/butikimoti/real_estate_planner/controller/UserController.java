@@ -7,7 +7,6 @@ import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import jakarta.validation.Valid;
-import org.apache.commons.codec.StringDecoder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -94,7 +93,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     private String viewUser(@PathVariable UUID id, Model model) {
-        UserDTO user = userEntityService.getUser(id);
+        UserDTO user = userEntityService.getUserDTO(id);
         model.addAttribute("user", user);
 
         return "user-page";
@@ -130,7 +129,7 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     private String viewEditUser(@PathVariable UUID id, Model model) {
-        UserDTO userDTO = userEntityService.getUser(id);
+        UserDTO userDTO = userEntityService.getUserDTO(id);
         model.addAttribute("user", userDTO);
 
         return "edit-user";
