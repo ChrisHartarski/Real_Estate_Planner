@@ -5,10 +5,13 @@ import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
-import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.specifications.UserEntitySpecifications;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,6 +56,22 @@ public class UserEntityServiceImpl implements UserEntityService {
     public UserEntity getCurrentUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userEntityRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("No active user"));
+    }
+
+    @Override
+    public Page<UserDTO> getAllUsers(Pageable pageable, String userFirstLastName, String userEmail, String userCompanyName, UserRole userRole) {
+        UserEntity user = getCurrentUser();
+        if (user == null) {
+            throw new RuntimeException("No active user");
+        }
+        if (user.getUserRole() != UserRole.ADMIN) {
+            throw new RuntimeException("User is not admin");
+        }
+
+        Specification<UserEntity> specification = UserEntitySpecifications.usersPageFilters(userFirstLastName, userEmail, userCompanyName, userRole);
+        Page<UserEntity> users = userEntityRepository.findAll(specification, pageable);
+
+        return users.map(userEntity -> modelMapper.map(userEntity, UserDTO.class));
     }
 
     private void encodePassAndSaveUser(UserEntity user) {
