@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="bg"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html}"></header>
+    <main>
+        <div class="page-container">
+            <div class="card gap-1 flex-column" th:object="${user}">
+                <div class="page-heading flex-column text-center">
+
+                    <h2 th:text="${user.firstName + ' ' + user.lastName}">Име на потребителя</h2>
+                    <h3 th:text="${user.companyName}">Име на компания</h3>
+
+                </div>
+
+                <div class="info-section">
+                    <div class="main-info flex-column gap-0-5">
+                        <h3 th:text="#{property.main-info-header}">Основна информация</h3>
+
+                        <!-- Email -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{register-user.email} + ':'">Имейл:</div>
+                            <div class="info-right-column"
+                                 th:text="${user.email}">Имейл</div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{register-user.phone} + ':'">Адрес:
+                            </div>
+                            <div class="info-right-column"
+                                 th:text="${user.phone}">Телефон</div>
+                        </div>
+
+                        <!-- User Role -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{register-user.userRole} + ':'">Телефон:</div>
+                            <div class="info-right-column"
+                                 th:text="#{'userRole.' + ${user.userRole.toString()}}">Роля</div>
+                        </div>
+                    </div>
+
+                    <div class="created-on-updated-on-section flex-column gap-0-5">
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{users.registered-on} + ':'">Регистриран на:</div>
+                            <div class="info-right-column" th:text="${#temporals.format(user.registeredOn, 'dd.MM.yyyy')}">05.05.2025 г.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons-section" sec:authorize="hasRole('ADMIN') or principal.username == user.email">
+                    <div>
+                        <a th:href="@{/users/{id}/edit(id=${user.id})}">
+                            <button class="btn btn-green" th:text="#{users.button-change}">Промени</button>
+                        </a>
+                    </div>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <form id="delete-property-form"
+                              th:action="@{/users/{id}(id=${user.id})}"
+                              th:method="DELETE"
+                              th:attr="data-message=#{users.confirm-delete-user-message}"
+                              onsubmit="return false;">
+                            <button class="btn btn-red delete-button" th:text="#{users.button-delete}">Изтрий</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modal">
+            <div class="modal-content">
+                <p id="modal-message">Are you sure?</p>
+                <div class="modal-buttons">
+                    <button id="confirm-delete-button" class="btn btn-blue" th:text="#{property.confirm-yes}">Yes</button>
+                    <button id="cancel-delete-button" class="btn btn-blue" th:text="#{property.confirm-no}">No</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+
+    <script>
+        window.i18nMessages = {
+            deleteConfirmMessage: '[[#{property.confirm-delete-message}]]'
+        }
+    </script>
+
+    <!-- Initialize scriptPropertyPage.js -->
+    <script th:src="@{/js/scriptPropertyPage.js}"></script>
+</body>
+</html>

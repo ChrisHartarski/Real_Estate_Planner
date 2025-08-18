@@ -83,7 +83,8 @@
         <div class="offer-list-section w-70" id="offerListSection">
             <div th:each="user : ${users.getContent()}">
                 <div class="card">
-                    <div class="user-list-card-container">
+                    <a class="user-list-card-container"
+                       th:href="@{'/users/' + ${user.id}}">
                         <div class="bold" id="userFirstLastName"
                             th:text="${user.firstName} + ' ' + ${user.lastName}">
                         </div>
@@ -96,7 +97,7 @@
                         <div id="userRole"
                             th:text="#{${'userRole.' + user.userRole.name()}}">
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

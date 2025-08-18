@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="bg"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'register'})}"></header>
+    <main>
+        <div class="page-container">
+            <div class="card flex-column">
+                <h1 class="text-center" th:text="#{edit-user.heading}">Промени потребител</h1>
+                <form class="flex-column gap-1" id="edit_user_form"
+                        th:action="@{'/users/' + ${user.id}}"
+                        th:method="PATCH"
+                        th:object="${user}">
+
+                    <!-- User email input-->
+                    <div class="flex-column text-center">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="email" th:text="#{register-user.email} + ':'">Имейл</label>
+                            </div>
+                            <div class="login-right-column">
+                                <input class="login-input" name="email" id="email" type="email"
+                                       th:placeholder="#{register-user.email-placeholder}"
+                                       th:field="*{email}"
+                                        readonly/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Company Name input-->
+                    <div class="flex-column text-center">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="companyName" th:text="#{register-user.company} + ':'">Company name</label>
+                            </div>
+                            <div class="login-right-column">
+                                <input class="login-input" id="companyName" type="text"
+                                       th:placeholder="#{register-user.company-placeholder}"
+                                       th:field="*{companyName}"
+                                        readonly/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- First name input-->
+                    <div class="flex-column text-center">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="firstName" th:text="#{register-user.first-name} + ':'">Име</label>
+                            </div>
+                            <div class="login-right-column">
+                                <input class="login-input" id="firstName" type="text"
+                                       th:placeholder="#{register-user.first-name-placeholder}"
+                                       th:field="*{firstName}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{firstName}" class="text-red">First name input errors!</small>
+                    </div>
+
+                    <!-- Last name input-->
+                    <div class="flex-column text-center">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="lastName" th:text="#{register-user.last-name} + ':'">Фамилия</label>
+                            </div>
+                            <div class="login-right-column">
+                                <input class="login-input" id="lastName" type="text"
+                                        th:placeholder="#{register-user.last-name-placeholder}"
+                                       th:field="*{lastName}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{lastName}" class="text-red">Last name input errors!</small>
+                    </div>
+
+                    <!-- Phone input-->
+                    <div class="flex-column text-center">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="phone" th:text="#{register-user.phone} + ':'">Телефон</label>
+                            </div>
+                            <div class="login-right-column">
+                                <input class="login-input" id="phone" type="text"
+                                       th:placeholder="#{register-user.phone-placeholder}"
+                                       th:field="*{phone}"/>
+                            </div>
+                        </div>
+                        <small th:errors="*{phone}" class="text-red">Phone input errors!</small>
+                    </div>
+
+                    <!-- User Role -->
+                    <div class="flex-column text-center" sec:authorize="hasRole('ADMIN')">
+                        <div class="login-row">
+                            <div class="login-left-column">
+                                <label for="userRole" th:text="#{register-user.userRole} + ':'">Роля</label>
+                            </div>
+                            <div class="login-right-column">
+                                <select class="login-input" id="userRole" th:field="*{userRole}">
+                                    <option
+                                        th:each="role : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
+                                        th:value="${role}"
+                                        th:text="#{${'userRole.' + role.name()}}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <small th:errors="*{userRole}" class="text-red">User role errors!</small>
+                    </div>
+
+                    <!-- Register Button-->
+                    <div class="center">
+                        <button class="btn btn-blue" id="submitButton" type="submit"
+                                th:text="#{edit-user.button}">Потвърди промените</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+</body>
+</html>
