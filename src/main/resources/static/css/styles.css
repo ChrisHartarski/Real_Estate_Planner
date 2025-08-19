@@ -1125,6 +1125,7 @@ a {
 
 .page-container .buttons-section {
     display: flex;
+    justify-content: center;
     gap: 1rem;
 }
 

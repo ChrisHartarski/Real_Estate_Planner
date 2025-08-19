@@ -64,6 +64,11 @@
                             <button class="btn btn-green" th:text="#{users.button-change}">Промени</button>
                         </a>
                     </div>
+                    <div th:if="${@userEntityServiceImpl.getCurrentUser().id == user.id}">
+                        <a th:href="@{/users/{id}/changePassword(id=${user.id})}">
+                            <button class="btn btn-green" th:text="#{users.button-change-pass}">Промени парола</button>
+                        </a>
+                    </div>
                     <div sec:authorize="hasRole('ADMIN')">
                         <form id="delete-property-form"
                               th:action="@{/users/{id}(id=${user.id})}"
