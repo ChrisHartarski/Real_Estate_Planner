@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                <div class="buttons-section" sec:authorize="hasRole('ADMIN') or principal.username == user.email">
+                <div class="buttons-section" th:if="${user.userRole.name().equals('ADMIN') || @userEntityServiceImpl.getCurrentUser().id == user.id}">
                     <div>
                         <a th:href="@{/users/{id}/edit(id=${user.id})}">
                             <button class="btn btn-green" th:text="#{users.button-change}">Промени</button>
