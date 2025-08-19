@@ -20,11 +20,12 @@
                         th:action="@{/users/login}"
                         th:method="post">
 
+                    <small th:if="${wrongUsernameOrPassword}" class="text-red"
+                           th:text="#{login.error-message}">Грешен имейл или парола
+                    </small>
+
                     <!-- Email address input-->
                     <div class="flex-row text-center">
-                        <small th:if="${wrongUsernameOrPassword}" class="text-red"
-                               th:text="#{login.error-message}">Грешен имейл или парола
-                        </small>
                         <div class="flex-row w-100 gap-1">
                             <div class="login-left-column">
                                 <label for="email" th:text="#{login.email} + ':'">Имейл</label>

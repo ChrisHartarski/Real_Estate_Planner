@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserDTO;
+import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserPassDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
@@ -124,6 +125,18 @@ public class UserEntityServiceImpl implements UserEntityService {
         }
 
         userEntityRepository.deleteById(id);
+    }
+
+    @Override
+    public void changeUserPassword(UUID id, EditUserPassDTO userPass) {
+        UserEntity user = getUser(id);
+        if (getCurrentUser().getUserRole() != UserRole.ADMIN
+            && !getCurrentUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized user");
+        }
+
+        user.setPassword(userPass.getNewPassword());
+        encodePassAndSaveUser(user);
     }
 
     @Override

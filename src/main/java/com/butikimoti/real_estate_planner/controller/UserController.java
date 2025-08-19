@@ -1,6 +1,7 @@
 package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserDTO;
+import com.butikimoti.real_estate_planner.model.dto.userEntity.EditUserPassDTO;
 import com.butikimoti.real_estate_planner.model.dto.userEntity.UserDTO;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,16 +27,21 @@ import java.util.UUID;
 public class UserController {
     private final UserEntityService userEntityService;
     private final CompanyService companyService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserEntityService userEntityService, CompanyService companyService) {
+    public UserController(UserEntityService userEntityService, CompanyService companyService, PasswordEncoder passwordEncoder) {
         this.userEntityService = userEntityService;
         this.companyService = companyService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @ModelAttribute("registerUserData")
     public UserDTO registerUserData() {
         return new UserDTO();
     }
+
+    @ModelAttribute("userPass")
+    public EditUserPassDTO userPass() {return new EditUserPassDTO();}
 
     @GetMapping("")
     public String getUsers(@RequestParam(value = "userFirstLastNameParam",required = false) String userFirstLastName,
@@ -134,6 +141,44 @@ public class UserController {
         model.addAttribute("user", userDTO);
 
         return "edit-user";
+    }
+
+    @GetMapping("/{id}/changePassword")
+    private String viewChangePassword(@PathVariable UUID id, Model model) {
+        EditUserDTO userDTO = userEntityService.getEditUserDTO(id);
+        model.addAttribute("userId", id);
+        model.addAttribute("userEmail", userDTO.getEmail());
+
+        return "edit-user-password";
+    }
+
+    @PatchMapping("/{id}/changePass")
+    private String changePassword(@PathVariable UUID id,
+                                  @Valid EditUserPassDTO userPass,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userPass", userPass);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userPass", bindingResult);
+            return "redirect:/users/" + id + "/changePassword";
+        }
+
+        if (userEntityService.getCurrentUser().getUserRole() != UserRole.ADMIN) {
+            if (!passwordEncoder.matches(userPass.getCurrentPassword(), userEntityService.getCurrentUser().getPassword())) {
+                redirectAttributes.addFlashAttribute("userPasswordIncorrect", true);
+                return "redirect:/users/" + id + "/changePassword";
+            }
+        }
+
+        if (!userPass.getNewPassword().equals(userPass.getConfirmNewPassword())) {
+            redirectAttributes.addFlashAttribute("passwordsDoNotMatch", true);
+            return "redirect:/users/" + id + "/changePassword";
+        }
+
+        userEntityService.changeUserPassword(id, userPass);
+
+        return "redirect:/users/" + id;
     }
 
     @GetMapping("/login")

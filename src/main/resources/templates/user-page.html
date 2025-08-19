@@ -58,13 +58,13 @@
                     </div>
                 </div>
 
-                <div class="buttons-section" th:if="${user.userRole.name().equals('ADMIN') || @userEntityServiceImpl.getCurrentUser().id == user.id}">
+                <div class="buttons-section" th:if="${@userEntityServiceImpl.getCurrentUser().userRole.name().equals('ADMIN') || @userEntityServiceImpl.getCurrentUser().id == user.id}">
                     <div>
                         <a th:href="@{/users/{id}/edit(id=${user.id})}">
                             <button class="btn btn-green" th:text="#{users.button-change}">Промени</button>
                         </a>
                     </div>
-                    <div th:if="${@userEntityServiceImpl.getCurrentUser().id == user.id}">
+                    <div th:if="${@userEntityServiceImpl.getCurrentUser().userRole.name().equals('ADMIN') || @userEntityServiceImpl.getCurrentUser().id == user.id}">
                         <a th:href="@{/users/{id}/changePassword(id=${user.id})}">
                             <button class="btn btn-green" th:text="#{users.button-change-pass}">Промени парола</button>
                         </a>
