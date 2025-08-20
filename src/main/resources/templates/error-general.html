@@ -14,8 +14,8 @@
     <header th:replace="~{fragments/navbar.html}"></header>
     <main>
         <div class="flex-column gap-1">
-            <div class="text-center white" th:text="#{error.resource-not-found}">
-                The resource you are requesting cannot be found!
+            <div class="text-center white" th:text="#{error.general}">
+                An unexpected error occurred. Please try again later.
             </div>
             <div class="text-center white">
                 <span th:text="#{error.back-to-index-p1} + ' '"></span>

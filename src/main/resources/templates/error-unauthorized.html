@@ -13,8 +13,15 @@
 <body>
     <header th:replace="~{fragments/navbar.html}"></header>
     <main>
-        <div class="text-center white">
-            You are not authorized to see this page!
+        <div class="flex-column gap-1">
+            <div class="text-center white" th:text="#{error.unauthorized}">
+                You are not authorized to see this page!
+            </div>
+            <div class="text-center white">
+                <span th:text="#{error.back-to-index-p1} + ' '"></span>
+                <a class="link-white" th:href="@{/}" th:text="#{error.back-to-index-p2}"></a>
+                <span>.</span>
+            </div>
         </div>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
