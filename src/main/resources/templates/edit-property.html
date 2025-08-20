@@ -89,7 +89,7 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <textarea class="property-input-fill-long" name="additionalStructures" id="additionalStructures" rows="2"
+                                    <textarea class="property-input-fill-long" name="address" id="address" rows="2"
                                               th:placeholder="#{property.address-placeholder}"
                                               th:field="*{address}">
                                     </textarea>
@@ -554,5 +554,9 @@
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
     <script th:src="@{/js/scriptAddOrEditProperty.js}"></script>
+    <!--    Initialize FontAwesome script for navbar  -->
+    <script src="https://kit.fontawesome.com/89ea1f6c83.js" crossorigin="anonymous"></script>
+    <!--    Initialize Dropdown script for navbar   -->
+    <script th:src="@{/js/scriptDropdown.js}"></script>
 </body>
 </html>
