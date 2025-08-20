@@ -11,6 +11,7 @@ import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.LogoService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.CompanySpecifications;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
@@ -99,11 +100,11 @@ public class CompanyServiceImpl implements CompanyService {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
         if (currentUser == null) {
-            throw new RuntimeException("No logged in user");
+            throw new UnauthorizedException("No logged in user");
         }
 
         if (!currentUser.getUserRole().equals(UserRole.ADMIN)) {
-            throw new RuntimeException("Current user is not admin");
+            throw new UnauthorizedException("Current user is not admin");
         }
 
         Specification<Company> specification = CompanySpecifications.companiesPageFilters(name, email);

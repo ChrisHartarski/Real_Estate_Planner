@@ -11,6 +11,7 @@ import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import com.butikimoti.real_estate_planner.service.PropertyPictureService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.BasePropertySpecifications;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
@@ -130,7 +131,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     private Company getOwnerCompany() {
         UserEntity currentUser = userEntityService.getCurrentUser();
         if (currentUser == null) {
-            throw new RuntimeException("No logged in user");
+            throw new UnauthorizedException("No logged in user");
         }
 
         Company ownerCompany = currentUser.getCompany();

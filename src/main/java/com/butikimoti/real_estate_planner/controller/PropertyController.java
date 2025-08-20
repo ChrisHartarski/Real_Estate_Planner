@@ -135,7 +135,7 @@ public class PropertyController {
         PropertyDTO propertyData = getPropertyDTOById(id);
 
         if (!isCompanyMatching(propertyData)) {
-            return "unauthorized";
+            return "error-unauthorized";
         }
 
         model.addAttribute("property", propertyData);

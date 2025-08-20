@@ -24,7 +24,6 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = modelMapper.map(addCommentDTO, Comment.class);
         comment.setDate(LocalDateTime.now());
 
-        commentRepository.saveAndFlush(comment);
-        return null;
+        return commentRepository.saveAndFlush(comment);
     }
 }

@@ -8,6 +8,7 @@ import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.UserEntitySpecifications;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -77,17 +78,17 @@ public class UserEntityServiceImpl implements UserEntityService {
     @Override
     public UserEntity getCurrentUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userEntityRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("No active user"));
+        return userEntityRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UnauthorizedException("No active user"));
     }
 
     @Override
     public Page<UserDTO> getAllUsers(Pageable pageable, String userFirstLastName, String userEmail, String userCompanyName, UserRole userRole) {
         UserEntity user = getCurrentUser();
         if (user == null) {
-            throw new RuntimeException("No active user");
+            throw new UnauthorizedException("No active user");
         }
         if (user.getUserRole() != UserRole.ADMIN) {
-            throw new RuntimeException("User is not admin");
+            throw new UnauthorizedException("User is not admin");
         }
 
         Specification<UserEntity> specification = UserEntitySpecifications.usersPageFilters(userFirstLastName, userEmail, userCompanyName, userRole);
@@ -100,7 +101,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     public UserEntity getUser(UUID id) {
         UserEntity currentUser = getCurrentUser();
         if (!currentUser.getId().equals(id) && currentUser.getUserRole() != UserRole.ADMIN) {
-            throw new RuntimeException("Unauthorized user");
+            throw new UnauthorizedException("User is not admin");
         }
 
         return userEntityRepository.findById(id).orElseThrow(() -> new RuntimeException("No such user"));
@@ -121,7 +122,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     public void deleteUser(UUID id) {
         UserEntity currentUser = getCurrentUser();
         if (currentUser.getUserRole() != UserRole.ADMIN) {
-            throw new RuntimeException("Current user not admin");
+            throw new UnauthorizedException("Current user not admin");
         }
 
         userEntityRepository.deleteById(id);
@@ -132,7 +133,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         UserEntity user = getUser(id);
         if (getCurrentUser().getUserRole() != UserRole.ADMIN
             && !getCurrentUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Unauthorized user");
+            throw new UnauthorizedException("Unauthorized user");
         }
 
         user.setPassword(userPass.getNewPassword());
@@ -143,7 +144,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     public UserEntity editAndSaveUserToDB(EditUserDTO userDTO) {
         UserEntity currentUser = getCurrentUser();
         if (currentUser.getUserRole() != UserRole.ADMIN) {
-            throw new RuntimeException("Current user not admin");
+            throw new UnauthorizedException("Current user not admin");
         }
 
         UserEntity user = getUser(userDTO.getId());
