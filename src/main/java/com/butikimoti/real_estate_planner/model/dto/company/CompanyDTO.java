@@ -1,16 +1,21 @@
 package com.butikimoti.real_estate_planner.model.dto.company;
 
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
+import com.butikimoti.real_estate_planner.model.entity.Logo;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class RegisterCompanyDTO {
+public class CompanyDTO {
+    private UUID id;
+
     private List<UserEntity> users;
 
     @NotEmpty(message = "{companyName.notEmpty}")
@@ -31,17 +36,29 @@ public class RegisterCompanyDTO {
 
     private List<BaseProperty> properties;
 
-    public RegisterCompanyDTO() {
+    private LocalDateTime registeredOn;
+
+    private Logo logo;
+
+    public CompanyDTO() {
         this.users = new ArrayList<>();
         this.properties = new ArrayList<>();
     }
 
-    public RegisterCompanyDTO(String name, String address, String phone, String email) {
+    public CompanyDTO(String name, String address, String phone, String email) {
         this();
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public List<UserEntity> getUsers() {
@@ -90,5 +107,21 @@ public class RegisterCompanyDTO {
 
     public void setProperties(List<BaseProperty> properties) {
         this.properties = properties;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
+    }
+
+    public Logo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Logo logo) {
+        this.logo = logo;
     }
 }

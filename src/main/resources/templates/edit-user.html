@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="bg"
-       xmlns:th="http://www.thymeleaf.org">
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register User</title>
+    <title>Edit User</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
     <!-- Core theme CSS -->
@@ -15,11 +16,11 @@
     <main>
         <div class="page-container">
             <div class="card flex-column">
-                <h1 class="text-center" th:text="#{register-user.heading}">Регистрирай фирма</h1>
-                <form class="flex-column gap-1" id="register_user_form"
-                        th:action="@{/users/register}"
-                        th:method="POST"
-                        th:object="${registerUserData}">
+                <h1 class="text-center" th:text="#{edit-user.heading}">Промени потребител</h1>
+                <form class="flex-column gap-1" id="edit_user_form"
+                        th:action="@{'/users/' + ${user.id}}"
+                        th:method="PATCH"
+                        th:object="${user}">
 
                     <!-- User email input-->
                     <div class="flex-column text-center">
@@ -30,41 +31,10 @@
                             <div class="login-right-column">
                                 <input class="login-input" name="email" id="email" type="email"
                                        th:placeholder="#{register-user.email-placeholder}"
-                                       th:field="*{email}"/>
+                                       th:field="*{email}"
+                                        readonly/>
                             </div>
                         </div>
-                        <small th:errors="*{email}" class="text-red">User email invalid!</small>
-                        <small th:if="${userExists != null and userExists}" class="text-red" th:text="#{register-user.email-error}">User with this email already exists!</small>
-                    </div>
-
-                    <!-- User password input-->
-                    <div class="flex-column text-center">
-                        <div class="login-row">
-                            <div class="login-left-column">
-                                <label for="password" th:text="#{register-user.password} + ':'">Password</label>
-                            </div>
-                            <div class="login-right-column">
-                                <input class="login-input" name="password" id="password" type="password" autocomplete="off"
-                                       th:placeholder="#{register-user.password-placeholder}" th:field="*{password}"/>
-                            </div>
-                        </div>
-                        <small th:errors="*{password}" class="text-red">Password invalid!</small>
-                    </div>
-
-                    <!-- Confirm password input-->
-                    <div class="flex-column text-center">
-                        <div class="login-row">
-                            <div class="login-left-column">
-                                <label for="confirm-password" th:text="#{register-user.confirm-password} + ':'">Confirm Password</label>
-                            </div>
-                            <div class="login-right-column">
-                                <input class="login-input" name="confirm-password" id="confirm-password" type="password" autocomplete="off"
-                                       th:placeholder="#{register-user.confirm-password-placeholder}"
-                                       th:field="*{confirmPassword}"/>
-                            </div>
-                        </div>
-                        <small th:errors="*{confirmPassword}" class="text-red">Password invalid!</small>
-                        <small th:if="${passwordsDoNotMatch != null and passwordsDoNotMatch}" class="text-red" th:text="#{register-user.passwords-do-not-match}">Passwords do not match!</small>
                     </div>
 
                     <!-- Company Name input-->
@@ -76,23 +46,10 @@
                             <div class="login-right-column">
                                 <input class="login-input" id="companyName" type="text"
                                        th:placeholder="#{register-user.company-placeholder}"
-                                       th:field="*{companyName}"/>
+                                       th:field="*{companyName}"
+                                        readonly/>
                             </div>
                         </div>
-                        <small th:errors="*{companyName}" class="text-red">Company name input errors!</small>
-                        <small th:if="${companyDoesNotExist == null or !companyDoesNotExist}" class="text-black">
-                            <span th:text="#{register-user.register-company-message-part1} + ' '">Ако фирмата Ви не е
-                                регистрирана, моля </span>
-                            <a class="link-black" th:href="@{/companies/register}" target="_blank"
-                               th:text="#{register-user.register-company-message-part2}">регистрирайте нова фирма</a>
-                            <span>!</span>
-                        </small>
-                        <small th:if="${companyDoesNotExist != null and companyDoesNotExist}" class="text-red">
-                            <span th:text="#{register-user.register-company-error-part1} + ' '">Тази фирма не е регистрирана! Моля </span>
-                            <a class="link-red" th:href="@{/companies/register}" target="_blank"
-                               th:text="#{register-user.register-company-error-part2}">регистрирайте нова фирма</a>
-                            <span>!</span>
-                        </small>
                     </div>
 
                     <!-- First name input-->
@@ -141,7 +98,7 @@
                     </div>
 
                     <!-- User Role -->
-                    <div class="flex-column text-center">
+                    <div class="flex-column text-center" sec:authorize="hasRole('ADMIN')">
                         <div class="login-row">
                             <div class="login-left-column">
                                 <label for="userRole" th:text="#{register-user.userRole} + ':'">Роля</label>
@@ -156,13 +113,13 @@
                                 </select>
                             </div>
                         </div>
-                        <small th:errors="*{userRole}" class="text-red">Phone input errors!</small>
+                        <small th:errors="*{userRole}" class="text-red">User role errors!</small>
                     </div>
 
                     <!-- Register Button-->
                     <div class="center">
                         <button class="btn btn-blue" id="submitButton" type="submit"
-                                th:text="#{register-user.button}">Регистрирай</button>
+                                th:text="#{edit-user.button}">Потвърди промените</button>
                     </div>
                 </form>
             </div>

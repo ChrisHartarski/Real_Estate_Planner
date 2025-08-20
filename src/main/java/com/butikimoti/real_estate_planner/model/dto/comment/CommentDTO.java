@@ -5,7 +5,8 @@ import java.util.UUID;
 
 public class CommentDTO {
     private UUID id;
-    private String userFirstAndLastName;
+    private String userFirstName;
+    private String userLastName;
     private LocalDateTime date;
     private String commentText;
 
@@ -20,12 +21,20 @@ public class CommentDTO {
         this.id = id;
     }
 
-    public String getUserFirstAndLastName() {
-        return userFirstAndLastName;
+    public String getUserFirstName() {
+        return userFirstName;
     }
 
-    public void setUserFirstAndLastName(String userFirstAndLastName) {
-        this.userFirstAndLastName = userFirstAndLastName;
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public LocalDateTime getDate() {

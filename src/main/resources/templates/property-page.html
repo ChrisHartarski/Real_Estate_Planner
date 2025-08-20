@@ -327,7 +327,7 @@
                         <div class="comments-list">
                             <div class="comment-item" th:each="comment : ${property.comments}">
                                 <div class="comment-col-name"
-                                     th:text="${comment.user.firstName + ' ' + comment.user.lastName}"></div>
+                                     th:text="${comment.userFirstName + ' ' + comment.userLastName}"></div>
                                 <div class="comment-col-date"
                                      th:text="${#temporals.format(comment.date, 'dd.MM.yyyy')}"></div>
                                 <div class="comment-col-comment" th:text="${comment.commentText}"></div>

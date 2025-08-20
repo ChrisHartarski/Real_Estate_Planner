@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="bg"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html}"></header>
+    <main>
+        <div class="page-container">
+            <div class="card gap-1 flex-column" th:object="${property}">
+                <div class="page-heading flex-column text-center">
+
+                    <div class="logo-container" th:if="${company.logo != null}">
+                        <img th:src="@{${company.logo.pictureLink}}" alt="company_logo">
+                    </div>
+
+                    <h2 th:if="${company.logo == null}" th:text="${company.name}">Име на компанията</h2>
+
+                </div>
+                <div class="flex-column gap-1"
+                     th:if="${company.logo == null}">
+                    <div class="text-center">
+                        <details class="flex-column gap-1"
+                                 sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
+                            <summary th:text="#{companies.add-logo}">Добави лого</summary>
+                            <form th:action="@{/companies/{id}/upload-logo(id=${company.id})}"
+                                  th:method="POST"
+                                  enctype="multipart/form-data"
+                                  class="upload-image-form">
+                                <label for="file-upload"
+                                       class="custom-file-upload btn btn-blue font-size-0-9 font-weight-normal"
+                                       th:text="#{property.button-choose-file} + '...'">Choose file</label>
+                                <input id="file-upload" type="file" name="image" style="display:none" required />
+                                <div class="textbox textbox-white-border" id="file-name"
+                                     th:text="#{property.no-file-chosen}">
+                                    No file chosen
+                                </div>
+                                <button class="btn btn-blue" type="submit" th:text="#{property.button-upload}">Upload
+                                </button>
+                            </form>
+                        </details>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="main-info flex-column gap-0-5">
+                        <h3 th:text="#{property.main-info-header}">Основна информация</h3>
+                        <!-- Name -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{companies.company-name} + ':'">Наименование:</div>
+                            <div class="info-right-column"
+                                 th:text="${company.name}">Име на фирма</div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{companies.company-address} + ':'">Адрес:
+                            </div>
+                            <div class="info-right-column"
+                                 th:text="${company.address}">Адрес на фирма</div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{companies.company-phone} + ':'">Телефон:</div>
+                            <div class="info-right-column"
+                                 th:text="${company.phone}">+359000000000</div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{companies.company-email} + ':'">Наименование:</div>
+                            <div class="info-right-column"
+                                 th:text="${company.email}">mail@mail.com</div>
+                        </div>
+                    </div>
+
+                    <div class="created-on-updated-on-section flex-column gap-0-5">
+                        <div class="info-row">
+                            <div class="info-left-column" th:text="#{companies.registered-on} + ':'">Регистрирана на:</div>
+                            <div class="info-right-column" th:text="${#temporals.format(company.registeredOn, 'dd.MM.yyyy')}">05.05.2025 г.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons-section" sec:authorize="hasRole('ADMIN') or hasRole('COMPANY_ADMIN')">
+                    <div>
+                        <a th:href="@{/companies/{id}/edit(id=${company.id})}">
+                            <button class="btn btn-green" th:text="#{companies.button-change}">Промени</button>
+                        </a>
+                    </div>
+                    <div>
+                        <form id="delete-property-form"
+                              th:action="@{/companies/{id}(id=${company.id})}"
+                              th:method="DELETE"
+                              th:attr="data-message=#{companies.confirm-delete-property-message}"
+                              onsubmit="return false;">
+                            <button class="btn btn-red delete-button" th:text="#{companies.button-delete}">Изтрий</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modal">
+            <div class="modal-content">
+                <p id="modal-message">Are you sure?</p>
+                <div class="modal-buttons">
+                    <button id="confirm-delete-button" class="btn btn-blue" th:text="#{property.confirm-yes}">Yes</button>
+                    <button id="cancel-delete-button" class="btn btn-blue" th:text="#{property.confirm-no}">No</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+
+    <script>
+        window.i18nMessages = {
+            deleteConfirmMessage: '[[#{property.confirm-delete-message}]]'
+        }
+    </script>
+
+    <!-- Initialize scriptPropertyPage.js -->
+    <script th:src="@{/js/scriptPropertyPage.js}"></script>
+</body>
+</html>

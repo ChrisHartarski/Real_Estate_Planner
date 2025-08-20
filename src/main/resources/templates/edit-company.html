@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bg"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Property</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html}"></header>
+    <main>
+        <div class="page-container">
+            <div class="card flex-column">
+                <h1 class="text-center" th:text="#{companies.edit-heading}">Промени компания</h1>
+                <form class="flex-column gap-1" id="edit_company_form"
+                        th:action="@{'/companies/' + ${editCompanyData.id}}"
+                        th:method="PATCH"
+                        th:object="${editCompanyData}">
+
+                    <div class="property-input-section">
+
+                        <!-- Company name input-->
+                        <div class="property-input">
+                            <div class="property-input-line">
+                                <div class="property-input-left-column">
+                                    <label for="name" th:text="#{register-company.name} + ':'">Company name</label>
+                                </div>
+                                <div class="property-input-right-column">
+                                    <input class="property-input-fill-long" name="name" id="name" type="text"
+                                           th:field="*{name}" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company address input-->
+                        <div class="property-input">
+                            <div class="property-input-line">
+                                <div class="property-input-left-column">
+                                    <label for="address" th:text="#{register-company.address} + ':'">Company name</label>
+                                </div>
+                                <div class="property-input-right-column">
+                                    <input class="property-input-fill-long" name="address" id="address" type="text"
+                                           placeholder="Адрес на фирма" th:field="*{address}"/>
+                                </div>
+                            </div>
+                            <small th:errors="*{address}" class="text-red">Company address invalid!</small>
+                        </div>
+
+                        <!-- Company phone input-->
+                        <div class="property-input">
+                            <div class="property-input-line">
+                                <div class="property-input-left-column">
+                                    <label for="phone" th:text="#{register-company.phone} + ':'">Company name</label>
+                                </div>
+                                <div class="property-input-right-column">
+                                    <input class="property-input-fill-long" name="phone" id="phone" type="text" placeholder="+359000000000"
+                                           th:field="*{phone}"/>
+                                </div>
+                            </div>
+                            <small th:errors="*{phone}" class="text-red">Company phone invalid!</small>
+                        </div>
+
+                        <!-- Company email input-->
+                        <div class="property-input">
+                            <div class="property-input-line">
+                                <div class="property-input-left-column">
+                                    <label for="email" th:text="#{register-company.email} + ':'">Имейл</label>
+                                </div>
+                                <div class="property-input-right-column">
+                                    <input class="property-input-fill-long" name="email" id="email" type="email" placeholder="name@example.com"
+                                           th:field="*{email}"/>
+                                </div>
+                            </div>
+                            <small th:errors="*{email}" class="text-red">Company email invalid!</small>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <div class="center">
+                            <button class="btn btn-blue" id="submitButton" type="submit"
+                                    th:text="#{property.edit-submit-button}">Потвърди промените</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="flex-column gap-1">
+                    <div class="text-center">
+                        <details class="flex-column gap-1"
+                                 th:if="${editCompanyData.logo != null}">
+                            <summary th:text="#{companies.replace-logo}">Промени лого</summary>
+                            <form th:action="@{/companies/{id}/replace-logo(id=${editCompanyData.id})}"
+                                  th:method="PUT"
+                                  enctype="multipart/form-data"
+                                  class="upload-image-form">
+                                <label for="file-upload"
+                                       class="custom-file-upload btn btn-blue font-size-0-9 font-weight-normal"
+                                       th:text="#{property.button-choose-file} + '...'">Choose file</label>
+                                <input id="file-upload" type="file" name="image" style="display:none" required />
+                                <div class="textbox textbox-white-border" id="file-name"
+                                     th:text="#{property.no-file-chosen}">
+                                    No file chosen
+                                </div>
+                                <button class="btn btn-blue" type="submit" th:text="#{property.button-upload}">Upload
+                                </button>
+                            </form>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+    <!-- Initialize scriptPropertyPage.js -->
+    <script th:src="@{/js/scriptPropertyPage.js}"></script>
+    <script th:src="@{/js/scriptAddOrEditProperty.js}"></script>
+</body>
+</html>

@@ -1,11 +1,15 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.company.RegisterCompanyDTO;
+import com.butikimoti.real_estate_planner.model.dto.company.CompanyDTO;
 import com.butikimoti.real_estate_planner.model.entity.Apartment;
 import com.butikimoti.real_estate_planner.model.entity.Company;
 import com.butikimoti.real_estate_planner.model.entity.House;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
+import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.CompanyRepository;
+import com.butikimoti.real_estate_planner.service.LogoService;
+import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,17 +30,26 @@ public class CompanyServiceImplUnitTests {
     private CompanyServiceImpl serviceToTest;
     private static final Company TEST_COMPANY = new Company("Test Company", "Test Address", "+359000000000", "test@email.com");
     private static final Company TEST_COMPANY_WITH_USERS_AND_PROPERTIES = new Company(List.of(new UserEntity(), new UserEntity()), "Test Company", "Test Address", "+359000000000", "test@email.com", List.of(new Apartment(), new House()));
-    private static final RegisterCompanyDTO REGISTER_COMPANY_DTO = new RegisterCompanyDTO(TEST_COMPANY.getName(), TEST_COMPANY.getAddress(), TEST_COMPANY.getPhone(), TEST_COMPANY.getEmail());
-
+    private static final CompanyDTO REGISTER_COMPANY_DTO = new CompanyDTO(TEST_COMPANY.getName(), TEST_COMPANY.getAddress(), TEST_COMPANY.getPhone(), TEST_COMPANY.getEmail());
+    private static final UserEntity TEST_ADMIN_USER = new UserEntity("test@email.com", new Company(), "MyStrongPassword_12", UserRole.ADMIN,"First name", "Last Name", "+359111111111");
     @Mock
     private CompanyRepository companyRepository;
+
+    @Mock
+    private UserEntityService userEntityService;
+
+    @Mock
+    private LogoService logoService;
+
+    @Mock
+    private CloudinaryService cloudinaryService;
 
     @Captor
     private ArgumentCaptor<Company> companyCaptor;
 
     @BeforeEach
     void setUp() {
-        serviceToTest = new CompanyServiceImpl(companyRepository, new ModelMapper());
+        serviceToTest = new CompanyServiceImpl(companyRepository, userEntityService, logoService, cloudinaryService, new ModelMapper());
     }
 
     @Test
@@ -59,6 +72,7 @@ public class CompanyServiceImplUnitTests {
 
     @Test
     void testRegisterCompanySendsCorrectDataToDB() {
+        when(userEntityService.getCurrentUser()).thenReturn(TEST_ADMIN_USER);
         when(companyRepository.existsByName(REGISTER_COMPANY_DTO.getName())).thenReturn(false);
 
         serviceToTest.registerCompany(REGISTER_COMPANY_DTO);
@@ -77,6 +91,7 @@ public class CompanyServiceImplUnitTests {
 
     @Test
     void testRegisterCompanyThrowsErrorIfCompanyExists() {
+        when(userEntityService.getCurrentUser()).thenReturn(TEST_ADMIN_USER);
         when(companyRepository.existsByName(REGISTER_COMPANY_DTO.getName())).thenReturn(true);
 
         Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.registerCompany(REGISTER_COMPANY_DTO));

@@ -2,6 +2,7 @@ package com.butikimoti.real_estate_planner.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +14,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<UserEntity> users;
 
     @Column(unique = true, nullable = false)
@@ -28,8 +29,14 @@ public class Company {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "ownerCompany")
+    @OneToMany(mappedBy = "ownerCompany", cascade = CascadeType.REMOVE)
     private List<BaseProperty> properties;
+
+    @Column(name = "registered_on", nullable = false)
+    private LocalDateTime registeredOn;
+
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Logo logo;
 
     public Company() {
         this.users = new ArrayList<>();
@@ -114,5 +121,21 @@ public class Company {
 
     public void setProperties(List<BaseProperty> properties) {
         this.properties = properties;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
+    }
+
+    public Logo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Logo logo) {
+        this.logo = logo;
     }
 }

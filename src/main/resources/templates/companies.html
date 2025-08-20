@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="bg"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html}"></header>
+
+    <main>
+        <h1 th:text="#{companies.page-header}"
+                class="white text-center page-title">Компании
+        </h1>
+
+<!--        Filter and Sort -->
+        <div class="filter-sort-section">
+            <div class="card">
+               <h3 th:text="#{companies.filter-header}">Филтър</h3>
+               <form class="flex-column filter-section gap-1"
+                         th:action="@{/companies}"
+                         th:method="GET">
+                       <div class="filter-items-container">
+                           <!-- Name Filter -->
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{companies.company-name}"
+                                      for="filter-name"></label>
+                               <input class="filter-right-column" id="filter-name" name="companyName"
+                                       th:placeholder="#{companies.company-name-placeholder}"
+                                       th:value="${companyNameParam}">
+                           </div>
+
+                           <!-- Email filter -->
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{companies.email-filter}" for="filter-email"></label>
+                               <input class="filter-right-column" id="filter-email" name="companyEmail"
+                                      th:placeholder="#{companies.email-filter-placeholder}"
+                                      th:value="${companyEmailParam}"/>
+                           </div>
+                       </div>
+
+                       <div class="flex-row w-100">
+                           <button class="btn btn-blue center">Приложи</button>
+                       </div>
+                   </form>
+            </div>
+        </div>
+
+<!-- Companies List -->
+        <div class="offer-list-section w-70" id="offerListSection">
+            <div th:each="company : ${companies.getContent()}">
+                <div class="card">
+                    <div class="offers-card-container">
+                        <div class="company-logo-section">
+                            <a th:href="@{'/companies/' + ${company.id}}">
+                                <img th:if="${company.logo != null}"
+                                     th:src="@{${company.logo.getPictureLink()}}"
+                                     alt="company logo">
+                                <img th:if="${company.logo == null}" src="/images/logo.png" alt="logo_real_estate_planner">
+                            </a>
+                        </div>
+                        <div class="company-content-section content-section">
+                            <div class="content-header">
+                                <div class="flex-column">
+                                    <div class="header">
+                                        <a th:href="@{'/companies/' + ${company.id}}">
+                                            <h2 th:text="${company.name}">Име на компанията
+                                                апартамент</h2>
+                                        </a>
+                                    </div>
+                                    <p  th:text="${company.address}">Русе, ул. Солун 26</p>
+                                </div>
+                            </div>
+                            <div class="content-description">
+                                <div class="content-row">
+                                    <div th:text="#{companies.company-email} + ': '">Имейл:</div>
+                                    <div class="bold"
+                                         th:text="${company.email}">mail@mail.com
+                                    </div>
+                                </div>
+                                <div class="content-row">
+                                    <div th:text="#{companies.company-phone} + ': '">Телефон:</div>
+                                    <div class="bold"
+                                         th:text="${company.phone}">+359000000000
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-footer">
+                                <a class="link-blue" th:href="@{'/companies/' + ${company.id}}" th:text="#{companies.more-details} + '...'">Повече информация...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Select -->
+        <div class="page-select-container">
+            <div class="pagination">
+                <!-- Go to first page -->
+                <a th:if="${companies.number > 0}"
+                   th:href="@{${'/companies'}(page=0,
+                          name=${companyNameParam},
+                          email=${companyEmailParam})}">&laquo;</a>
+
+                <!-- Previous page -->
+                <a th:if="${companies.number > 0}"
+                   th:href="@{${'/companies'}(page=0,
+                          name=${companyNameParam},
+                          email=${companyEmailParam})}"
+                   th:text="${companies.number}"></a>
+
+                <!-- Current page (highlighted) -->
+                <span class="current-page" th:text="${companies.number + 1}"></span>
+
+                <!-- Next page -->
+                <a th:if="${companies.number < companies.totalPages - 1}"
+                   th:href="@{${'/companies'}(page=0,
+                          name=${companyNameParam},
+                          email=${companyEmailParam})}"
+                   th:text="${companies.number + 2}"></a>
+
+                <!-- Go to last page -->
+                <a th:if="${companies.number < companies.totalPages - 1}"
+                   th:href="@{${'/companies'}(page=0,
+                          name=${companyNameParam},
+                          email=${companyEmailParam})}">&raquo;</a>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+
+    <!-- Initialize scriptFilter.js to remove unused query parameters from url -->
+    <script th:src="@{/js/scriptFilter.js}"></script>
+</body>
+</html>

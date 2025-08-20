@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="bg"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar.html}"></header>
+
+    <main>
+        <h1 th:text="#{users.page-header}"
+                class="white text-center page-title">Потребители
+        </h1>
+
+<!--        Filter and Sort -->
+        <div class="filter-sort-section">
+            <div class="card">
+               <h3 th:text="#{companies.filter-header}">Филтър</h3>
+               <form class="flex-column filter-section gap-1"
+                         th:action="@{/users}"
+                         th:method="GET">
+                       <div class="filter-items-container">
+                           <!-- Name Filter -->
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{users.name}"
+                                      for="filter-name"></label>
+                               <input class="filter-right-column" id="filter-name" name="userFirstLastNameParam"
+                                       th:placeholder="#{users.name-placeholder}"
+                                       th:value="${userFirstLastNameParam}">
+                           </div>
+
+                           <!-- Email filter -->
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{users.email}" for="filter-email"></label>
+                               <input class="filter-right-column" id="filter-email" name="userEmailParam"
+                                      th:placeholder="#{users.email-placeholder}"
+                                      th:value="${userEmailParam}"/>
+                           </div>
+
+                           <!-- Company filter -->
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{users.company}"
+                                      for="filter-company"></label>
+                               <input class="filter-right-column" id="filter-company" name="userCompanyParam"
+                                      th:placeholder="#{users.company-placeholder}"
+                                      th:value="${userCompanyParam}">
+                           </div>
+
+                           <!-- Role filter -->
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{users.role}" for="filter-user-role"></label>
+
+                               <select class="filter-right-column" id="filter-user-role" name="userRoleParam">
+                                   <option
+                                            value=""
+                                            th:text="#{users.role-placeholder}"
+                                            th:selected="${userRoleParam == null || userRoleParam == ''}">
+                                   </option>
+                                   <option
+                                           th:each="userRole : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
+                                           th:value="${userRole}"
+                                           th:text="#{${'userRole.' + userRole.name()}}"
+                                           th:selected="${userRole.name() == userRoleParam}">
+                                   </option>
+                               </select>
+                           </div>
+                       </div>
+
+                       <div class="flex-row w-100">
+                           <button class="btn btn-blue center">Приложи</button>
+                       </div>
+                   </form>
+            </div>
+        </div>
+
+<!-- Users List -->
+        <div class="offer-list-section w-70" id="offerListSection">
+            <div th:each="user : ${users.getContent()}">
+                <div class="card">
+                    <a class="user-list-card-container"
+                       th:href="@{'/users/' + ${user.id}}">
+                        <div class="bold" id="userFirstLastName"
+                            th:text="${user.firstName} + ' ' + ${user.lastName}">
+                        </div>
+                        <div id="userCompany"
+                             th:text="${user.companyName}">
+                        </div>
+                        <div id="userEmail"
+                            th:text="${user.email}">
+                        </div>
+                        <div id="userRole"
+                            th:text="#{${'userRole.' + user.userRole.name()}}">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Select -->
+        <div class="page-select-container">
+            <div class="pagination">
+                <!-- Go to first page -->
+                <a th:if="${users.number > 0}"
+                   th:href="@{${'/users'}(page=0,
+                          name=${userFirstLastNameParam},
+                          email=${userEmailParam},
+                          company=${userCompanyParam},
+                          role=${userRoleParam})}">&laquo;</a>
+
+                <!-- Previous page -->
+                <a th:if="${users.number > 0}"
+                   th:href="@{${'/users'}(page=0,
+                          name=${userFirstLastNameParam},
+                          email=${userEmailParam},
+                          company=${userCompanyParam},
+                          role=${userRoleParam})}"
+                   th:text="${user.number}"></a>
+
+                <!-- Current page (highlighted) -->
+                <span class="current-page" th:text="${users.number + 1}"></span>
+
+                <!-- Next page -->
+                <a th:if="${users.number < users.totalPages - 1}"
+                   th:href="@{${'/users'}(page=0,
+                          name=${userFirstLastNameParam},
+                          email=${userEmailParam},
+                          company=${userCompanyParam},
+                          role=${userRoleParam})}"
+                   th:text="${users.number + 2}"></a>
+
+                <!-- Go to last page -->
+                <a th:if="${users.number < users.totalPages - 1}"
+                   th:href="@{${'/users'}(page=0,
+                          name=${userFirstLastNameParam},
+                          email=${userEmailParam},
+                          company=${userCompanyParam},
+                          role=${userRoleParam})}">&raquo;</a>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer.html::footer}"></footer>
+
+    <!-- Initialize scriptFilter.js to remove unused query parameters from url -->
+    <script th:src="@{/js/scriptFilter.js}"></script>
+</body>
+</html>

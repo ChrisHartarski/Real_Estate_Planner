@@ -6,7 +6,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class RegisterUserDTO {
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+public class UserDTO {
+    private UUID id;
 
     @NotEmpty(message = "{email.notEmpty}")
     @Email(message = "{email.invalid}")
@@ -37,11 +41,13 @@ public class RegisterUserDTO {
 
     private UserRole userRole;
 
-    public RegisterUserDTO() {
+    private LocalDateTime registeredOn;
+
+    public UserDTO() {
         this.userRole = UserRole.USER;
     }
 
-    public RegisterUserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone) {
+    public UserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone) {
         this();
         this.email = email;
         this.password = password;
@@ -52,9 +58,17 @@ public class RegisterUserDTO {
         this.phone = phone;
     }
 
-    public RegisterUserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone, UserRole userRole) {
+    public UserDTO(String email, String password, String confirmPassword, String companyName, String firstName, String lastName, String phone, UserRole userRole) {
         this(email, password, confirmPassword, companyName, firstName, lastName, phone);
         this.userRole = userRole;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -119,5 +133,13 @@ public class RegisterUserDTO {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
     }
 }
