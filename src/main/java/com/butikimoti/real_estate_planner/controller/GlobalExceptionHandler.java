@@ -17,4 +17,9 @@ public class GlobalExceptionHandler {
     public String resourceNotFound(ResourceNotFoundException ex) {
         return "error-not-found";
     }
+
+    @ExceptionHandler(Exception.class)
+    public String generic(Exception ex) {
+        return "error-generic";
+    }
 }
