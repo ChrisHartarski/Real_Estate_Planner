@@ -11,6 +11,7 @@ import com.butikimoti.real_estate_planner.service.CompanyService;
 import com.butikimoti.real_estate_planner.service.LogoService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.ResourceNotFoundException;
 import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.CompanySpecifications;
 import org.modelmapper.ModelMapper;
@@ -187,7 +188,7 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = companyRepository.findById(id).orElse(null);
 
         if (company == null) {
-            throw new RuntimeException("Company not found");
+            throw new ResourceNotFoundException("Company not found");
         }
 
         return company;

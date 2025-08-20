@@ -4,6 +4,7 @@ import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.repository.PropertyPictureRepository;
 import com.butikimoti.real_estate_planner.service.PropertyPictureService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class PropertyPictureServiceImpl implements PropertyPictureService {
 
     @Override
     public PropertyPicture getPicture(UUID id) {
-        return propertyPictureRepository.findById(id).orElseThrow(() -> new RuntimeException("PropertyPicture not found"));
+        return propertyPictureRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property picture not found"));
     }
 
     @Override
@@ -31,7 +32,7 @@ public class PropertyPictureServiceImpl implements PropertyPictureService {
         Optional<PropertyPicture> pictureOptional = propertyPictureRepository.findById(id);
 
         if (pictureOptional.isEmpty()) {
-            throw new RuntimeException("Property picture with id " + id + " does not exist");
+            throw new ResourceNotFoundException("Property picture with id " + id + " does not exist");
         }
 
         String publicID = pictureOptional.get().getPublicID();

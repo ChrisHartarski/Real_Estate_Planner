@@ -11,6 +11,7 @@ import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
 import com.butikimoti.real_estate_planner.service.BasePropertyService;
 import com.butikimoti.real_estate_planner.service.PropertyPictureService;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.ResourceNotFoundException;
 import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.BasePropertySpecifications;
 import org.modelmapper.ModelMapper;
@@ -44,7 +45,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
         if (currentUser == null) {
-            throw new RuntimeException("No logged in user");
+            throw new UnauthorizedException("No logged in user");
         }
 
         Company ownerCompany = currentUser.getCompany();
@@ -61,7 +62,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     @Override
     public BaseProperty savePropertyToDB(BaseProperty property) {
         if (property == null) {
-            throw new RuntimeException("Property not found");
+            throw new ResourceNotFoundException("Property not found");
         }
 
         property.setUpdatedOn(LocalDateTime.now());
@@ -73,7 +74,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     public BaseProperty saveNewPropertyToDB(AddPropertyDTO addPropertyDTO) {
         Set<PropertyType> propertyTypes = Set.of(PropertyType.values());
         if (!propertyTypes.contains(addPropertyDTO.getPropertyType())) {
-            throw new RuntimeException("No such property type: " + addPropertyDTO.getPropertyType());
+            throw new ResourceNotFoundException("No such property type: " + addPropertyDTO.getPropertyType());
         }
 
         BaseProperty property = getBasePropertyFromDTO(addPropertyDTO);
@@ -88,7 +89,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         BaseProperty property = basePropertyRepository.findById(editPropertyDTO.getId()).orElse(null);
 
         if (property == null) {
-            throw new RuntimeException("Property not found");
+            throw new ResourceNotFoundException("Property not found");
         }
 
         applyEditPropertyDTOToProperty(property, editPropertyDTO);
@@ -98,7 +99,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
     @Override
     public BaseProperty getPropertyByID(UUID id) {
-        return basePropertyRepository.findById(id).orElseThrow(() -> new RuntimeException("Property not found"));
+        return basePropertyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property not found"));
     }
 
     @Override
@@ -109,7 +110,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
     @Override
     public void deletePicture(UUID id, UUID pictureId) throws IOException {
-        BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new RuntimeException("Property not found"));
+        BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property not found"));
         PropertyPicture picture = propertyPictureService.getPicture(pictureId);
 
         propertyPictureService.deletePictureFromCloud(pictureId);
@@ -149,7 +150,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             case GARAGE -> modelMapper.map(dto, Garage.class);
             case HOUSE -> modelMapper.map(dto, House.class);
             case LAND -> modelMapper.map(dto, Land.class);
-            default -> throw new RuntimeException("No such property type: " + dto.getPropertyType());
+            default -> throw new ResourceNotFoundException("No such property type: " + dto.getPropertyType());
         };
     }
 

@@ -8,6 +8,7 @@ import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.UserRole;
 import com.butikimoti.real_estate_planner.repository.UserEntityRepository;
 import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.util.exceptions.ResourceNotFoundException;
 import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.UserEntitySpecifications;
 import jakarta.transaction.Transactional;
@@ -104,7 +105,7 @@ public class UserEntityServiceImpl implements UserEntityService {
             throw new UnauthorizedException("User is not admin");
         }
 
-        return userEntityRepository.findById(id).orElseThrow(() -> new RuntimeException("No such user"));
+        return userEntityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No such user"));
     }
 
     @Override
