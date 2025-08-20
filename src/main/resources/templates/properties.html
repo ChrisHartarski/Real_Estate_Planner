@@ -7,9 +7,9 @@
     <title th:if="${pageType.equals('sales')}">Sales</title>
     <title th:if="${pageType.equals('rents')}">Rents</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
     <!-- Core theme CSS -->
-    <link href="/css/styles.css" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
     <th:block th:if="${pageType.equals('sales')}">
