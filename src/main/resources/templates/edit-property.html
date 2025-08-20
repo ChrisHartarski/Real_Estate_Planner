@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Property</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
-    <!-- Core theme CSS -->
-    <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
     <header th:replace="~{fragments/navbar.html}"></header>
@@ -89,7 +89,7 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <textarea class="property-input-fill-long" name="additionalStructures" id="additionalStructures" rows="2"
+                                    <textarea class="property-input-fill-long" name="address" id="address" rows="2"
                                               th:placeholder="#{property.address-placeholder}"
                                               th:field="*{address}">
                                     </textarea>

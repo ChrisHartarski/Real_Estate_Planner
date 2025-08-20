@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <!-- Core theme CSS -->
-    <link href="/css/styles.css" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
     <footer class="footer" th:fragment="footer">
             <p class="footer-text">2025 ® Copyright Имотен указател</p>
             <p class="footer-text">Продукт на Бутик за имоти ЕООД.</p>
+
+
+        <!--    Initialize FontAwesome script for navbar  -->
+            <script src="https://kit.fontawesome.com/89ea1f6c83.js" crossorigin="anonymous"></script>
+        <!--    Initialize Dropdown script for navbar   -->
+            <script th:src="@{/js/scriptDropdown.js}"></script>
     </footer>
 </body>
 </html>
