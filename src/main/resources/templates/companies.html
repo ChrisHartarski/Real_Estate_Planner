@@ -9,10 +9,6 @@
     <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-
-    <!-- Preload critical resources -->
-<!--    <link rel="preload" as="image" th:href="@{/images/logo.png}" />-->
-<!--    <link rel="preload" as="script" th:href="@{/js/scriptDropdown.js}" />-->
 </head>
 <body>
     <header th:replace="~{fragments/navbar.html}"></header>
@@ -141,9 +137,5 @@
 
     <!-- Initialize scriptFilter.js to remove unused query parameters from url -->
     <script th:src="@{/js/scriptFilter.js}"></script>
-    <!--    Initialize FontAwesome script for navbar  -->
-<!--    <script src="https://kit.fontawesome.com/89ea1f6c83.js" crossorigin="anonymous"></script>-->
-    <!--    Initialize Dropdown script for navbar   -->
-<!--    <script th:src="@{/js/scriptDropdown.js}"></script>-->
 </body>
 </html>

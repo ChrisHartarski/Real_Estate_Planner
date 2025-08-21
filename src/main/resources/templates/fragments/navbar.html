@@ -6,12 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
-    <!-- Core theme CSS -->
-    <link th:href="@{/css/styles.css}" rel="stylesheet" />
-
-<!--    &lt;!&ndash; Preload critical resources &ndash;&gt;-->
-<!--    <link rel="preload" as="image" th:href="@{/images/logo.png}" />-->
-<!--    <link rel="preload" as="script" th:href="@{/js/scriptDropdown.js}" />-->
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
     <nav class="navbar" th:fragment="navbar(activeLink)">
@@ -49,7 +45,7 @@
                         <a th:href="@{'/'}">
                             <form th:action="@{/users/logout}"
                                   th:method="post">
-                                <button class="nav-item btn-transparent" type="submit" th:href="@{/users/logout}" th:text="#{navbar.logout}">Излез</button>
+                                <button class="nav-item btn-transparent" type="submit" th:text="#{navbar.logout}">Излез</button>
                             </form>
                         </a>
                     </div>
