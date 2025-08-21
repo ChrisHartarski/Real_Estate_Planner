@@ -1,3 +1,7 @@
+substitutions:
+  _REPO_NAME: ""
+  _IMAGE_NAME: ""
+
 steps:
   # Step 1: Build the Spring Boot app using Gradle
   - id: 'Build Spring Boot app with Gradle'
@@ -10,7 +14,7 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest',
+      '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:latest',
       '.'
     ]
 
@@ -19,7 +23,7 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest'
+      'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:latest'
     ]
 
   # Step 4: Deploy to Cloud Run
@@ -29,7 +33,7 @@ steps:
     args:
       [
         'run', 'deploy', 'real-estate-planner-dev',
-        '--image', 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev:latest',
+        '--image', 'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}:latest',
         '--region', 'europe-west1',
         '--platform', 'managed',
         '--allow-unauthenticated',
@@ -37,7 +41,7 @@ steps:
       ]
 
 images:
-  - 'europe-west1-docker.pkg.dev/real-estate-planner-butik-imot/real-estate-planner-dev/real-estate-planner-dev'
+  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/${_IMAGE_NAME}'
 
 options:
   logging: CLOUD_LOGGING_ONLY
