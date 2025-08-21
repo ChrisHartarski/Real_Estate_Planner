@@ -12,7 +12,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" as="image" th:href="@{/images/logo.png}" />
-    <link rel="preload" as="script" th:href="@{/js/scriptDropdown.js}" />
+<!--    <link rel="preload" as="script" th:href="@{/js/scriptDropdown.js}" />-->
 </head>
 <body>
     <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'register'})}"></header>
@@ -95,6 +95,6 @@
     <!--    Initialize FontAwesome script for navbar  -->
     <script src="https://kit.fontawesome.com/89ea1f6c83.js" crossorigin="anonymous"></script>
     <!--    Initialize Dropdown script for navbar   -->
-    <script th:src="@{/js/scriptDropdown.js}"></script>
+<!--    <script th:src="@{/js/scriptDropdown.js}"></script>-->
 </body>
 </html>
