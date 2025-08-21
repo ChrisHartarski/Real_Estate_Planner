@@ -5,6 +5,7 @@ import com.butikimoti.real_estate_planner.service.util.CurrentUserDetailsService
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +22,25 @@ public class SecurityConfig {
                                 //grant access to static resources
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 //access to all users
-                                .requestMatchers("/", "/users/login", "users/login-error").permitAll()
+                                .requestMatchers("/", "/users/login", "/users/login-error").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/users/{id}", "/users/{id}/edit", "/users/{id}/changePassword").permitAll()
+                                .requestMatchers(HttpMethod.PATCH, "/users/{id}", "/users/{id}/changePassword").permitAll()
                                 //access to ADMIN role users
-                                .requestMatchers("/admin-panel", "/users/register", "/companies/register", "/users/edit", "/companies/edit", "/companies", "/users").hasRole("ADMIN")
+                                .requestMatchers(
+                                        "/companies", "/companies/register", "/companies/{id}", "/companies/{id}/edit", "/companies/{id}/upload-logo", "/companies/{id}/replace-logo",
+                                        "/users", "/users/{id}",
+                                        "/properties/sales", "/properties/rents", "/properties/add", "/properties/{id}", "/properties/{id}/edit", "/properties/{id}/upload-picture", "/properties/{id}/delete-picture/{pictureID}", "/properties/{id}/add-comment"
+                                    ).hasRole("ADMIN")
                                 //access to COMPANY_ADMIN role users
-                                .requestMatchers("/companies/edit", "/properties/add", "/properties/{id}", "/properties/sales", "/properties/rents").hasRole("COMPANY_ADMIN")
+                                .requestMatchers(
+                                        "/companies/{id}", "/companies/{id}/edit", "/companies/{id}/upload-logo", "/companies/{id}/replace-logo",
+                                        "/properties/sales", "/properties/rents", "/properties/add", "/properties/{id}", "/properties/{id}/edit", "/properties/{id}/upload-picture", "/properties/{id}/delete-picture/{pictureID}", "/properties/{id}/add-comment"
+                                    ).hasRole("COMPANY_ADMIN")
                                 //access to USER role users
-                                .requestMatchers("/properties/sales", "/properties/rents", "/properties/{id}", "/users/edit").hasRole("USER")
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/properties/sales", "/properties/rents", "/properties/{id}"
+                                    ).hasRole("USER")
                                 .anyRequest()
                                 .authenticated()
                 )

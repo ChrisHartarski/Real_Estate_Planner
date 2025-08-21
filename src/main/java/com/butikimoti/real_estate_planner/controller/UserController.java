@@ -152,7 +152,7 @@ public class UserController {
         return "edit-user-password";
     }
 
-    @PatchMapping("/{id}/changePass")
+    @PatchMapping("/{id}/changePassword")
     private String changePassword(@PathVariable UUID id,
                                   @Valid EditUserPassDTO userPass,
                                   BindingResult bindingResult,

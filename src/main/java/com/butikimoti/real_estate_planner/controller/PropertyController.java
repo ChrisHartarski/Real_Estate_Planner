@@ -125,11 +125,6 @@ public class PropertyController {
         return "redirect:/properties/" + savedProperty.getId();
     }
 
-    @GetMapping("/property-page")
-    public String getOfferPage() {
-        return "property-page";
-    }
-
     @GetMapping("/{id}")
     public String getPropertyInfoPage(@PathVariable UUID id, Model model) {
         PropertyDTO propertyData = getPropertyDTOById(id);
@@ -203,6 +198,13 @@ public class PropertyController {
         return "redirect:/properties/" + id;
     }
 
+    @DeleteMapping("/{id}/delete-picture/{pictureId}")
+    public String deletePicture(@PathVariable UUID id, @PathVariable UUID pictureId) throws IOException {
+        basePropertyService.deletePicture(id, pictureId);
+
+        return "redirect:/properties/" + id;
+    }
+
     @PostMapping("/{id}/add-comment")
     public String addComment(@PathVariable UUID id,
                              @Valid AddCommentDTO addCommentData,
@@ -228,13 +230,6 @@ public class PropertyController {
         addCommentData.setProperty(property);
 
         commentService.addComment(addCommentData);
-
-        return "redirect:/properties/" + id;
-    }
-
-    @DeleteMapping("/{id}/delete-picture/{pictureId}")
-    public String deletePicture(@PathVariable UUID id, @PathVariable UUID pictureId) throws IOException {
-        basePropertyService.deletePicture(id, pictureId);
 
         return "redirect:/properties/" + id;
     }
