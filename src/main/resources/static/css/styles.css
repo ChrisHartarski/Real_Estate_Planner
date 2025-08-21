@@ -348,6 +348,7 @@ a {
     list-style-type: none;
     display: flex;
     align-items: center;
+    justify-content: right;
     gap: 1rem;
     margin: 0;
     padding: 0;
