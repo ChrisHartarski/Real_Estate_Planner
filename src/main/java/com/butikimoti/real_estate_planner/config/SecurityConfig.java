@@ -21,26 +21,63 @@ public class SecurityConfig {
                         authorizeRequests
                                 //grant access to static resources
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                //access to all users
+
+                                //access to all
                                 .requestMatchers("/", "/users/login", "/users/login-error").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/users/{id}", "/users/{id}/edit", "/users/{id}/changePassword").permitAll()
-                                .requestMatchers(HttpMethod.PATCH, "/users/{id}", "/users/{id}/changePassword").permitAll()
-                                //access to ADMIN role users
+
+                                //access to only ADMIN role users
                                 .requestMatchers(
-                                        "/companies", "/companies/register", "/companies/{id}", "/companies/{id}/edit", "/companies/{id}/upload-logo", "/companies/{id}/replace-logo",
-                                        "/users", "/users/{id}",
-                                        "/properties/sales", "/properties/rents", "/properties/add", "/properties/{id}", "/properties/{id}/edit", "/properties/{id}/upload-picture", "/properties/{id}/delete-picture/{pictureID}", "/properties/{id}/add-comment"
-                                    ).hasRole("ADMIN")
-                                //access to COMPANY_ADMIN role users
+                                        "/companies", "/companies/register",
+                                        "/users"
+                                ).hasRole("ADMIN")
                                 .requestMatchers(
-                                        "/companies/{id}", "/companies/{id}/edit", "/companies/{id}/upload-logo", "/companies/{id}/replace-logo",
-                                        "/properties/sales", "/properties/rents", "/properties/add", "/properties/{id}", "/properties/{id}/edit", "/properties/{id}/upload-picture", "/properties/{id}/delete-picture/{pictureID}", "/properties/{id}/add-comment"
-                                    ).hasRole("COMPANY_ADMIN")
-                                //access to USER role users
+                                        HttpMethod.DELETE,
+                                        "/companies/*",
+                                        "/users/*"
+                                ).hasRole("ADMIN")
+
+                                //access GET requests to all logged users
                                 .requestMatchers(
                                         HttpMethod.GET,
-                                        "/properties/sales", "/properties/rents", "/properties/{id}"
-                                    ).hasRole("USER")
+                                        "/users/*", "/users/*/edit", "/users/*/changePassword",
+                                        "/properties/sales", "/properties/rents", "/properties/*"
+                                    ).hasAnyRole("ADMIN", "COMPANY_ADMIN", "USER")
+                                //access PATCH requests to all logged users
+                                .requestMatchers(HttpMethod.PATCH, "/users/*", "/users/*/changePassword").hasAnyRole("ADMIN", "COMPANY_ADMIN", "USER")
+                                //access POST requests to all logged users
+                                .requestMatchers(HttpMethod.POST, "/properties/*/add-comment").hasAnyRole("ADMIN", "COMPANY_ADMIN", "USER")
+
+                                //access GET requests ADMIN and COMPANY_ADMIN
+                                .requestMatchers(
+                                        HttpMethod.GET,
+                                        "/companies/*", "/companies/*/edit",
+                                        "/properties/add", "/properties/*/edit"
+                                    ).hasAnyRole("ADMIN", "COMPANY_ADMIN")
+                                //access PATCH requests ADMIN and COMPANY_ADMIN
+                                .requestMatchers(
+                                        HttpMethod.PATCH,
+                                        "/companies/*",
+                                        "/properties/*"
+                                    ).hasAnyRole("ADMIN", "COMPANY_ADMIN")
+                                //access PUT requests ADMIN and COMPANY_ADMIN
+                                .requestMatchers(
+                                        HttpMethod.PUT,
+                                        "/companies/*/replace-logo"
+                                    ).hasAnyRole("ADMIN", "COMPANY_ADMIN")
+                                //access POST requests ADMIN and COMPANY_ADMIN
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/companies/*/upload-logo",
+                                        "/properties/add", "/properties/*/upload-picture"
+                                    ).hasAnyRole("ADMIN", "COMPANY_ADMIN")
+                                //access DELETE requests ADMIN and COMPANY_ADMIN
+                                .requestMatchers(
+                                        HttpMethod.DELETE,
+                                        "/properties/*/delete-picture/*"
+                                    ).hasAnyRole("ADMIN", "COMPANY_ADMIN")
+
+                                
+
                                 .anyRequest()
                                 .authenticated()
                 )
