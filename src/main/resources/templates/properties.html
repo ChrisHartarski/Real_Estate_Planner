@@ -120,7 +120,7 @@
                                 <img th:if="${!property.pictures.isEmpty()}"
                                      th:src="@{${property.pictures[0].getPictureLink()}}"
                                      alt="property image">
-                                <img th:if="${property.getPictures().isEmpty()}" src="/images/sample_image.jpg" alt="sample_img">
+                                <img th:if="${property.getPictures().isEmpty()}" th:src="@{/images/no-image.png}" alt="sample_img">
                             </a>
                         </div>
                         <div class="content-section">
