@@ -31,11 +31,6 @@ public class UserEntityServiceImpl implements UserEntityService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    private static final UserDTO FIRST_ADMIN_USER = new UserDTO(System.getenv("ADMIN_USER_EMAIL"), System.getenv("ADMIN_USER_PASS"), System.getenv("ADMIN_USER_PASS"), System.getenv("ADMIN_COMPANY_NAME"), System.getenv("ADMIN_FIRST_NAME"), System.getenv("ADMIN_LAST_NAME"), System.getenv("ADMIN_PHONE"), UserRole.ADMIN);
-    private static final UserDTO TEST_USER_1 = new UserDTO(System.getenv("TEST_USER1_EMAIL"), System.getenv("TEST_USER1_PASS"), System.getenv("TEST_USER1_PASS"), System.getenv("TEST_COMPANY_NAME"), System.getenv("TEST_USER1_FIRST_NAME"), System.getenv("TEST_USER1_LAST_NAME"), System.getenv("TEST_USER1_PHONE"), UserRole.COMPANY_ADMIN);
-    private static final UserDTO TEST_USER_2 = new UserDTO(System.getenv("TEST_USER2_EMAIL"), System.getenv("TEST_USER2_PASS"), System.getenv("TEST_USER2_PASS"), System.getenv("TEST_COMPANY_NAME"), System.getenv("TEST_USER2_FIRST_NAME"), System.getenv("TEST_USER2_LAST_NAME"), System.getenv("TEST_USER2_PHONE"), UserRole.USER);
-
-
     public UserEntityServiceImpl(UserEntityRepository userEntityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userEntityRepository = userEntityRepository;
         this.modelMapper = modelMapper;
@@ -59,20 +54,47 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     public void registerInitialAdminUser(Company company) {
-        if (!userExists(FIRST_ADMIN_USER.getEmail())) {
-            registerNewUser(FIRST_ADMIN_USER, company);
+        if (!userExists(System.getenv("ADMIN_USER_EMAIL"))) {
+            UserDTO newAdminUser =
+                    new UserDTO(System.getenv("ADMIN_USER_EMAIL"),
+                            System.getenv("ADMIN_USER_PASS"),
+                            System.getenv("ADMIN_USER_PASS"),
+                            System.getenv("ADMIN_COMPANY_NAME"),
+                            System.getenv("ADMIN_FIRST_NAME"),
+                            System.getenv("ADMIN_LAST_NAME"),
+                            System.getenv("ADMIN_PHONE"),
+                            UserRole.ADMIN);
+            registerNewUser(newAdminUser, company);
         }
 
     }
 
     @Override
     public void registerInitialTestUsers(Company company) {
-        if (!userExists(TEST_USER_1.getEmail())) {
-            registerNewUser(TEST_USER_1, company);
+        if (!userExists(System.getenv("TEST_USER1_EMAIL"))) {
+            UserDTO testUser1 =
+                    new UserDTO(System.getenv("TEST_USER1_EMAIL"),
+                            System.getenv("TEST_USER1_PASS"),
+                            System.getenv("TEST_USER1_PASS"),
+                            System.getenv("TEST_COMPANY_NAME"),
+                            System.getenv("TEST_USER1_FIRST_NAME"),
+                            System.getenv("TEST_USER1_LAST_NAME"),
+                            System.getenv("TEST_USER1_PHONE"),
+                            UserRole.COMPANY_ADMIN);
+            registerNewUser(testUser1, company);
         }
 
-        if (!userExists(TEST_USER_2.getEmail())) {
-            registerNewUser(TEST_USER_2, company);
+        if (!userExists(System.getenv("TEST_USER2_EMAIL"))) {
+            UserDTO testUser2 =
+                    new UserDTO(System.getenv("TEST_USER2_EMAIL"),
+                            System.getenv("TEST_USER2_PASS"),
+                            System.getenv("TEST_USER2_PASS"),
+                            System.getenv("TEST_COMPANY_NAME"),
+                            System.getenv("TEST_USER2_FIRST_NAME"),
+                            System.getenv("TEST_USER2_LAST_NAME"),
+                            System.getenv("TEST_USER2_PHONE"),
+                            UserRole.USER);
+            registerNewUser(testUser2, company);
         }
     }
 

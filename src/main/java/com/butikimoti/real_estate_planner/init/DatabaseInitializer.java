@@ -22,11 +22,11 @@ public class DatabaseInitializer implements CommandLineRunner {
         companyService.registerInitialCompanies();
 
         //Add admin, company_admin and normal user on startup for test purposes
-        if (companyService.companyExists(companyService.getInitialAdminCompany().getName())) {
+        if (companyService.companyExists(System.getenv("ADMIN_COMPANY_NAME"))) {
             userEntityService.registerInitialAdminUser(companyService.getInitialAdminCompany());
         }
 
-        if (companyService.companyExists(companyService.getTestCompany().getName())) {
+        if (companyService.companyExists(System.getenv("TEST_COMPANY_NAME"))) {
             userEntityService.registerInitialTestUsers(companyService.getTestCompany());
         }
     }

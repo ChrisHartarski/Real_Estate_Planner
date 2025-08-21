@@ -35,9 +35,6 @@ public class CompanyServiceImpl implements CompanyService {
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
-    private static final CompanyDTO FIRST_COMPANY = new CompanyDTO(System.getenv("ADMIN_COMPANY_NAME"), System.getenv("ADMIN_COMPANY_ADDRESS"), System.getenv("ADMIN_COMPANY_PHONE"), System.getenv("ADMIN_COMPANY_EMAIL"));
-    private static final CompanyDTO TEST_COMPANY = new CompanyDTO(System.getenv("TEST_COMPANY_NAME"), System.getenv("TEST_COMPANY_ADDRESS"), System.getenv("TEST_COMPANY_PHONE"), System.getenv("TEST_COMPANY_EMAIL"));
-
     public CompanyServiceImpl(CompanyRepository companyRepository, UserEntityService userEntityService, LogoService logoService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.companyRepository = companyRepository;
         this.userEntityService = userEntityService;
@@ -63,12 +60,20 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void registerInitialCompanies() {
-        if (!companyExists(FIRST_COMPANY.getName())) {
-            registerNewCompany(FIRST_COMPANY);
+        if (!companyExists(System.getenv("ADMIN_COMPANY_NAME"))) {
+            CompanyDTO newAdminCompany = new CompanyDTO(System.getenv("ADMIN_COMPANY_NAME"),
+                                                        System.getenv("ADMIN_COMPANY_ADDRESS"),
+                                                        System.getenv("ADMIN_COMPANY_PHONE"),
+                                                        System.getenv("ADMIN_COMPANY_EMAIL"));
+            registerNewCompany(newAdminCompany);
         }
 
-        if (!companyExists(TEST_COMPANY.getName())) {
-            registerNewCompany(TEST_COMPANY);
+        if (!companyExists(System.getenv("TEST_COMPANY_NAME"))) {
+            CompanyDTO newTestCompany = new CompanyDTO(System.getenv("TEST_COMPANY_NAME"),
+                                                        System.getenv("TEST_COMPANY_ADDRESS"),
+                                                        System.getenv("TEST_COMPANY_PHONE"),
+                                                        System.getenv("TEST_COMPANY_EMAIL"));
+            registerNewCompany(newTestCompany);
         }
     }
 
