@@ -9,8 +9,8 @@
     <!-- Core theme CSS -->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
 
-    <!-- Preload critical resources -->
-    <link rel="preload" as="image" th:href="@{/images/logo.png}" />
+<!--    &lt;!&ndash; Preload critical resources &ndash;&gt;-->
+<!--    <link rel="preload" as="image" th:href="@{/images/logo.png}" />-->
 <!--    <link rel="preload" as="script" th:href="@{/js/scriptDropdown.js}" />-->
 </head>
 <body>
@@ -39,7 +39,7 @@
                 </li>
                 <li class="nav-item dropdown"  sec:authorize="isAuthenticated()">
                     <div class="profile-btn" id="profileBtn">
-<!--                        <i class="fa-regular fa-user blue" ></i>-->
+                        <i class="fa-regular fa-user blue" ></i>
                         <div
                                 th:text="${@userEntityServiceImpl.getCurrentUser().firstName + ' ' + @userEntityServiceImpl.getCurrentUser().lastName}">
                             Профил</div>
