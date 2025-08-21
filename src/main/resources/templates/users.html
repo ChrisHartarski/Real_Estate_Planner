@@ -25,57 +25,54 @@
                <form class="flex-column filter-section gap-1"
                          th:action="@{/users}"
                          th:method="GET">
-                       <div class="filter-items-container">
-                           <!-- Name Filter -->
-                           <div class="filter-item">
-                               <label class="filter-left-column" th:text="#{users.name}"
-                                      for="filter-name"></label>
-                               <input class="filter-right-column" id="filter-name" name="userFirstLastNameParam"
-                                       th:placeholder="#{users.name-placeholder}"
-                                       th:value="${userFirstLastNameParam}">
-                           </div>
+                   <div class="filter-items-container">
+                       <!-- Name Filter -->
+                       <div class="filter-item">
+                           <label class="filter-left-column" th:text="#{users.name}"
+                                  for="filter-name"></label>
+                           <input class="filter-right-column" id="filter-name" name="userFirstLastNameParam"
+                                  th:placeholder="#{users.name-placeholder}"
+                                  th:value="${userFirstLastNameParam}">
 
-                           <!-- Email filter -->
-                           <div class="filter-item">
-                               <label class="filter-left-column" th:text="#{users.email}" for="filter-email"></label>
-                               <input class="filter-right-column" id="filter-email" name="userEmailParam"
-                                      th:placeholder="#{users.email-placeholder}"
-                                      th:value="${userEmailParam}"/>
-                           </div>
-
-                           <!-- Company filter -->
-                           <div class="filter-item">
-                               <label class="filter-left-column" th:text="#{users.company}"
-                                      for="filter-company"></label>
-                               <input class="filter-right-column" id="filter-company" name="userCompanyParam"
-                                      th:placeholder="#{users.company-placeholder}"
-                                      th:value="${userCompanyParam}">
-                           </div>
-
-                           <!-- Role filter -->
-                           <div class="filter-item">
-                               <label class="filter-left-column" th:text="#{users.role}" for="filter-user-role"></label>
-
-                               <select class="filter-right-column" id="filter-user-role" name="userRoleParam">
-                                   <option
-                                            value=""
-                                            th:text="#{users.role-placeholder}"
-                                            th:selected="${userRoleParam == null || userRoleParam == ''}">
-                                   </option>
-                                   <option
-                                           th:each="userRole : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
-                                           th:value="${userRole}"
-                                           th:text="#{${'userRole.' + userRole.name()}}"
-                                           th:selected="${userRole.name() == userRoleParam}">
-                                   </option>
-                               </select>
-                           </div>
                        </div>
+                       <!-- Email filter -->
+                       <div class="filter-item">
+                           <label class="filter-left-column" th:text="#{users.email}" for="filter-email"></label>
+                           <input class="filter-right-column" id="filter-email" name="userEmailParam"
+                                  th:placeholder="#{users.email-placeholder}"
 
-                       <div class="flex-row w-100">
+                                  th:value="${userEmailParam}"/>
+                       </div>
+                       <!-- Company filter -->
+                       <div class="filter-item">
+                           <label class="filter-left-column" th:text="#{users.company}"
+                                  for="filter-company"></label>
+                           <input class="filter-right-column" id="filter-company" name="userCompanyParam"
+                                  th:placeholder="#{users.company-placeholder}"
+                                  th:value="${userCompanyParam}">
+
+                       </div>
+                           <div class="filter-item">
+                               <label class="filter-left-column" th:text="#{users.role}" for="filter-user-role"></label><!-- Role filter -->
+                               <select class="filter-right-column" id="filter-user-role" name="userRoleParam"><option
+                                       value=""
+                                       th:text="#{users.role-placeholder}"
+                                       th:selected="${userRoleParam == null || userRoleParam == ''}">
+                               </option><option
+                                       th:each="userRole : ${T(com.butikimoti.real_estate_planner.model.enums.UserRole).values()}"
+                                       th:value="${userRole}"
+                                       th:text="#{${'userRole.' + userRole.name()}}"
+                                       th:selected="${userRole.name() == userRoleParam}">
+                               </option></select></div>
+                   </div>
+
+                   <!-- CSRF token -->
+                   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                   <div class="flex-row w-100">
                            <button class="btn btn-blue center">Приложи</button>
-                       </div>
-                   </form>
+                   </div>
+               </form>
             </div>
         </div>
 

@@ -25,29 +25,32 @@
                <form class="flex-column filter-section gap-1"
                          th:action="@{/companies}"
                          th:method="GET">
-                       <div class="filter-items-container">
-                           <!-- Name Filter -->
-                           <div class="filter-item">
-                               <label class="filter-left-column" th:text="#{companies.company-name}"
-                                      for="filter-name"></label>
-                               <input class="filter-right-column" id="filter-name" name="companyName"
-                                       th:placeholder="#{companies.company-name-placeholder}"
-                                       th:value="${companyNameParam}">
-                           </div>
-
-                           <!-- Email filter -->
-                           <div class="filter-item">
-                               <label class="filter-left-column" th:text="#{companies.email-filter}" for="filter-email"></label>
-                               <input class="filter-right-column" id="filter-email" name="companyEmail"
-                                      th:placeholder="#{companies.email-filter-placeholder}"
-                                      th:value="${companyEmailParam}"/>
-                           </div>
+                   <div class="filter-items-container">
+                       <!-- Name Filter -->
+                       <div class="filter-item">
+                           <label class="filter-left-column" th:text="#{companies.company-name}"
+                                  for="filter-name"></label>
+                           <input class="filter-right-column" id="filter-name" name="companyName"
+                                  th:placeholder="#{companies.company-name-placeholder}"
+                                  th:value="${companyNameParam}">
                        </div>
 
-                       <div class="flex-row w-100">
-                           <button class="btn btn-blue center">Приложи</button>
+                       <!-- Email filter -->
+                       <div class="filter-item">
+                           <label class="filter-left-column" th:text="#{companies.email-filter}" for="filter-email"></label>
+                           <input class="filter-right-column" id="filter-email" name="companyEmail"
+                                  th:placeholder="#{companies.email-filter-placeholder}"
+                                  th:value="${companyEmailParam}"/>
                        </div>
-                   </form>
+                   </div>
+
+                   <!-- CSRF token -->
+                   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                   <div class="flex-row w-100">
+                       <button class="btn btn-blue center">Приложи</button>
+                   </div>
+               </form>
             </div>
         </div>
 

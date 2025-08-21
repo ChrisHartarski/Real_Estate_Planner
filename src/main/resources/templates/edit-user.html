@@ -116,6 +116,9 @@
                         <small th:errors="*{userRole}" class="text-red">User role errors!</small>
                     </div>
 
+                    <!-- CSRF token -->
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                     <!-- Register Button-->
                     <div class="center">
                         <button class="btn btn-blue" id="submitButton" type="submit"

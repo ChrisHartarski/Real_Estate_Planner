@@ -102,6 +102,10 @@
                                        th:value="${addressParam}"/>
                             </div>
                         </div>
+
+                        <!-- CSRF token -->
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                         <div class="flex-row w-100">
                             <button class="btn btn-blue center">Приложи</button>
                         </div>

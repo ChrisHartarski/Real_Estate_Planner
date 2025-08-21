@@ -50,6 +50,10 @@
                                               th:method="DELETE"
                                               th:attr="data-message=#{property.confirm-delete-picture-message}"
                                               onsubmit="return false;">
+
+                                            <!-- CSRF token -->
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                                             <button id="delete-picture-button" class="btn-delete delete-button" type="button">
                                                 X
                                             </button>
@@ -84,6 +88,10 @@
                                      th:text="#{property.no-file-chosen}">
                                     No file chosen
                                 </div>
+
+                                <!-- CSRF token -->
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                                 <button class="btn btn-blue" type="submit" th:text="#{property.button-upload}">Upload
                                 </button>
                             </form>
@@ -348,6 +356,10 @@
                                               th:placeholder="#{property.add-comment-placeholder}"
                                               th:field="*{commentText}">
                                     </textarea>
+
+                                    <!-- CSRF token -->
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                                     <button class="btn btn-blue add-comment-button" type="submit" th:text="#{property.button-add-comment}">Добави коментар
                                     </button>
                                 </form>
@@ -368,6 +380,10 @@
                               th:method="DELETE"
                               th:attr="data-message=#{property.confirm-delete-property-message}"
                               onsubmit="return false;">
+
+                            <!-- CSRF token -->
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                             <button class="btn btn-red delete-button" th:text="#{property.button-delete}">Изтрий</button>
                         </form>
                     </div>
