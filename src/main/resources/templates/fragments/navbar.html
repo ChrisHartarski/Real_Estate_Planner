@@ -39,7 +39,7 @@
                 </li>
                 <li class="nav-item dropdown"  sec:authorize="isAuthenticated()">
                     <div class="profile-btn" id="profileBtn">
-                        <i class="fa-regular fa-user blue" ></i>
+<!--                        <i class="fa-regular fa-user blue" ></i>-->
                         <div
                                 th:text="${@userEntityServiceImpl.getCurrentUser().firstName + ' ' + @userEntityServiceImpl.getCurrentUser().lastName}">
                             Профил</div>
