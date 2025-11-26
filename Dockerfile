@@ -13,4 +13,4 @@ WORKDIR /app
 COPY --from=build /home/gradle/project/build/libs/Real_Estate_Planner.jar /app/app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar --server.port=$PORT"]
