@@ -60,7 +60,7 @@ public abstract class BaseProperty {
     @Column(name = "contact_email")
     private String contactEmail;
 
-    @Column
+    @Column (columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "created_on", nullable = false)
