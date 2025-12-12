@@ -32,33 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
         glide.mount();
     }
 
+    const uploadImageForm = document.querySelector('.upload-image-form');
+    uploadImageForm.addEventListener('submit', () => {
+        const uploadBtn = document.getElementById('upload-image-btn');
+        uploadBtn.disabled = true;
 
-    // const deletePictureButton = document.getElementById('delete-picture-button');
-    //
-    // deletePictureButton.addEventListener("click", function (event) {
-    //     const confirmDeletePictureModal = document.getElementById('confirm-delete-picture-modal');
-    //     openModal(confirmDeletePictureModal);
-    //
-    //     const confirmDeletePictureButton = document.getElementById('confirm-delete-picture-button');
-    //     confirmDeletePictureButton.addEventListener('click', function () {
-    //         const deletePictureForm = document.getElementById('delete-picture-form');
-    //         deletePictureForm.submit();
-    //     })
-    //
-    //     const cancelDeletePictureButton = document.getElementById('cancel-delete-picture-button');
-    //     cancelDeletePictureButton.addEventListener('click', function () {
-    //         const modal = document.closest('.modal');
-    //         closeModal(modal);
-    //     })
-    // });
-    //
-    // function openModal(modal) {
-    //     modal.style.display="block";
-    // }
-    //
-    // function closeModal(modal) {
-    //     modal.style.display="none";
-    // }
+        const uploadingMsg = document.getElementById('uploading-text');
+        uploadingMsg.style.display = 'block';
+    })
 
     const deleteButtons = document.querySelectorAll('.delete-button');
     const modal = document.querySelector('#modal');
@@ -79,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmDeleteButton.addEventListener('click', function () {
         if (formToSubmit) {
             formToSubmit.submit();
+            confirmDeleteButton.disabled = true;
         }
     });
 
