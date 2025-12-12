@@ -110,12 +110,16 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
     @Override
     public void deletePicture(UUID id, UUID pictureId) throws IOException {
-        BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property not found"));
-        PropertyPicture picture = propertyPictureService.getPicture(pictureId);
+        try {
+            BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property not found"));
+            PropertyPicture picture = propertyPictureService.getPicture(pictureId);
 
-        propertyPictureService.deletePictureFromCloud(pictureId);
-        property.getPictures().remove(picture);
-        basePropertyRepository.saveAndFlush(property);
+            propertyPictureService.deletePictureFromCloud(pictureId);
+            property.getPictures().remove(picture);
+            basePropertyRepository.saveAndFlush(property);
+        } catch (ResourceNotFoundException e) {
+            System.out.println("Property not found");
+        }
     }
 
     private void deleteAllPicturesFromProperty(UUID propertyId) throws IOException {

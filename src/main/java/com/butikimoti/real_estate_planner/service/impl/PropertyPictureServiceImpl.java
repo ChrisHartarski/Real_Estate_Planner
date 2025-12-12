@@ -32,7 +32,8 @@ public class PropertyPictureServiceImpl implements PropertyPictureService {
         Optional<PropertyPicture> pictureOptional = propertyPictureRepository.findById(id);
 
         if (pictureOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Property picture with id " + id + " does not exist");
+            System.out.println("Property picture not found");
+            return;
         }
 
         String publicID = pictureOptional.get().getPublicID();
