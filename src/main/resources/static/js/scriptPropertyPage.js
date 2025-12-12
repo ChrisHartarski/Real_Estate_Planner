@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if(input && fileName) {
         input.addEventListener('change', () => {
             if(input.files.length > 0){
-                fileName.textContent = input.files[0].name;
+                let names = Array.from(input.files)
+                    .map(file => file.name)
+                    .join(', ');
+
+                fileName.textContent = names;
             }
         });
     }
@@ -36,10 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
     uploadImageForm.addEventListener('submit', () => {
         const uploadBtn = document.getElementById('upload-image-btn');
         uploadBtn.disabled = true;
+        uploadBtn.classList.remove('btn-blue');
+        uploadBtn.classList.add('btn-disabled');
 
         const uploadingMsg = document.getElementById('uploading-text');
         uploadingMsg.style.display = 'block';
-    })
+    });
 
     const deleteButtons = document.querySelectorAll('.delete-button');
     const modal = document.querySelector('#modal');
@@ -57,10 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    let propertyDeleteMsgEl = document.getElementById('property-delete-in-progress-msg');
+
     confirmDeleteButton.addEventListener('click', function () {
         if (formToSubmit) {
             formToSubmit.submit();
             confirmDeleteButton.disabled = true;
+            confirmDeleteButton.classList.remove('btn-blue');
+            confirmDeleteButton.classList.add('btn-disabled');
+            propertyDeleteMsgEl.style.display = 'block';
         }
     });
 

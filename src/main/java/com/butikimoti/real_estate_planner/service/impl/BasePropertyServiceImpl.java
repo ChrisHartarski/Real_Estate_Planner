@@ -23,8 +23,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class BasePropertyServiceImpl implements BasePropertyService {
@@ -114,7 +117,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             BaseProperty property = basePropertyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Property not found"));
             PropertyPicture picture = propertyPictureService.getPicture(pictureId);
 
-            propertyPictureService.deletePictureFromCloud(pictureId);
+            propertyPictureService.deletePictureFromCloud(picture);
             property.getPictures().remove(picture);
             basePropertyRepository.saveAndFlush(property);
         } catch (ResourceNotFoundException e) {
@@ -124,8 +127,20 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
     private void deleteAllPicturesFromProperty(UUID propertyId) throws IOException {
         BaseProperty property = getPropertyByID(propertyId);
-        while (!property.getPictures().isEmpty()) {
-            deletePicture(property.getId(), property.getPictures().getFirst().getId());
+        List<PropertyPicture> pictures = new ArrayList<>(property.getPictures());
+
+        property.getPictures().clear();
+        basePropertyRepository.saveAndFlush(property);
+
+        for (PropertyPicture picture : pictures) {
+            CompletableFuture.runAsync(() -> {
+                try {
+                    propertyPictureService.deletePictureFromCloud(picture);
+                } catch (IOException e) {
+                    System.err.println("Failed to delete Cloudinary picture: " + picture.getId());
+                    e.printStackTrace();
+                }
+            });
         }
     }
 

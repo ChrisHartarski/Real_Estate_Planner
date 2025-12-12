@@ -233,6 +233,12 @@ a {
     border: solid 2px white;
 }
 
+.btn-disabled {
+    color: darkslategray;
+    background-color: gray;
+    border: solid 2px gray;
+}
+
 .btn-transparent {
     border: none;
     background-color: transparent;
@@ -1014,6 +1020,13 @@ a {
 
 .upload-image-form {
     display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.upload-image-form > div {
+    display: flex;
     gap: 0.5rem;
     justify-content: center;
 }
@@ -1030,8 +1043,14 @@ a {
 }
 
 .custom-file-upload {
-    display: inline-block;
     cursor: pointer;
+}
+
+#file-name {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #carousel-status {

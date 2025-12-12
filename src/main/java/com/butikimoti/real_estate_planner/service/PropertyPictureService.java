@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface PropertyPictureService {
     PropertyPicture getPicture(UUID id);
-    void deletePictureFromCloud(UUID id) throws IOException;
+    void deletePictureFromCloud(PropertyPicture picture) throws IOException;
 }

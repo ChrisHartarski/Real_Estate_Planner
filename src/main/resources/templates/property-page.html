@@ -80,23 +80,25 @@
                                   th:method="POST"
                                   enctype="multipart/form-data"
                                   class="upload-image-form">
-                                <label for="file-upload"
-                                       class="custom-file-upload btn btn-blue font-size-0-9 font-weight-normal"
-                                       th:text="#{property.button-choose-file} + '...'">Choose file</label>
-                                <input id="file-upload" type="file" name="images" style="display:none" multiple required />
-                                <div class="textbox textbox-white-border" id="file-name"
-                                     th:text="#{property.no-file-chosen}">
-                                    No file chosen
+                                <div>
+                                    <label for="file-upload"
+                                           class="custom-file-upload btn btn-blue font-size-0-9 font-weight-normal"
+                                           th:text="#{property.button-choose-file} + '...'">Choose file</label>
+                                    <input id="file-upload" type="file" name="images" style="display:none" multiple required />
+                                    <div class="textbox textbox-white-border" id="file-name"
+                                         th:text="#{property.no-file-chosen}">
+                                        No file chosen
+                                    </div>
+
+                                    <!-- CSRF token -->
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                                    <button id="upload-image-btn" class="btn btn-blue" type="submit" th:text="#{property.button-upload}">Upload
+                                    </button>
                                 </div>
-                                <p id="uploading-text" class="text-center" style="display: none">
+                                <div id="uploading-text" class="text-center" style="display: none">
                                     <small class="text-red" th:text="#{property.uploading-pictures}">Uploading pictures...</small>
-                                </p>
-
-                                <!-- CSRF token -->
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-                                <button id="upload-image-btn" class="btn btn-blue" type="submit" th:text="#{property.button-upload}">Upload
-                                </button>
+                                </div>
                             </form>
                         </details>
                     </div>
@@ -399,6 +401,9 @@
                 <div class="modal-buttons">
                     <button id="confirm-delete-button" class="btn btn-blue" th:text="#{property.confirm-yes}">Yes</button>
                     <button id="cancel-delete-button" class="btn btn-blue" th:text="#{property.confirm-no}">No</button>
+                </div>
+                <div>
+                    <small id="property-delete-in-progress-msg" th:text="#{property.delete-in-progress-msg}" class="text-red" style="display: none">Имотът се изтрива...</small>
                 </div>
             </div>
         </div>

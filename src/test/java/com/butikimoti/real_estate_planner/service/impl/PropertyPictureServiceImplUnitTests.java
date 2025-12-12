@@ -1,7 +1,6 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
 import com.butikimoti.real_estate_planner.model.entity.Apartment;
-import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.repository.PropertyPictureRepository;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
@@ -16,8 +15,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PropertyPictureServiceImplUnitTests {
@@ -58,16 +56,16 @@ public class PropertyPictureServiceImplUnitTests {
 
     @Test
     public void testDeletePictureFromCloud_InvokesCloudinaryService() throws IOException {
-        when(propertyPictureRepository.findById(PICTURE_ID)).thenReturn(Optional.of(TEST_PICTURE));
 
-        serviceToTest.deletePictureFromCloud(PICTURE_ID);
+        serviceToTest.deletePictureFromCloud(TEST_PICTURE);
         verify(cloudinaryService).deletePicture(TEST_PICTURE.getPublicID());
     }
 
-    @Test
-    public void testDeletePictureFromCloud_ThrowsExceptionIfNotFound() {
-        when(propertyPictureRepository.findById(PICTURE_ID)).thenReturn(Optional.empty());
-
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.deletePictureFromCloud(PICTURE_ID));
-    }
+//    @Test
+//    public void testDeletePictureFromCloud_NothingGetsDeleted() throws IOException {
+//        when(propertyPictureRepository.findById(PICTURE_ID)).thenReturn(Optional.empty());
+//
+//        serviceToTest.deletePictureFromCloud(TEST_PICTURE);
+//        verify(cloudinaryService, never()).deletePicture(PICTURE_ID.toString());
+//    }
 }

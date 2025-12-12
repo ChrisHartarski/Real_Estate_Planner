@@ -28,15 +28,8 @@ public class PropertyPictureServiceImpl implements PropertyPictureService {
     }
 
     @Override
-    public void deletePictureFromCloud(UUID id) throws IOException {
-        Optional<PropertyPicture> pictureOptional = propertyPictureRepository.findById(id);
-
-        if (pictureOptional.isEmpty()) {
-            System.out.println("Property picture not found");
-            return;
-        }
-
-        String publicID = pictureOptional.get().getPublicID();
+    public void deletePictureFromCloud(PropertyPicture picture) throws IOException {
+        String publicID = picture.getPublicID();
         cloudinaryService.deletePicture(publicID);
     }
 }
