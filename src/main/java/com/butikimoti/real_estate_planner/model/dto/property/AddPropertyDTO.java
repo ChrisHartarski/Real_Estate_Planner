@@ -45,11 +45,8 @@ public class AddPropertyDTO implements HasPropertyType {
     private String contactName;
 
     @NotEmpty(message = "{phone.notEmpty}")
-    @Pattern(regexp = "[+]?\\d{6,15}", message = "{phone.pattern}")
     private String contactPhone;
 
-    @NotEmpty(message = "{email.notEmpty}")
-    @Email(message = "{email.invalid}")
     private String contactEmail;
 
     @Size(max = 1000, message = "{description.length}")

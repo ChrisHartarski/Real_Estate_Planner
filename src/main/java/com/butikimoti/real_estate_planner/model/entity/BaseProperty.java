@@ -51,10 +51,10 @@ public abstract class BaseProperty {
     @Column(name = "sale_or_rent", nullable = false)
     private OfferType offerType;
 
-    @Column(name = "contact_name", nullable = false)
+    @Column(name = "contact_name")
     private String contactName;
 
-    @Column(name = "contact_phone", nullable = false)
+    @Column(name = "contact_phone")
     private String contactPhone;
 
     @Column(name = "contact_email")
