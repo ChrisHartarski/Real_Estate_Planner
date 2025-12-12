@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -185,14 +186,17 @@ public class PropertyController {
 
     @PostMapping("/{id}/upload-picture")
     public String uploadPicture(@PathVariable UUID id,
-                                @RequestParam("image") MultipartFile file) throws IOException {
+                                @RequestParam("images") List<MultipartFile> images) throws IOException {
         BaseProperty property = basePropertyService.getPropertyByID(id);
-        CloudinaryImageInfoDTO cloudinaryImageInfo = cloudinaryService.uploadImage(file);
-        String imageUrl = cloudinaryImageInfo.getImageUrl();
-        String imagePublicId = cloudinaryImageInfo.getPublicId();
+        List<CloudinaryImageInfoDTO> imageList = cloudinaryService.uploadImages(images);
+        imageList.forEach(image -> {
+            String imageUrl = image.getImageUrl();
+            String imagePublicId = image.getPublicId();
 
-        PropertyPicture picture = new PropertyPicture(imageUrl, property, imagePublicId);
-        property.getPictures().add(picture);
+            PropertyPicture picture = new PropertyPicture(imageUrl, property, imagePublicId);
+            property.getPictures().add(picture);
+        });
+
         basePropertyService.savePropertyToDB(property);
 
         return "redirect:/properties/" + id;

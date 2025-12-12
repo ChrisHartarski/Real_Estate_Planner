@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -21,6 +23,16 @@ public class CloudinaryService {
                 "api_secret", System.getenv("CLOUDINARY_API_SECRET"),
                 "secure", true
         ));
+    }
+
+    public List<CloudinaryImageInfoDTO> uploadImages(List<MultipartFile> files) throws IOException {
+        List<CloudinaryImageInfoDTO> result = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            result.add(uploadImage(file));
+        }
+
+        return result;
     }
 
     @SuppressWarnings("unchecked")
