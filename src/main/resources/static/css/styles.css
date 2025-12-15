@@ -295,6 +295,11 @@ a {
 }
 
 .link-white,
+.text-white {
+    color: white;
+}
+
+.link-white,
 .link-red,
 .link-black,
 .link-blue {
@@ -909,6 +914,10 @@ a {
 }
 
 /* Property page */
+
+.return-link-container {
+    margin-bottom: 0.5rem;
+}
 
 .page-heading,
 .images-section,
