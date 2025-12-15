@@ -69,7 +69,7 @@ public class PropertyController {
             @RequestParam(value = "propertyType", required = false) PropertyType propertyType,
             @RequestParam(value = "city", required = false) String city,
             @RequestParam(value = "neighbourhood", required = false) String neighbourhood,
-            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "contactPhone", required = false) String contactPhone,
             @RequestParam(value = "minPrice", required = false) Double minPrice,
             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
@@ -77,14 +77,14 @@ public class PropertyController {
 
         model.addAttribute("pageType", "sales");
 
-        return viewProperties(OfferType.SALE, propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.SALE, propertyType, city, neighbourhood, contactPhone, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/rents")
     public String viewRents(@RequestParam(value = "propertyType", required = false) PropertyType propertyType,
                             @RequestParam(value = "city", required = false) String city,
                             @RequestParam(value = "neighbourhood", required = false) String neighbourhood,
-                            @RequestParam(value = "address", required = false) String address,
+                            @RequestParam(value = "contactPhone", required = false) String contactPhone,
                             @RequestParam(value = "minPrice", required = false) Double minPrice,
                             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
                             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
@@ -92,7 +92,7 @@ public class PropertyController {
 
         model.addAttribute("pageType", "rents");
 
-        return viewProperties(OfferType.RENT, propertyType, city, neighbourhood, address, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.RENT, propertyType, city, neighbourhood, contactPhone, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/add")
@@ -238,13 +238,13 @@ public class PropertyController {
         return "redirect:/properties/" + id;
     }
 
-    private String viewProperties(OfferType offerType, PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice, Pageable pageable, Model model) {
-        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, offerType, propertyType, city, neighbourhood, address, minPrice, maxPrice);
+    private String viewProperties(OfferType offerType, PropertyType propertyType, String city, String neighbourhood, String contactPhone, Double minPrice, Double maxPrice, Pageable pageable, Model model) {
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, offerType, propertyType, city, neighbourhood, contactPhone, minPrice, maxPrice);
         model.addAttribute("properties", properties);
         model.addAttribute("propertyTypeParam", propertyType);
         model.addAttribute("cityParam", city);
         model.addAttribute("neighbourhoodParam", neighbourhood);
-        model.addAttribute("addressParam", address);
+        model.addAttribute("contactPhoneParam", contactPhone);
         model.addAttribute("minPriceParam", minPrice);
         model.addAttribute("maxPriceParam", maxPrice);
 

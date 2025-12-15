@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public interface BasePropertyService {
-    Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String city, String neighbourhood, String address, Double minPrice, Double maxPrice);
+    Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String city, String neighbourhood, String contactPhone, Double minPrice, Double maxPrice);
     BaseProperty savePropertyToDB(BaseProperty property);
     BaseProperty saveNewPropertyToDB(AddPropertyDTO addPropertyDTO);
     BaseProperty editPropertyAndAddToDB(EditPropertyDTO editPropertyDTO);

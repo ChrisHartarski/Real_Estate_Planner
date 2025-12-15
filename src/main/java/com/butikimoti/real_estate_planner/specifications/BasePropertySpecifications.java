@@ -18,7 +18,7 @@ public class BasePropertySpecifications {
             PropertyType propertyType,
             String city,
             String neighbourhood,
-            String address,
+            String contactPhone,
             Double minPrice,
             Double maxPrice
     ) {
@@ -43,8 +43,8 @@ public class BasePropertySpecifications {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("neighbourhood")), "%" + neighbourhood + "%"));
             }
 
-            if (address != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("address")), "%" + address + "%"));
+            if (contactPhone != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("contactPhone")), "%" + contactPhone + "%"));
             }
 
             if (minPrice != null) {
