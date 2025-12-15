@@ -4,13 +4,14 @@ import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CloudinaryService {
@@ -25,14 +26,36 @@ public class CloudinaryService {
         ));
     }
 
-    public List<CloudinaryImageInfoDTO> uploadImages(List<MultipartFile> files) throws IOException {
-        List<CloudinaryImageInfoDTO> result = new ArrayList<>();
+    public List<CloudinaryImageInfoDTO> uploadImages(List<MultipartFile> files) {
+//        previous version before async:
+//
+//        List<CloudinaryImageInfoDTO> result = new ArrayList<>();
+//
+//        for (MultipartFile file : files) {
+//            result.add(uploadImage(file));
+//        }
+//
+//        return result;
 
-        for (MultipartFile file : files) {
-            result.add(uploadImage(file));
+        List<CompletableFuture<CloudinaryImageInfoDTO>> futures =
+                files.stream()
+                        .map(this::uploadImageAsync)
+                        .toList();
+
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .toList();
+    }
+
+    @Async
+    public CompletableFuture<CloudinaryImageInfoDTO> uploadImageAsync(MultipartFile file) {
+        try {
+            return CompletableFuture.completedFuture(uploadImage(file));
+        } catch (IOException e) {
+            return CompletableFuture.failedFuture(e);
         }
-
-        return result;
     }
 
     @SuppressWarnings("unchecked")
