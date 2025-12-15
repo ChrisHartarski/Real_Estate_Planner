@@ -57,7 +57,7 @@ public class AddPropertyDTO implements HasPropertyType {
     private LocalDateTime updatedOn;
 
     //common
-    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyConstructionType.notEmpty}")
+    @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class, GarageGroup.class}, message = "{propertyConstructionType.notEmpty}")
     private ConstructionType constructionType;
 
     @NotNull(groups = {ApartmentGroup.class, BusinessPropertyGroup.class, HouseGroup.class}, message = "{propertyYear.notEmpty}")

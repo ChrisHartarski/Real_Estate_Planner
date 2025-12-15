@@ -233,7 +233,8 @@
                         <!-- Construction type-->
                         <div class="info-row" th:if="${property.propertyType.name().equals('APARTMENT')
                                                         or property.propertyType.name().equals('HOUSE')
-                                                        or property.propertyType.name().equals('BUSINESS')}">
+                                                        or property.propertyType.name().equals('BUSINESS')
+                                                        or property.propertyType.name().equals('GARAGE')}">
                             <div class="info-left-column" th:text="#{property.construction-type} + ':'">Тип
                                 строителство:</div>
                             <div class="info-right-column"
