@@ -150,6 +150,10 @@
                                 <div class="property-input-right-column">
                                     <select class="property-input-fill-long" id="offerType" th:field="*{offerType}">
                                         <option
+                                                value=""
+                                                th:text="#{property.offer-type-placeholder}">
+                                        </option>
+                                        <option
                                                 th:value="${T(com.butikimoti.real_estate_planner.model.enums.OfferType).SALE}"
                                                 th:text="#{offerType.SALE}">
                                         </option>
