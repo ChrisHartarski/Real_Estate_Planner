@@ -318,6 +318,18 @@ a {
     font-size: 0.9rem;
 }
 
+.create-new-property-btn {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 1rem auto;
+}
+
+.create-new-property-btn > a {
+    width: fit-content;
+    margin: 0 auto;
+}
+
 /* Navbar */
 .navbar {
     width: 100%;
