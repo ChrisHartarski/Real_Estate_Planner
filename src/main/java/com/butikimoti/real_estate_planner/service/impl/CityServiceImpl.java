@@ -40,6 +40,11 @@ public class CityServiceImpl implements CityService {
         return cityRepository.findCityByName(cityName).orElse(null);
     }
 
+    @Override
+    public boolean repoIsEmpty() {
+        return cityRepository.count() == 0;
+    }
+
 
     Set<String> getAllCityNames() {
         return cityRepository.findAll()

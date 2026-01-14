@@ -52,6 +52,11 @@ public class NeighbourhoodServiceImpl implements NeighbourhoodService {
         return neighbourhoodRepository.findByNameAndCityName(neighbourhoodName, cityName).orElse(null);
     }
 
+    @Override
+    public boolean repoIsEmpty() {
+        return neighbourhoodRepository.count() == 0;
+    }
+
     Set<String> getNeighbourhoodNamesInCity(String cityName) {
         return neighbourhoodRepository.findAllByCityName(cityName)
                 .stream()

@@ -10,4 +10,5 @@ public interface NeighbourhoodService {
     void deleteNeighbourhood(String neighbourhoodName, String cityName);
     Neighbourhood getNeighbourhood(UUID neighbourhoodID);
     Neighbourhood getNeighbourhood(String neighbourhoodName, String cityName);
+    boolean repoIsEmpty();
 }

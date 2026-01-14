@@ -6,4 +6,5 @@ public interface CityService {
     void addCity(String cityName);
     void deleteCity(String cityName);
     City getCity(String cityName);
+    boolean repoIsEmpty();
 }

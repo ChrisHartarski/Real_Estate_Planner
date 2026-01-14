@@ -1,0 +1,542 @@
+[
+  {
+    "city": "Русе град",
+    "neighbourhood": "Алеи Възраждане"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Басарбово"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Веждата"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Възраждане"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "ДЗС"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Долапите"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Дружба 1"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Дружба 2"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Дружба 3"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Завод Найден Киров"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Захарна фабрика"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Здравец"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Здравец Изток"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Здравец Север 1"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Здравец Север 2"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "КТМ"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Мальовица"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Мидия Енос"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Нова промишлена зона"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Новата махала"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Промишлена зона - Запад"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Промишлена зона - Изток"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Родина 1"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Родина 2"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Родина 3"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Родина 4"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Сарая"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Средна кула"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Товарна гара"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Тракцията"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Търговия на едро"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Хъшове"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Цветница"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Централен кооп. пазар"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Централен южен район"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Център"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Чародейка - Север"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Чародейка - Юг"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Широк център"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "Ялта"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. 9-ти километър"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Астарджийка"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Д. Басарбовски"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Касева Чешма"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Кръста"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Кулата"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Левента"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Липака"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Образцов Чифлик"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Русофили"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Средна кула"
+  },
+  {
+    "city": "Русе град",
+    "neighbourhood": "в.з. Трите гълъба"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "главен път Е85"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Борово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Бяла"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Ветово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Глоджево"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Две могили"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Мартен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Сеново"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "гр. Сливо поле"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Бабово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Баниска"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Басарбово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Батин"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Батишница"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Белцов"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Беляново"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Бистренци"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Божичен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Борисово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Босилковци"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Ботров"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Брестовица"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Бръшлен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Бъзовец"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Бъзън"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Волово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Голямо Враново"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Горно Абланово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Джулюница"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Долна Студена"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Долно Абланово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Дряновец"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Екзарх Йосиф"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Иваново"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Караманово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Каран Върбовка"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Кацелово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Копривец"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Кошарна"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Кошов"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Красен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Кривина"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Кривня"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Лом Черковна"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Малко Враново"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Мечка"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Могилино"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Николово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Нисово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Новград"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Ново село"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Обретеник"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Острица"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Пейчиново"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Пепелина"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Пет кладенци"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Пиперково"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Пиргово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Писанец"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Полско Косово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Помен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Просена"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Ряхово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Сандрово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Сваленик"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Семерджиево"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Смирненски"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Стамболово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Стърмен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Табачка"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Тетово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Тръстеник"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Хотанца"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Ценово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Церовец"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Червен"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Червена вода"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Черешово"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Чилнов"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Широково"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Щръклево"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Юделник"
+  },
+  {
+    "city": "Русе област",
+    "neighbourhood": "с. Ястребово"
+  }
+]
