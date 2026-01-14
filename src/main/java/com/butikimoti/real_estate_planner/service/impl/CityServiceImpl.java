@@ -33,6 +33,11 @@ public class CityServiceImpl implements CityService {
         cityRepository.deleteCityByName(cityName);
     }
 
+    @Override
+    public City getCity(String cityName) {
+        return cityRepository.findCityByName(cityName).orElse(null);
+    }
+
 
     Set<String> getAllCityNames() {
         return cityRepository.findAll()

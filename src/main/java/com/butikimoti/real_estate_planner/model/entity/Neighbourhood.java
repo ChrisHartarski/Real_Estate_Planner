@@ -19,9 +19,10 @@ public class Neighbourhood {
     public Neighbourhood() {
     }
 
-    public Neighbourhood(String name) {
+    public Neighbourhood(String name, City city) {
         this();
         this.name = name;
+        this.city = city;
     }
 
     public UUID getId() {
