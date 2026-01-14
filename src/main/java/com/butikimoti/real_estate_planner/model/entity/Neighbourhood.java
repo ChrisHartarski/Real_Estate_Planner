@@ -14,7 +14,7 @@ public class Neighbourhood {
     @Column
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private City city;
 
     public Neighbourhood() {

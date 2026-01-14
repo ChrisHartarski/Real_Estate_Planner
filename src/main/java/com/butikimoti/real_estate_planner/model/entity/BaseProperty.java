@@ -25,13 +25,13 @@ public abstract class BaseProperty {
     @Column(name = "property_type", nullable = false)
     private PropertyType propertyType;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Company ownerCompany;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private City city;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Neighbourhood neighbourhood;
 
     @Column(nullable = false)
