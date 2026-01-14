@@ -3,10 +3,12 @@ package com.butikimoti.real_estate_planner.service.impl;
 import com.butikimoti.real_estate_planner.model.entity.City;
 import com.butikimoti.real_estate_planner.repository.CityRepository;
 import com.butikimoti.real_estate_planner.service.CityService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
 

@@ -5,11 +5,13 @@ import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.repository.NeighbourhoodRepository;
 import com.butikimoti.real_estate_planner.service.CityService;
 import com.butikimoti.real_estate_planner.service.NeighbourhoodService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class NeighbourhoodServiceImpl implements NeighbourhoodService {
     private final NeighbourhoodRepository neighbourhoodRepository;
     private final CityService cityService;
