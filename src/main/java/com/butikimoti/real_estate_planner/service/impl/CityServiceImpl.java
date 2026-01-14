@@ -5,6 +5,7 @@ import com.butikimoti.real_estate_planner.repository.CityRepository;
 import com.butikimoti.real_estate_planner.service.CityService;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,11 +46,12 @@ public class CityServiceImpl implements CityService {
         return cityRepository.count() == 0;
     }
 
-
-    Set<String> getAllCityNames() {
+    @Override
+    public Set<String> getAllCityNames() {
         return cityRepository.findAll()
                 .stream()
                 .map(City::getName)
-                .collect(Collectors.toSet());
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }
