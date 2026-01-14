@@ -8,9 +8,7 @@ import com.butikimoti.real_estate_planner.model.entity.*;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
-import com.butikimoti.real_estate_planner.service.BasePropertyService;
-import com.butikimoti.real_estate_planner.service.PropertyPictureService;
-import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.*;
 import com.butikimoti.real_estate_planner.service.util.exceptions.ResourceNotFoundException;
 import com.butikimoti.real_estate_planner.service.util.exceptions.UnauthorizedException;
 import com.butikimoti.real_estate_planner.specifications.BasePropertySpecifications;
@@ -34,12 +32,16 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     private final BasePropertyRepository basePropertyRepository;
     private final UserEntityService userEntityService;
     private final PropertyPictureService propertyPictureService;
+    private final CityService cityService;
+    private final NeighbourhoodService neighbourhoodService;
     private final ModelMapper modelMapper;
 
-    public BasePropertyServiceImpl(BasePropertyRepository basePropertyRepository, UserEntityService userEntityService, PropertyPictureService propertyPictureService, ModelMapper modelMapper) {
+    public BasePropertyServiceImpl(BasePropertyRepository basePropertyRepository, UserEntityService userEntityService, PropertyPictureService propertyPictureService, CityService cityService, NeighbourhoodService neighbourhoodService, ModelMapper modelMapper) {
         this.basePropertyRepository = basePropertyRepository;
         this.userEntityService = userEntityService;
         this.propertyPictureService = propertyPictureService;
+        this.cityService = cityService;
+        this.neighbourhoodService = neighbourhoodService;
         this.modelMapper = modelMapper;
     }
 
@@ -79,8 +81,12 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         if (!propertyTypes.contains(addPropertyDTO.getPropertyType())) {
             throw new ResourceNotFoundException("No such property type: " + addPropertyDTO.getPropertyType());
         }
+        City city = cityService.getCity(addPropertyDTO.getCity());
+        Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(addPropertyDTO.getNeighbourhood(), addPropertyDTO.getCity());
 
         BaseProperty property = getBasePropertyFromDTO(addPropertyDTO);
+        property.setCity(city);
+        property.setNeighbourhood(neighbourhood);
         property.setOwnerCompany(getOwnerCompany());
         property.setCreatedOn(LocalDateTime.now());
 
@@ -162,8 +168,11 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         return ownerCompany;
     }
 
-    private BaseProperty getBasePropertyFromDTO(HasPropertyType dto) {
-        return  switch (dto.getPropertyType()) {
+    private BaseProperty getBasePropertyFromDTO(AddPropertyDTO dto) {
+        City city = cityService.getCity(dto.getCity());
+        Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(dto.getNeighbourhood(), dto.getCity());
+
+        BaseProperty result =  switch (dto.getPropertyType()) {
             case APARTMENT -> modelMapper.map(dto, Apartment.class);
             case BUSINESS -> modelMapper.map(dto, BusinessProperty.class);
             case GARAGE -> modelMapper.map(dto, Garage.class);
@@ -171,6 +180,10 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             case LAND -> modelMapper.map(dto, Land.class);
             default -> throw new ResourceNotFoundException("No such property type: " + dto.getPropertyType());
         };
+
+        result.setCity(city);
+        result.setNeighbourhood(neighbourhood);
+        return result;
     }
 
     private void applyEditPropertyDTOToProperty(BaseProperty property, EditPropertyDTO editPropertyDTO) {
@@ -180,6 +193,14 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         try {
             configuration.setSkipNullEnabled(true);
             modelMapper.map(editPropertyDTO, property);
+            if (!editPropertyDTO.getCity().equals(property.getCity().getName())) {
+                City city = cityService.getCity(editPropertyDTO.getCity());
+                property.setCity(city);
+            }
+            if (!editPropertyDTO.getNeighbourhood().equals(property.getNeighbourhood().getName())) {
+                Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(editPropertyDTO.getNeighbourhood(), editPropertyDTO.getCity());
+                property.setNeighbourhood(neighbourhood);
+            }
         } finally {
             configuration.setSkipNullEnabled(isSkipNullEnabled);
         }

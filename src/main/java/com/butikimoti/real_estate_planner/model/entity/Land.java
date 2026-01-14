@@ -19,7 +19,7 @@ public class Land extends BaseProperty {
     public Land() {
     }
 
-    public Land(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, LandType landType) {
+    public Land(UUID id, PropertyType propertyType, Company ownerCompany, City city, Neighbourhood neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, LandType landType) {
         super(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.landType = landType;
     }

@@ -36,11 +36,11 @@ public class BasePropertySpecifications {
             }
 
             if (city != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("city")), "%" + city.toLowerCase() + "%"));
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("cityName")), "%" + city.toLowerCase() + "%"));
             }
 
             if (neighbourhood != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("neighbourhood")), "%" + neighbourhood + "%"));
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("neighbourhoodName")), "%" + neighbourhood + "%"));
             }
 
             if (contactPhone != null) {

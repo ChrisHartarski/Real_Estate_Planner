@@ -1,5 +1,7 @@
 package com.butikimoti.real_estate_planner.model.dto.property;
 
+import com.butikimoti.real_estate_planner.model.entity.City;
+import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.model.enums.*;
 
 import java.time.LocalDateTime;

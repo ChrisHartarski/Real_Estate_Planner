@@ -40,7 +40,7 @@ public class House extends BaseProperty {
     public House() {
     }
 
-    public House(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, HouseType houseType, ConstructionType constructionType, int year, HeatingType heatingType, int yardArea, AreaUnit yardAreaUnit, int floorsCount, String additionalStructures) {
+    public House(UUID id, PropertyType propertyType, Company ownerCompany, City city, Neighbourhood neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, HouseType houseType, ConstructionType constructionType, int year, HeatingType heatingType, int yardArea, AreaUnit yardAreaUnit, int floorsCount, String additionalStructures) {
         super(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.houseType = houseType;
         this.constructionType = constructionType;

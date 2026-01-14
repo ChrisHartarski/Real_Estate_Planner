@@ -28,11 +28,11 @@ public abstract class BaseProperty {
     @ManyToOne
     private Company ownerCompany;
 
-    @Column(nullable = false)
-    private String city;
+    @ManyToOne
+    private City city;
 
-    @Column
-    private String neighbourhood;
+    @ManyToOne
+    private Neighbourhood neighbourhood;
 
     @Column(nullable = false)
     private String address;
@@ -78,7 +78,7 @@ public abstract class BaseProperty {
         this.comments = new ArrayList<>();
     }
 
-    protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
+    protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, City city, Neighbourhood neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
         this();
         this.id = id;
         this.propertyType = propertyType;
@@ -98,7 +98,7 @@ public abstract class BaseProperty {
         this.updatedOn = updatedOn;
     }
 
-    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, List<Comment> comments) {
+    protected BaseProperty(UUID id, List<PropertyPicture> pictures, PropertyType propertyType, Company ownerCompany, City city, Neighbourhood neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, List<Comment> comments) {
         this(id, propertyType, ownerCompany, city, neighbourhood, address, price, area, areaUnit, offerType, contactName, contactPhone, contactEmail, description, createdOn, updatedOn);
         this.pictures = pictures;
         this.comments = comments;
@@ -136,19 +136,19 @@ public abstract class BaseProperty {
         this.ownerCompany = ownerCompany;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
-    public String getNeighbourhood() {
+    public Neighbourhood getNeighbourhood() {
         return neighbourhood;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
+    public void setNeighbourhood(Neighbourhood neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
 
