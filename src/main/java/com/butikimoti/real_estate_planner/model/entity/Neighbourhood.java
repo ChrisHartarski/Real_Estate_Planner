@@ -8,6 +8,7 @@ import java.util.UUID;
 @Table(name = "neighbourhoods")
 public class Neighbourhood {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column
