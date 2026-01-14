@@ -3,6 +3,10 @@ package com.butikimoti.real_estate_planner.model.dto.property;
 import com.butikimoti.real_estate_planner.model.entity.City;
 import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.model.enums.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,72 +14,98 @@ import java.util.UUID;
 public class EditPropertyDTO implements HasPropertyType {
     private UUID id;
 
+    @NotNull(message = "{propertyType.notEmpty}")
     private PropertyType propertyType;
 
+    @NotNull(message = "{propertyCity.notEmpty}")
     private String city;
 
+    @NotNull(message = "{propertyNeighbourhood.notEmpty}")
     private String neighbourhood;
 
+    @NotEmpty(message = "{propertyAddress.notEmpty}")
     private String address;
 
+    @NotNull(message = "{propertyPrice.notEmpty}")
+    @Positive(message = "{propertyPrice.positive}")
     private double price;
 
+    @NotNull(message = "{propertyArea.notEmpty}")
+    @Positive(message = "{propertyArea.positive}")
     private int area;
 
+    @NotNull(message = "{propertyArea.unitNotEmpty}")
     private AreaUnit areaUnit;
 
+    @NotNull(message = "{offerType.notEmpty}")
     private OfferType offerType;
 
+    @NotEmpty(message = "{contactName.notEmpty}")
+    @Size(min = 1, max = 80, message = "{contactName.length}")
     private String contactName;
 
+    @NotEmpty(message = "{phone.notEmpty}")
     private String contactPhone;
 
     private String contactEmail;
 
+    @Size(max = 1000, message = "{description.length}")
     private String description;
 
     private LocalDateTime updatedOn;
 
     //common
+    @NotNull(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class, AddPropertyDTO.HouseGroup.class, AddPropertyDTO.GarageGroup.class}, message = "{propertyConstructionType.notEmpty}")
     private ConstructionType constructionType;
 
+    @NotNull(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class, AddPropertyDTO.HouseGroup.class}, message = "{propertyYear.notEmpty}")
+    @Positive(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class, AddPropertyDTO.HouseGroup.class}, message = "{propertyYear.positive}")
     private int year;
 
+    @NotNull(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class, AddPropertyDTO.HouseGroup.class}, message = "{propertyRoomCount.notEmpty}")
     private int roomCount;
 
+    @NotNull(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class}, message = "{propertyFloor.notEmpty}")
     private int floor;
 
+    @NotNull(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class}, message = "{propertyBuildingFloors.notEmpty}")
     private int buildingFloors;
 
     private String facing;
 
+    @NotNull(groups = {AddPropertyDTO.ApartmentGroup.class, AddPropertyDTO.BusinessPropertyGroup.class, AddPropertyDTO.HouseGroup.class}, message = "{propertyHeatingType.notEmpty}")
     private HeatingType heatingType;
 
     //apartment
+    @NotNull(groups = AddPropertyDTO.ApartmentGroup.class, message = "{propertyApartmentType.notEmpty}")
     private ApartmentType apartmentType;
 
     private boolean hasElevator;
 
     //house
+    @NotNull(groups = AddPropertyDTO.HouseGroup.class, message = "{propertyHouseType.notEmpty}")
     private HouseType houseType;
 
     private int yardArea;
 
     private AreaUnit yardAreaUnit;
 
+    @NotNull(groups = AddPropertyDTO.HouseGroup.class, message = "{propertyFloorsCount.notEmpty}")
     private int floorsCount;
 
     private String additionalStructures;
 
     //garage
+    @NotNull(groups = AddPropertyDTO.GarageGroup.class, message = "{propertyGarageType.notEmpty}")
     private GarageType garageType;
 
     //land
+    @NotNull(groups = AddPropertyDTO.LandGroup.class, message = "{propertyLandType.notEmpty}")
     private LandType landType;
 
     //business property
+    @NotNull(groups = AddPropertyDTO.BusinessPropertyGroup.class, message = "{propertyBusinessPropertyType.notEmpty}")
     private BusinessPropertyType businessPropertyType;
-
 
 
     public EditPropertyDTO() {
