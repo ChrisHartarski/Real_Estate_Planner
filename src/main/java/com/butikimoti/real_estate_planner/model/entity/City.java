@@ -15,7 +15,7 @@ public class City {
     @Column(unique = true)
     private String name;
 
-    @OneToMany
+    @OneToMany (mappedBy = "city", cascade = CascadeType.REMOVE)
     private List<Neighbourhood> neighbourhoods;
 
     public City() {
