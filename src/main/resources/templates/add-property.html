@@ -56,9 +56,20 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <input class="property-input-fill-long" name="city" id="city" type="text"
-                                           th:placeholder="#{property.city-placeholder}"
-                                           th:field="*{city}"/>
+                                    <select class="property-input-fill-long" id="city" th:field="*{city}">
+                                        <option
+                                                value=""
+                                                th:text="#{property.city-placeholder}">
+                                        </option>
+                                        <option
+                                                th:each="city : ${cities}"
+                                                th:value="${city}"
+                                                th:text="${city}">
+                                        </option>
+                                    </select>
+<!--                                    <input class="property-input-fill-long" name="city" id="city" type="text"-->
+<!--                                           th:placeholder="#{property.city-placeholder}"-->
+<!--                                           th:field="*{city}"/>-->
                                 </div>
                             </div>
                             <small th:errors="*{city}" class="text-red">Property city error!</small>
@@ -73,11 +84,18 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <input class="property-input-fill-long" name="neighbourhood" id="neighbourhood" type="text"
-                                           th:placeholder="#{property.neighbourhood-placeholder}"
-                                           th:field="*{neighbourhood}"/>
+                                    <select class="property-input-fill-long" id="neighbourhood" th:field="*{neighbourhood}">
+                                        <option
+                                                value=""
+                                                th:text="#{property.neighbourhood-placeholder}">
+                                        </option>
+                                    </select>
+<!--                                    <input class="property-input-fill-long" name="neighbourhood" id="neighbourhood" type="text"-->
+<!--                                           th:placeholder="#{property.neighbourhood-placeholder}"-->
+<!--                                           th:field="*{neighbourhood}"/>-->
                                 </div>
                             </div>
+                            <small th:errors="*{neighbourhood}" class="text-red">Property city error!</small>
                         </div>
 
                         <!-- Address input -->

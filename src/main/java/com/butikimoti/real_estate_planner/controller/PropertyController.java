@@ -6,13 +6,12 @@ import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
+import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
-import com.butikimoti.real_estate_planner.service.BasePropertyService;
-import com.butikimoti.real_estate_planner.service.CommentService;
-import com.butikimoti.real_estate_planner.service.UserEntityService;
+import com.butikimoti.real_estate_planner.service.*;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
@@ -42,14 +41,18 @@ public class PropertyController {
     private final UserEntityService userEntityService;
     private final CommentService commentService;
     private final CloudinaryService cloudinaryService;
+    private final CityService cityService;
+    private final NeighbourhoodService neighbourhoodService;
     private final ModelMapper modelMapper;
     private final Validator validator;
 
-    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, ModelMapper modelMapper, Validator validator) {
+    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, CityService cityService, NeighbourhoodService neighbourhoodService, ModelMapper modelMapper, Validator validator) {
         this.basePropertyService = basePropertyService;
         this.userEntityService = userEntityService;
         this.commentService = commentService;
         this.cloudinaryService = cloudinaryService;
+        this.cityService = cityService;
+        this.neighbourhoodService = neighbourhoodService;
         this.modelMapper = modelMapper;
         this.validator = validator;
     }
@@ -96,7 +99,9 @@ public class PropertyController {
     }
 
     @GetMapping("/add")
-    public String viewAddProperty() {
+    public String viewAddProperty(Model model) {
+        Set<String> cities = cityService.getAllCityNames();
+        model.addAttribute("cities", cities);
         return "add-property";
     }
 
@@ -178,8 +183,19 @@ public class PropertyController {
     @GetMapping("/{id}/edit")
     public String editProperty(@PathVariable UUID id, Model model) {
         EditPropertyDTO editPropertyData = getEditPropertyDTOById(id);
+        Set<String> cities = cityService.getAllCityNames();
+        List<String> neighbourhoods =
+                cityService
+                        .getCity(editPropertyData.getCity())
+                        .getNeighbourhoods()
+                        .stream()
+                        .map(Neighbourhood::getName)
+                        .sorted()
+                        .toList();
 
         model.addAttribute("editPropertyData", editPropertyData);
+        model.addAttribute("cities", cities);
+        model.addAttribute("neighbourhoods", neighbourhoods);
 
         return "edit-property";
     }
