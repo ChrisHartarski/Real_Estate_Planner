@@ -78,6 +78,8 @@ public class PropertyController {
             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
             Model model) {
 
+        Set<String> cities = cityService.getAllCityNames();
+        model.addAttribute("cities", cities);
         model.addAttribute("pageType", "sales");
 
         return viewProperties(OfferType.SALE, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, pageable, model);
@@ -85,7 +87,7 @@ public class PropertyController {
 
     @GetMapping("/rents")
     public String viewRents(@RequestParam(value = "propertyType", required = false) PropertyType propertyType,
-                            @RequestParam(value = "city", required = false) String cityNames,
+                            @RequestParam(value = "city", required = false) String cityName,
                             @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
                             @RequestParam(value = "contactPhone", required = false) String contactPhone,
                             @RequestParam(value = "minPrice", required = false) Double minPrice,
@@ -93,9 +95,11 @@ public class PropertyController {
                             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
                             Model model) {
 
+        Set<String> cities = cityService.getAllCityNames();
+        model.addAttribute("cities", cities);
         model.addAttribute("pageType", "rents");
 
-        return viewProperties(OfferType.RENT, propertyType, cityNames, neighbourhoodNames, contactPhone, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.RENT, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, pageable, model);
     }
 
     @GetMapping("/add")

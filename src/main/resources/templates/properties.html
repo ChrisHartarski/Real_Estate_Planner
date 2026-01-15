@@ -61,25 +61,55 @@
                                     </option>
                                 </select>
                             </div>
+                        </div>
 
-                            <!--                    City-->
+                        <!--                    City-->
+                        <div class="filter-items-container">
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.city}" for="filter-city"></label>
-                                <input class="filter-right-column" id="filter-city" name="city"
-                                       th:placeholder="#{property.city-placeholder}"
-                                       th:value="${cityParam}"/>
+                                <select class="filter-right-column" id="filter-city" name="city">
+                                    <option
+                                            value=""
+                                            th:text="#{property.city-placeholder}">
+                                    </option>
+                                    <option
+                                            th:each="city : ${cities}"
+                                            th:value="${city}"
+                                            th:text="${city}"
+                                            th:selected="${city} == ${cityParam}">
+                                    </option>
+                                </select>
                             </div>
                         </div>
+                        <!--                            Neighbourhood-->
                         <div class="filter-items-container">
-                            <!--                            Neighbourhood-->
-                            <div class="filter-item">
-                                <label class="filter-left-column" th:text="#{property.neighbourhood}"
-                                       for="filter-neighbourhood"></label>
-                                <input class="filter-right-column" id="filter-neighbourhood" name="neighbourhood"
-                                       th:placeholder="#{property.neighbourhood-placeholder}"
-                                       th:value="${neighbourhoodParam}"/>
-                            </div>
+                            <div class="filter-item center text-center">
+                                <div class="filter-left-column">
+                                    <div>
+                                        <label for="available-neighbourhoods" th:text="#{property.neighbourhood-available}"></label>
+                                    </div>
+                                    <div>
+                                        <select id="available-neighbourhoods" multiple size="5"></select>
+                                    </div>
+                                </div>
 
+                                <div class="dual-select-buttons">
+                                    <button type="button" id="add-neighbourhood-btn" class="btn btn-blue">&gt;&gt;</button>
+                                    <button type="button" id="remove-neighbourhood-btn" class="btn btn-blue">&lt;&lt;</button>
+                                </div>
+
+                                <div class="filter-right-column">
+                                    <div>
+                                        <label for="selected-neighbourhoods" th:text="#{property.neighbourhood-selected}"></label>
+                                    </div>
+                                    <div>
+                                        <select id="selected-neighbourhoods" name="neighbourhood" multiple size="5"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-items-container">
                             <!--                            Contact Phone-->
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.contact-phone}" for="filter-contactPhone"></label>

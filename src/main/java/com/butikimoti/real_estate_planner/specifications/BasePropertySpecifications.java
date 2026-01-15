@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BasePropertySpecifications {
 
@@ -42,7 +43,13 @@ public class BasePropertySpecifications {
             }
 
             if (neighbourhoods != null && !neighbourhoods.isEmpty()) {
-                predicates.add(root.get("neighbourhoods").in(neighbourhoods));
+                List<Neighbourhood> filtered = neighbourhoods.stream()
+                        .filter(Objects::nonNull)
+                        .toList();
+
+                if (!filtered.isEmpty()) {
+                    predicates.add(root.get("neighbourhood").in(filtered));
+                }
             }
 
             if (contactPhone != null) {
