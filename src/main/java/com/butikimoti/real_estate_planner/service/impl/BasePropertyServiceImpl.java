@@ -46,7 +46,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String city, String neighbourhood, String contactPhone, Double minPrice, Double maxPrice) {
+    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice) {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
         if (currentUser == null) {
@@ -58,7 +58,17 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             throw new RuntimeException("User does not have a company");
         }
 
-        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhood, contactPhone, minPrice, maxPrice);
+        City city = cityService.getCity(cityName);
+        List<Neighbourhood> neighbourhoods = new ArrayList<>();
+
+        if (neighbourhoodNames != null && !neighbourhoodNames.isEmpty()) {
+            neighbourhoods = neighbourhoodNames
+                            .stream()
+                            .map(name -> neighbourhoodService.getNeighbourhood(name, cityName))
+                            .toList();
+        }
+
+        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhoods, contactPhone, minPrice, maxPrice);
         Page<BaseProperty> properties = basePropertyRepository.findAll(specification, pageable);
 
         return properties.map(this::mapBasePropertyToPropertyDTO);

@@ -1,7 +1,9 @@
 package com.butikimoti.real_estate_planner.specifications;
 
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
+import com.butikimoti.real_estate_planner.model.entity.City;
 import com.butikimoti.real_estate_planner.model.entity.Company;
+import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import jakarta.persistence.criteria.Predicate;
@@ -16,8 +18,8 @@ public class BasePropertySpecifications {
             Company company,
             OfferType offerType,
             PropertyType propertyType,
-            String city,
-            String neighbourhood,
+            City city,
+            List<Neighbourhood> neighbourhoods,
             String contactPhone,
             Double minPrice,
             Double maxPrice
@@ -36,11 +38,11 @@ public class BasePropertySpecifications {
             }
 
             if (city != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("city")), "%" + city.toLowerCase() + "%"));
+                predicates.add(criteriaBuilder.equal(root.get("city"), city));
             }
 
-            if (neighbourhood != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("neighbourhood")), "%" + neighbourhood + "%"));
+            if (neighbourhoods != null && !neighbourhoods.isEmpty()) {
+                predicates.add(root.get("neighbourhoods").in(neighbourhoods));
             }
 
             if (contactPhone != null) {
