@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const propertyTypeSelect = document.getElementById("propertyType");
     const citySelect = document.getElementById("city");
-    const neighbourhoodSelect = document.getElementById("neighbourhood");
 
     if(propertyTypeSelect) {
         toggleFields(propertyTypeSelect.value);
@@ -39,8 +38,9 @@ function toggleFields(selectedTypeValue) {
 
 function populateNeighbourhoods(cityName) {
     const neighbourhoodSelect = document.getElementById("neighbourhood");
+    const neighbourhoodsCurrentValue = neighbourhoodSelect.dataset.current;
 
-    if (cityName == null) {
+    if (cityName == null || !cityName) {
         neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"></option>';
         return;
     }
@@ -54,6 +54,11 @@ function populateNeighbourhoods(cityName) {
                 const option = document.createElement('option');
                 option.value = n;
                 option.textContent = n;
+
+                if (neighbourhoodsCurrentValue && neighbourhoodsCurrentValue === n) {
+                    option.selected = true;
+                }
+
                 neighbourhoodSelect.appendChild(option);
             })
         })

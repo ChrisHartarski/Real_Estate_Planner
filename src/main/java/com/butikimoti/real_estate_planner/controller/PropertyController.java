@@ -3,6 +3,7 @@ package com.butikimoti.real_estate_planner.controller;
 import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.HasPropertyType;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -42,17 +44,15 @@ public class PropertyController {
     private final CommentService commentService;
     private final CloudinaryService cloudinaryService;
     private final CityService cityService;
-    private final NeighbourhoodService neighbourhoodService;
     private final ModelMapper modelMapper;
     private final Validator validator;
 
-    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, CityService cityService, NeighbourhoodService neighbourhoodService, ModelMapper modelMapper, Validator validator) {
+    public PropertyController(BasePropertyService basePropertyService, UserEntityService userEntityService, CommentService commentService, CloudinaryService cloudinaryService, CityService cityService, ModelMapper modelMapper, Validator validator) {
         this.basePropertyService = basePropertyService;
         this.userEntityService = userEntityService;
         this.commentService = commentService;
         this.cloudinaryService = cloudinaryService;
         this.cityService = cityService;
-        this.neighbourhoodService = neighbourhoodService;
         this.modelMapper = modelMapper;
         this.validator = validator;
     }
@@ -148,6 +148,9 @@ public class PropertyController {
                                @Valid EditPropertyDTO editPropertyData,
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes) {
+
+        validateWithGroup(editPropertyData, bindingResult);
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editPropertyData", editPropertyData);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editPropertyData", bindingResult);
@@ -182,18 +185,30 @@ public class PropertyController {
 
     @GetMapping("/{id}/edit")
     public String editProperty(@PathVariable UUID id, Model model) {
-        EditPropertyDTO editPropertyData = getEditPropertyDTOById(id);
-        Set<String> cities = cityService.getAllCityNames();
-        List<String> neighbourhoods =
-                cityService
-                        .getCity(editPropertyData.getCity())
-                        .getNeighbourhoods()
-                        .stream()
-                        .map(Neighbourhood::getName)
-                        .sorted()
-                        .toList();
 
-        model.addAttribute("editPropertyData", editPropertyData);
+        EditPropertyDTO editPropertyData = (EditPropertyDTO) model.getAttribute("editPropertyData");
+
+        if (editPropertyData == null) {
+            editPropertyData = getEditPropertyDTOById(id);
+            model.addAttribute("editPropertyData", editPropertyData);
+        }
+
+        Set<String> cities = cityService.getAllCityNames();
+
+        String cityName = editPropertyData.getCity();
+        List<String> neighbourhoods = new ArrayList<>();
+
+        if (cityName != null && !cityName.isBlank()) {
+            neighbourhoods =
+                    cityService
+                            .getCity(cityName)
+                            .getNeighbourhoods()
+                            .stream()
+                            .map(Neighbourhood::getName)
+                            .sorted()
+                            .toList();
+        }
+
         model.addAttribute("cities", cities);
         model.addAttribute("neighbourhoods", neighbourhoods);
 
@@ -202,7 +217,7 @@ public class PropertyController {
 
     @PostMapping("/{id}/upload-picture")
     public String uploadPicture(@PathVariable UUID id,
-                                @RequestParam("images") List<MultipartFile> images) throws IOException {
+                                @RequestParam("images") List<MultipartFile> images) {
         BaseProperty property = basePropertyService.getPropertyByID(id);
         List<CloudinaryImageInfoDTO> imageList = cloudinaryService.uploadImages(images);
         imageList.forEach(image -> {
@@ -281,15 +296,45 @@ public class PropertyController {
         return userCompanyName.equalsIgnoreCase(property.getOwnerCompanyName());
     }
 
-    private void validateWithGroup(AddPropertyDTO addPropertyData, BindingResult bindingResult) {
+//    private void validateWithGroup(AddPropertyDTO addPropertyData, BindingResult bindingResult) {
+//        //determine the group by PropertyType
+//        Class<?> group = determineValidationGroup(addPropertyData.getPropertyType());
+//
+//        //get the violations
+//        Set<ConstraintViolation<AddPropertyDTO>> constraintViolations = validator.validate(addPropertyData, group);
+//
+//        //add the violations to bindingResult
+//        for (ConstraintViolation<AddPropertyDTO> violation : constraintViolations) {
+//            String field = violation.getPropertyPath().toString();
+//            String message = violation.getMessage();
+//            bindingResult.addError(new FieldError(bindingResult.getObjectName(), field, message));
+//        }
+//    }
+//
+//    private void validateWithGroup(EditPropertyDTO editPropertyData, BindingResult bindingResult) {
+//        //determine the group by PropertyType
+//        Class<?> group = determineValidationGroup(editPropertyData.getPropertyType());
+//
+//        //get the violations
+//        Set<ConstraintViolation<EditPropertyDTO>> constraintViolations = validator.validate(editPropertyData, group);
+//
+//        //add the violations to bindingResult
+//        for (ConstraintViolation<EditPropertyDTO> violation : constraintViolations) {
+//            String field = violation.getPropertyPath().toString();
+//            String message = violation.getMessage();
+//            bindingResult.addError(new FieldError(bindingResult.getObjectName(), field, message));
+//        }
+//    }
+
+    private <T extends HasPropertyType> void validateWithGroup (T dto, BindingResult bindingResult) {
         //determine the group by PropertyType
-        Class<?> group = determineValidationGroup(addPropertyData.getPropertyType());
+        Class<?> group = determineValidationGroup(dto.getPropertyType());
 
         //get the violations
-        Set<ConstraintViolation<AddPropertyDTO>> constraintViolations = validator.validate(addPropertyData, group);
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(dto, group);
 
         //add the violations to bindingResult
-        for (ConstraintViolation<AddPropertyDTO> violation : constraintViolations) {
+        for (ConstraintViolation<T> violation : constraintViolations) {
             String field = violation.getPropertyPath().toString();
             String message = violation.getMessage();
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), field, message));

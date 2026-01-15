@@ -67,9 +67,6 @@
                                                 th:text="${city}">
                                         </option>
                                     </select>
-                                    <!--                                    <input class="property-input-fill-long" name="city" id="city" type="text"-->
-                                    <!--                                           th:placeholder="#{property.city-placeholder}"-->
-                                    <!--                                           th:field="*{city}"/>-->
                                 </div>
                             </div>
                             <small th:errors="*{city}" class="text-red">Property city error!</small>
@@ -84,15 +81,15 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <select class="property-input-fill-long" id="neighbourhood" th:field="*{neighbourhood}">
+                                    <select class="property-input-fill-long"
+                                            id="neighbourhood"
+                                            th:field="*{neighbourhood}"
+                                            th:data-current="${editPropertyData.neighbourhood}">
                                         <option th:each="neighbourhood : ${neighbourhoods}"
                                                 th:value="${neighbourhood}"
                                                 th:text="${neighbourhood}">
                                         </option>
                                     </select>
-                                    <!--                                    <input class="property-input-fill-long" name="neighbourhood" id="neighbourhood" type="text"-->
-                                    <!--                                           th:placeholder="#{property.neighbourhood-placeholder}"-->
-                                    <!--                                           th:field="*{neighbourhood}"/>-->
                                 </div>
                             </div>
                             <small th:errors="*{neighbourhood}" class="text-red">Property city error!</small>
