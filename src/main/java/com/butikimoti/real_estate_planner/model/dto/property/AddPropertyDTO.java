@@ -18,10 +18,10 @@ public class AddPropertyDTO implements HasPropertyType {
 
     private Company ownerCompany;
 
-    @NotNull(message = "{propertyCity.notEmpty}")
+    @NotEmpty(message = "{propertyCity.notEmpty")
     private String city;
 
-    @NotNull(message = "{propertyNeighbourhood.notEmpty}")
+    @NotEmpty(message = "{propertyNeighbourhood.notEmpty}")
     private String neighbourhood;
 
     @NotEmpty(message = "{propertyAddress.notEmpty}")

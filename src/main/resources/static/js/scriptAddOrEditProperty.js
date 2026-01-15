@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .addEventListener("change", () => toggleFields(propertyTypeSelect.value));
     }
 
-    citySelect.addEventListener("change", () => populateNeighbourhoods(citySelect.value));
+    if(citySelect) {
+        populateNeighbourhoods(citySelect.value);
+        citySelect
+            .addEventListener("change", () => populateNeighbourhoods(citySelect.value));
+    }
 
 });
 
@@ -37,14 +41,14 @@ function populateNeighbourhoods(cityName) {
     const neighbourhoodSelect = document.getElementById("neighbourhood");
 
     if (cityName == null) {
-        neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"> </option>';
+        neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"></option>';
         return;
     }
 
     fetch(`/neighbourhoods?cityName=${cityName}`)
         .then(response => response.json())
         .then(data => {
-            neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"> </option>';
+            neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"></option>';
 
             data.forEach(n => {
                 const option = document.createElement('option');

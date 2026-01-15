@@ -17,10 +17,10 @@ public class EditPropertyDTO implements HasPropertyType {
     @NotNull(message = "{propertyType.notEmpty}")
     private PropertyType propertyType;
 
-    @NotNull(message = "{propertyCity.notEmpty}")
+    @NotEmpty(message = "{propertyCity.notEmpty}")
     private String city;
 
-    @NotNull(message = "{propertyNeighbourhood.notEmpty}")
+    @NotEmpty(message = "{propertyNeighbourhood.notEmpty}")
     private String neighbourhood;
 
     @NotEmpty(message = "{propertyAddress.notEmpty}")
