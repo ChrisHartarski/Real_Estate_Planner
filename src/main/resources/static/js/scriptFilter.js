@@ -25,8 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`/neighbourhoods?cityName=${city}`)
             .then(response => response.json())
             .then(data => {
-                availableNeighbourhoodsSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"></option>';
-
                 data.forEach(n => {
                     const option = document.createElement('option');
                     option.value = n;

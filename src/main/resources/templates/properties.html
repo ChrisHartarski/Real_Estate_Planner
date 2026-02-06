@@ -83,27 +83,27 @@
                         </div>
                         <!--                            Neighbourhood-->
                         <div class="filter-items-container">
-                            <div class="filter-item center text-center">
-                                <div class="filter-left-column">
+                            <div class="center text-center flex-row gap-1">
+                                <div class="filter-right-column flex-column gap-1">
                                     <div>
                                         <label for="available-neighbourhoods" th:text="#{property.neighbourhood-available}"></label>
                                     </div>
                                     <div>
-                                        <select id="available-neighbourhoods" multiple size="5"></select>
+                                        <select class="select-box" id="available-neighbourhoods" multiple size="5"></select>
                                     </div>
                                 </div>
 
-                                <div class="dual-select-buttons">
+                                <div class="dual-select-buttons flex-column gap-1 justify-content-center">
                                     <button type="button" id="add-neighbourhood-btn" class="btn btn-blue">&gt;&gt;</button>
                                     <button type="button" id="remove-neighbourhood-btn" class="btn btn-blue">&lt;&lt;</button>
                                 </div>
 
-                                <div class="filter-right-column">
+                                <div class="filter-right-column flex-column gap-1">
                                     <div>
                                         <label for="selected-neighbourhoods" th:text="#{property.neighbourhood-selected}"></label>
                                     </div>
                                     <div>
-                                        <select id="selected-neighbourhoods" name="neighbourhood" multiple size="5"></select>
+                                        <select class="select-box" id="selected-neighbourhoods" name="neighbourhood" multiple size="5"></select>
                                     </div>
                                 </div>
                             </div>
