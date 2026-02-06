@@ -5,8 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const availableNeighbourhoodsSelect = document.getElementById('available-neighbourhoods');
     const selectedNeighbourhoodsSelect = document.getElementById('selected-neighbourhoods');
 
+    const params = new URLSearchParams(window.location.search);
+    const cityFromUrl = params.get("city");
+    const selectedNeighbourhoodsFromUrl = params.getAll("neighbourhood");
+
     const addSelectedBtn = document.getElementById('add-neighbourhood-btn');
     const removeSelectedBtn = document.getElementById('remove-neighbourhood-btn');
+
+    console.log("City value on load:", cityFromUrl);
+    console.log("selected neighbourhoods on load:", selectedNeighbourhoodsFromUrl);
+
 
     function sortSelectAlphabetically(selectElement) {
         Array.from(selectElement.options)
@@ -22,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!city) return;
 
-        fetch(`/neighbourhoods?cityName=${city}`)
+        fetch(`/neighbourhoods?cityName=${encodeURIComponent(city)}`)
             .then(response => response.json())
             .then(data => {
                 data.forEach(n => {
@@ -30,10 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     option.value = n;
                     option.textContent = n;
 
-                    availableNeighbourhoodsSelect.appendChild(option);
+                    if (selectedNeighbourhoodsFromUrl.includes(n)) {
+                        selectedNeighbourhoodsSelect.appendChild(option);
+                    } else {
+                        availableNeighbourhoodsSelect.appendChild(option);
+                    }
                 })
             })
             .catch(err => console.error('Error loading neighbourhoods:', err));
+    }
+
+    if (cityFromUrl) {
+        populateAvailableNeighbourhoods(cityFromUrl);
+        sortSelectAlphabetically(availableNeighbourhoodsSelect);
+        sortSelectAlphabetically(selectedNeighbourhoodsSelect);
     }
 
     citySelect.addEventListener('change', () => {
