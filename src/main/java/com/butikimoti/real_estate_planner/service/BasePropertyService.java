@@ -21,6 +21,7 @@ public interface BasePropertyService {
     BaseProperty saveNewPropertyToDB(AddPropertyDTO addPropertyDTO);
     BaseProperty editPropertyAndAddToDB(EditPropertyDTO editPropertyDTO);
     BaseProperty getPropertyByID(UUID id);
+    void archiveProperty(UUID id);
     void deleteProperty(UUID id) throws IOException;
     void deletePicture(UUID id, UUID pictureId) throws IOException;
 }

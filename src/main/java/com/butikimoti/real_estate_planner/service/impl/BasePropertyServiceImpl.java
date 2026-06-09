@@ -122,6 +122,21 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
+    public void archiveProperty(UUID id) {
+        BaseProperty property = getPropertyByID(id);
+
+        if(property.isArchived()) {
+            property.setArchived(false);
+            property.setArchivedOn(null);
+        } else {
+            property.setArchived(true);
+            property.setArchivedOn(LocalDateTime.now());
+        }
+
+        savePropertyToDB(property);
+    }
+
+    @Override
     public void deleteProperty(UUID id) throws IOException {
         deleteAllPicturesFromProperty(id);
         basePropertyRepository.deleteById(id);

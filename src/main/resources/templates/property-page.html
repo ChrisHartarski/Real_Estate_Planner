@@ -389,15 +389,15 @@
                             <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
                         </a>
                     </div>
-                    <div th:if="${!property.isArchived}">
-                        <a th:href="@{/properties/{id}/archive(id=${property.id})}">
-                            <button class="btn btn-orange" th:text="#{property.button-archive}">Архивирай</button>
-                        </a>
-                    </div>
-                    <div th:if="${property.isArchived}">
-                        <a th:href="@{/properties/{id}/activate(id=${property.id})}">
-                            <button class="btn btn-orange" th:text="#{property.button-activate}">Активирай</button>
-                        </a>
+                    <div >
+                        <form id="archive-property-form"
+                              th:action="@{/properties/{id}/archive(id=${property.id})}"
+                              th:method="PATCH">
+                            <button th:if="${property.isArchived}"
+                                    class="btn btn-orange" th:text="#{property.button-archive}">Архивирай</button>
+                            <button th:if="${property.isArchived}"
+                                    class="btn btn-orange" th:text="#{property.button-activate}">Активирай</button>
+                        </form>
                     </div>
                     <div>
                         <form id="delete-property-form"

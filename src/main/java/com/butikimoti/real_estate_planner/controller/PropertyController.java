@@ -1,10 +1,7 @@
 package com.butikimoti.real_estate_planner.controller;
 
 import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
-import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
-import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
-import com.butikimoti.real_estate_planner.model.dto.property.HasPropertyType;
-import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.*;
 import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
@@ -204,6 +201,14 @@ public class PropertyController {
         }
 
         return "redirect:/properties/" + editedProperty.getId();
+    }
+
+    @PatchMapping("/{id}/archive")
+    public String archiveProperty(@PathVariable UUID id) {
+
+        basePropertyService.archiveProperty(id);
+
+        return "redirect:/properties/" + id;
     }
 
     @DeleteMapping("/{id}")
