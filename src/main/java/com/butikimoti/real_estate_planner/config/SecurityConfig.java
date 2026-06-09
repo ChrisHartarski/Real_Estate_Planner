@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         HttpMethod.GET,
                                         "/users/*", "/users/*/edit", "/users/*/changePassword",
-                                        "/properties/sales", "/properties/rents", "/properties/*"
+                                        "/properties/sales", "/properties/rents", "/properties/*", "/properties/archivedSales", "/properties/archivedRents"
                                     ).hasAnyRole("ADMIN", "COMPANY_ADMIN", "USER")
                                 //access PATCH requests to all logged users
                                 .requestMatchers(HttpMethod.PATCH, "/users/*", "/users/*/changePassword").hasAnyRole("ADMIN", "COMPANY_ADMIN", "USER")
