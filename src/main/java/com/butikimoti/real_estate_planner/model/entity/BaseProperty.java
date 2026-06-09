@@ -63,11 +63,17 @@ public abstract class BaseProperty {
     @Column (columnDefinition = "TEXT")
     private String description;
 
+    @Column (name = "is_archived")
+    private boolean isArchived;
+
     @Column(name = "created_on", nullable = false)
     private LocalDateTime createdOn;
 
     @Column(name = "updated_on", nullable = false)
     private LocalDateTime updatedOn;
+
+    @Column(name = "archived_on")
+    private LocalDateTime archivedOn;
 
     @OneToMany(mappedBy = "property", orphanRemoval = true)
     @OrderBy("date DESC")
@@ -76,6 +82,7 @@ public abstract class BaseProperty {
     protected BaseProperty() {
         this.pictures = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.isArchived = false;
     }
 
     protected BaseProperty(UUID id, PropertyType propertyType, Company ownerCompany, City city, Neighbourhood neighbourhood, String address, double price, int area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn) {
@@ -224,6 +231,14 @@ public abstract class BaseProperty {
         this.description = description;
     }
 
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
+
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
@@ -238,6 +253,14 @@ public abstract class BaseProperty {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public LocalDateTime getArchivedOn() {
+        return archivedOn;
+    }
+
+    public void setArchivedOn(LocalDateTime archivedOn) {
+        this.archivedOn = archivedOn;
     }
 
     public List<Comment> getComments() {
