@@ -273,8 +273,8 @@ public class PropertyController {
         return "redirect:/properties/" + id;
     }
 
-    private String viewProperties(OfferType offerType, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice, Pageable pageable, Model model) {
-        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, offerType, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice);
+    private String viewProperties(OfferType offerType, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice, boolean isArchived, Pageable pageable, Model model) {
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, offerType, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, isArchived);
         model.addAttribute("properties", properties);
         model.addAttribute("propertyTypeParam", propertyType);
         model.addAttribute("cityParam", cityName);
@@ -282,6 +282,7 @@ public class PropertyController {
         model.addAttribute("contactPhoneParam", contactPhone);
         model.addAttribute("minPriceParam", minPrice);
         model.addAttribute("maxPriceParam", maxPrice);
+        model.addAttribute("isArchived", isArchived);
 
         return "properties";
     }
