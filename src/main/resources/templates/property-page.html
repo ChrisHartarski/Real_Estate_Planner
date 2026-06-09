@@ -329,12 +329,17 @@
 
                     <div class="created-on-updated-on-section flex-column gap-0-5">
                         <div class="info-row">
-                            <div class="info-left-column">Създаден&nbsp;на:</div>
+                            <div class="info-left-column" th:text="#{property.createdOn} + ':'">Създаден&nbsp;на:</div>
                             <div class="info-right-column" th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025 г.</div>
                         </div>
                         <div class="info-row">
-                            <div class="info-left-column">Последна актуализация:</div>
+                            <div class="info-left-column" th:text="#{property.updatedOn} + ':'">Последна актуализация:</div>
                             <div class="info-right-column" th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025 г.</div>
+                        </div>
+                        <div th:if="${property.isArchived}"
+                             class="info-row">
+                            <div class="info-left-column" th:text="#{property.achivedOn} + ':'">Архивиран на:</div>
+                            <div class="info-right-column" th:text="${#temporals.format(property.archivedOn, 'dd.MM.yyyy')}">10.05.2025 г.</div>
                         </div>
                     </div>
                 </div>
@@ -382,6 +387,16 @@
                     <div>
                         <a th:href="@{/properties/{id}/edit(id=${property.id})}">
                             <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
+                        </a>
+                    </div>
+                    <div th:if="${!property.isArchived}">
+                        <a th:href="@{/properties/{id}/archive(id=${property.id})}">
+                            <button class="btn btn-orange" th:text="#{property.button-archive}">Архивирай</button>
+                        </a>
+                    </div>
+                    <div th:if="${property.isArchived}">
+                        <a th:href="@{/properties/{id}/activate(id=${property.id})}">
+                            <button class="btn btn-orange" th:text="#{property.button-activate}">Активирай</button>
                         </a>
                     </div>
                     <div>

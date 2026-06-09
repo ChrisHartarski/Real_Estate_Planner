@@ -215,6 +215,18 @@ a {
     border: solid 2px green;
 }
 
+.btn-orange {
+    background-color: orange;
+    color: #FFFFFF;
+    border: solid 2px orange;
+}
+
+.btn-orange:hover {
+    color: orange;
+    background-color: #FFFFFF;
+    border: solid 2px orange;
+}
+
 .btn-red {
     background-color: red;
     color: #FFFFFF;
