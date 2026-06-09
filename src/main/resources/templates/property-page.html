@@ -338,7 +338,7 @@
                         </div>
                         <div th:if="${property.isArchived}"
                              class="info-row">
-                            <div class="info-left-column" th:text="#{property.achivedOn} + ':'">Архивиран на:</div>
+                            <div class="info-left-column" th:text="#{property.archivedOn} + ':'">Архивиран на:</div>
                             <div class="info-right-column" th:text="${#temporals.format(property.archivedOn, 'dd.MM.yyyy')}">10.05.2025 г.</div>
                         </div>
                     </div>
@@ -389,14 +389,18 @@
                             <button class="btn btn-green" th:text="#{property.button-change}">Промени</button>
                         </a>
                     </div>
-                    <div >
+                    <div th:if="${!property.isArchived}">
                         <form id="archive-property-form"
                               th:action="@{/properties/{id}/archive(id=${property.id})}"
                               th:method="PATCH">
-                            <button th:if="${property.isArchived}"
-                                    class="btn btn-orange" th:text="#{property.button-archive}">Архивирай</button>
-                            <button th:if="${property.isArchived}"
-                                    class="btn btn-orange" th:text="#{property.button-activate}">Активирай</button>
+                            <button class="btn btn-orange" th:text="#{property.button-archive}">Архивирай</button>
+                        </form>
+                    </div>
+                    <div th:if="${property.isArchived}">
+                        <form id="activate-property-form"
+                              th:action="@{/properties/{id}/archive(id=${property.id})}"
+                              th:method="PATCH">
+                            <button class="btn btn-orange" th:text="#{property.button-activate}">Активирай</button>
                         </form>
                     </div>
                     <div>

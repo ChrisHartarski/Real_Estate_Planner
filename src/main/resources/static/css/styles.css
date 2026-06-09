@@ -1205,7 +1205,7 @@ a {
 }
 
 .page-container .buttons-section > div {
-    width: calc(50% - 0.5rem);
+    width: calc(33% - 0.5rem);
     text-align: center;
 }
 
