@@ -23,7 +23,8 @@ public class BasePropertySpecifications {
             List<Neighbourhood> neighbourhoods,
             String contactPhone,
             Double minPrice,
-            Double maxPrice
+            Double maxPrice,
+            boolean isArchived
     ) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -63,6 +64,8 @@ public class BasePropertySpecifications {
             if (maxPrice != null) {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
             }
+
+            predicates.add(criteriaBuilder.equal(root.get("isArchived"), isArchived));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });

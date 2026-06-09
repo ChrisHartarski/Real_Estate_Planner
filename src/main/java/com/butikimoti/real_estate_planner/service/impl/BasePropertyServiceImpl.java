@@ -46,7 +46,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice) {
+    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice, boolean isArchived) {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
         if (currentUser == null) {
@@ -68,7 +68,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
                             .toList();
         }
 
-        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhoods, contactPhone, minPrice, maxPrice);
+        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhoods, contactPhone, minPrice, maxPrice, isArchived);
         Page<BaseProperty> properties = basePropertyRepository.findAll(specification, pageable);
 
         return properties.map(this::mapBasePropertyToPropertyDTO);

@@ -81,7 +81,7 @@ public class BasePropertyServiceImplUnitTests {
                 eq(pageable)))
                 .thenReturn(new PageImpl<>(properties, pageable, 20));
 
-        Page<PropertyDTO> result = serviceToTest.getAllPropertiesByCompany(pageable, OfferType.SALE, null, null, null, null, null, null);
+        Page<PropertyDTO> result = serviceToTest.getAllPropertiesByCompany(pageable, OfferType.SALE, null, null, null, null, null, null, false);
         List<PropertyDTO> resultList = result.getContent();
 
         PropertyDTO apartmentDTO = resultList.stream().filter(propertyDTO -> propertyDTO.getPropertyType() == PropertyType.APARTMENT).findFirst().orElse(null);
@@ -139,7 +139,7 @@ public class BasePropertyServiceImplUnitTests {
     public void testGetAllPropertiesByCompany_throwsExceptionWhenThereIsNoLoggedInUser() {
         when(userEntityService.getCurrentUser()).thenReturn(null);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, null, null, null, null, null, null));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, null, null, null, null, null, null, false));
     }
 
     @Test
@@ -148,7 +148,7 @@ public class BasePropertyServiceImplUnitTests {
         user.setCompany(null);
         when(userEntityService.getCurrentUser()).thenReturn(user);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, null, null, null, null, null, null));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, null, null, null, null, null, null, false));
     }
 
     @Test
