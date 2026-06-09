@@ -29,6 +29,14 @@
                     sec:authorize="hasAnyRole('COMPANY_ADMIN', 'USER')">
                     <a th:text="#{navbar.rents}" th:href="@{/properties/rents}">Наеми</a>
                 </li>
+                <li class="nav-item" th:classappend="${activeLink == 'archivedSales'}? 'active' : ''"
+                    sec:authorize="hasAnyRole('COMPANY_ADMIN', 'USER')">
+                    <a th:text="#{navbar.archivedSales}" th:href="@{/properties/archivedSales}">Архив продажби</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink == 'archivedRents'}? 'active' : ''"
+                    sec:authorize="hasAnyRole('COMPANY_ADMIN', 'USER')">
+                    <a th:text="#{navbar.archivedRents}" th:href="@{/properties/archivedRents}">Архив наеми</a>
+                </li>
                 <li class="nav-item" th:classappend="${activeLink == 'login'}? 'active' : ''"
                     sec:authorize="!isAuthenticated()">
                     <a th:text="#{navbar.login}" th:href="@{/users/login}">Влез</a>
