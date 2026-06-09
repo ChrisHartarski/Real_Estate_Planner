@@ -39,9 +39,13 @@ public class PropertyDTO implements HasPropertyType {
 
     private String description;
 
+    private boolean isArchived;
+
     private LocalDateTime createdOn;
 
     private LocalDateTime updatedOn;
+
+    private LocalDateTime archivedOn;
 
     private List<Comment> comments;
 
@@ -210,6 +214,14 @@ public class PropertyDTO implements HasPropertyType {
         this.description = description;
     }
 
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
+
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
@@ -224,6 +236,14 @@ public class PropertyDTO implements HasPropertyType {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public LocalDateTime getArchivedOn() {
+        return archivedOn;
+    }
+
+    public void setArchivedOn(LocalDateTime archivedOn) {
+        this.archivedOn = archivedOn;
     }
 
     public List<Comment> getComments() {
