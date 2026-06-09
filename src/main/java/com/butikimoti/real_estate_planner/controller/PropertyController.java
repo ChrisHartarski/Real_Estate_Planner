@@ -82,7 +82,7 @@ public class PropertyController {
         model.addAttribute("cities", cities);
         model.addAttribute("pageType", "sales");
 
-        return viewProperties(OfferType.SALE, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.SALE, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, false, pageable, model);
     }
 
     @GetMapping("/rents")
@@ -99,7 +99,42 @@ public class PropertyController {
         model.addAttribute("cities", cities);
         model.addAttribute("pageType", "rents");
 
-        return viewProperties(OfferType.RENT, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, pageable, model);
+        return viewProperties(OfferType.RENT, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, false, pageable, model);
+    }
+
+    @GetMapping("/archivedSales")
+    public String viewArchivedSales(
+            @RequestParam(value = "propertyType", required = false) PropertyType propertyType,
+            @RequestParam(value = "city", required = false) String cityName,
+            @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
+            @RequestParam(value = "contactPhone", required = false) String contactPhone,
+            @RequestParam(value = "minPrice", required = false) Double minPrice,
+            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
+
+        Set<String> cities = cityService.getAllCityNames();
+        model.addAttribute("cities", cities);
+        model.addAttribute("pageType", "sales");
+
+        return viewProperties(OfferType.SALE, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, true, pageable, model);
+    }
+
+    @GetMapping("/archivedRents")
+    public String viewArchivedRents(@RequestParam(value = "propertyType", required = false) PropertyType propertyType,
+                            @RequestParam(value = "city", required = false) String cityName,
+                            @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
+                            @RequestParam(value = "contactPhone", required = false) String contactPhone,
+                            @RequestParam(value = "minPrice", required = false) Double minPrice,
+                            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+                            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+                            Model model) {
+
+        Set<String> cities = cityService.getAllCityNames();
+        model.addAttribute("cities", cities);
+        model.addAttribute("pageType", "rents");
+
+        return viewProperties(OfferType.RENT, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, true, pageable, model);
     }
 
     @GetMapping("/add")
