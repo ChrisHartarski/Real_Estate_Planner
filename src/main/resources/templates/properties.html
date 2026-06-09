@@ -12,24 +12,39 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-    <th:block th:if="${pageType.equals('sales')}">
+    <th:block th:if="${pageType.equals('sales') and !isArchived}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'sales'})}"></header>
     </th:block>
-    <th:block th:if="${pageType.equals('rents')}">
+    <th:block th:if="${pageType.equals('rents') and !isArchived}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'rents'})}"></header>
+    </th:block>
+    <th:block th:if="${pageType.equals('sales') and isArchived}">
+        <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'archivedSales'})}"></header>
+    </th:block>
+    <th:block th:if="${pageType.equals('rents') and isArchived}">
+        <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'archivedRents'})}"></header>
     </th:block>
 
     <main>
-        <h1 th:if="${pageType.equals('sales')}"
+        <h1 th:if="${pageType.equals('sales') and !isArchived}"
             th:text="#{property.page-header-sales}"
                 class="white text-center page-title">Продажби
         </h1>
-        <h1 th:if="${pageType.equals('rents')}"
+        <h1 th:if="${pageType.equals('rents') and !isArchived}"
             th:text="#{property.page-header-rents}"
             class="white text-center page-title">Наеми
         </h1>
+        <h1 th:if="${pageType.equals('sales') and isArchived}"
+            th:text="#{property.page-header-archived-sales}"
+            class="white text-center page-title">Архив Продажби
+        </h1>
+        <h1 th:if="${pageType.equals('rents') and isArchived}"
+            th:text="#{property.page-header-archived-rents}"
+            class="white text-center page-title">Архив Наеми
+        </h1>
 
-        <div class="create-new-property-btn">
+        <div th:if="${!isArchived}"
+             class="create-new-property-btn">
             <a class="btn btn-white" th:href="@{/properties/add}" th:text="'+ ' + #{index.add-new-property}">Създай нова обява</a>
         </div>
 
@@ -261,9 +276,15 @@
                                     <div th:text="#{property.updatedOn} + ': '">Актуализиран на: </div>
                                     <div th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025</div>
                                 </div>
-                                <div class="content-footer-column">
+                                <div th:if="${!isArchived}"
+                                     class="content-footer-column">
                                     <div th:text="#{property.createdOn} + ': '">Създаден на: </div>
                                     <div th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025</div>
+                                </div>
+                                <div th:if="${isArchived}"
+                                     class="content-footer-column">
+                                    <div th:text="#{property.archivedOn} + ': '">Архивиран на: </div>
+                                    <div th:text="${#temporals.format(property.archivedOn, 'dd.MM.yyyy')}">05.05.2025</div>
                                 </div>
                                 <a class="link-blue" th:href="@{'/properties/' + ${property.id}}" th:text="#{property.more-details} + '...'">Повече информация...</a>
                             </div>
@@ -284,7 +305,8 @@
                           neighbourhood=${neighbourhoodParam},
                           address=${addressParam},
                           minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam})}">&laquo;</a>
+                          maxPrice=${maxPriceParam},
+                          isArchived=${isArchived})}">&laquo;</a>
 
                 <!-- Previous page -->
                 <a th:if="${properties.number > 0}"
@@ -294,7 +316,8 @@
                           neighbourhood=${neighbourhoodParam},
                           address=${addressParam},
                           minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam})}"
+                          maxPrice=${maxPriceParam},
+                          isArchived=${isArchived})}"
                    th:text="${properties.number}"></a>
 
                 <!-- Current page (highlighted) -->
@@ -308,7 +331,8 @@
                           neighbourhood=${neighbourhoodParam},
                           address=${addressParam},
                           minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam})}"
+                          maxPrice=${maxPriceParam},
+                          isArchived=${isArchived)}"
                    th:text="${properties.number + 2}"></a>
 
                 <!-- Go to last page -->
@@ -319,7 +343,8 @@
                           neighbourhood=${neighbourhoodParam},
                           address=${addressParam},
                           minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam})}">&raquo;</a>
+                          maxPrice=${maxPriceParam},
+                          isArchived=${isArchived})}">&raquo;</a>
             </div>
         </div>
     </main>
