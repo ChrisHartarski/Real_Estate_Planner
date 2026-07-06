@@ -3,91 +3,98 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const citySelect = document.getElementById('filter-city');
     const availableNeighbourhoodsSelect = document.getElementById('available-neighbourhoods');
-    const selectedNeighbourhoodsSelect = document.getElementById('selected-neighbourhoods');
+    const selectedNeighbourhoodsSelect = document.getElementById('selected-neighbourhoods')
 
-    const params = new URLSearchParams(window.location.search);
-    const cityFromUrl = params.get("city");
-    const selectedNeighbourhoodsFromUrl = params.getAll("neighbourhood");
+    const addBtn = document.getElementById("add-neighbourhood-btn");
+    const removeBtn = document.getElementById("remove-neighbourhood-btn");
 
-    const addSelectedBtn = document.getElementById('add-neighbourhood-btn');
-    const removeSelectedBtn = document.getElementById('remove-neighbourhood-btn');
+    const filterStateEl = document.getElementById("filter-state");
 
-    console.log("City value on load:", cityFromUrl);
-    console.log("selected neighbourhoods on load:", selectedNeighbourhoodsFromUrl);
+    function sortSelect(select) {
+        const options = Array.from(select.options);
 
+        options.sort((a, b) =>
+            a.textContent.localeCompare(b.textContent));
 
-    function sortSelectAlphabetically(selectElement) {
-        Array.from(selectElement.options)
-            .sort((a,b) => a.textContent.localeCompare(b.textContent))
-            .forEach(option => selectElement.appendChild(option));
+        select.innerHTML = "";
+        options.forEach(o => select.appendChild(o));
     }
 
-    function populateAvailableNeighbourhoods(cityName) {
-        const city = cityName;
+    function normalizeId(id) {
+        return String(id).trim().toLowerCase();
+    }
+
+    function getPreselectedNeighbourhoodIds() {
+        const raw = filterStateEl?.dataset.neighbourhoods;
+
+        return raw;
+    }
+
+    function loadNeighbourhoods(cityId) {
+
+        const selectedIds = getPreselectedNeighbourhoodIds();
+        console.log(selectedIds);
 
         availableNeighbourhoodsSelect.innerHTML = "";
         selectedNeighbourhoodsSelect.innerHTML = "";
 
-        if (!city) return;
+        if (!cityId) return;
 
-        fetch(`/neighbourhoods?cityName=${encodeURIComponent(city)}`)
+        fetch(`/neighbourhoods?cityId=${encodeURIComponent(cityId)}`)
             .then(response => response.json())
             .then(data => {
-                data.forEach(n => {
-                    const option = document.createElement('option');
-                    option.value = n;
-                    option.textContent = n;
 
-                    if (selectedNeighbourhoodsFromUrl.includes(n)) {
+                data.forEach(n => {
+                    const option = document.createElement("option");
+                    option.value = n.id;
+                    option.textContent = n.name;
+
+                    if (selectedIds.includes(n.id)) {
                         selectedNeighbourhoodsSelect.appendChild(option);
                     } else {
                         availableNeighbourhoodsSelect.appendChild(option);
                     }
-                })
-            })
-            .catch(err => console.error('Error loading neighbourhoods:', err));
+                });
+
+                sortSelect(availableNeighbourhoodsSelect);
+                sortSelect(selectedNeighbourhoodsSelect);
+            });
     }
 
-    if (cityFromUrl) {
-        populateAvailableNeighbourhoods(cityFromUrl);
-        sortSelectAlphabetically(availableNeighbourhoodsSelect);
-        sortSelectAlphabetically(selectedNeighbourhoodsSelect);
+    if (citySelect.value && citySelect.value !== "null") {
+        loadNeighbourhoods(citySelect.value);
     }
 
-    citySelect.addEventListener('change', () => {
-        populateAvailableNeighbourhoods(citySelect.value);
-        selectedNeighbourhoodsSelect.innerHTML = "";
+    citySelect.addEventListener('change', (e) => {
+        loadNeighbourhoods(e.target.value);
     });
 
-    addSelectedBtn.addEventListener('click', () => {
+    addBtn.addEventListener('click', () => {
         Array.from(availableNeighbourhoodsSelect.selectedOptions)
             .forEach(option => {
                 availableNeighbourhoodsSelect.removeChild(option);
                 selectedNeighbourhoodsSelect.appendChild(option);
             });
-        sortSelectAlphabetically(selectedNeighbourhoodsSelect);
-    })
+        sortSelect(selectedNeighbourhoodsSelect);
+    });
 
-    removeSelectedBtn.addEventListener('click', () => {
+    removeBtn.addEventListener('click', () => {
         Array.from(selectedNeighbourhoodsSelect.selectedOptions)
             .forEach(option => {
                 selectedNeighbourhoodsSelect.removeChild(option);
                 availableNeighbourhoodsSelect.appendChild(option);
             });
-        sortSelectAlphabetically(availableNeighbourhoodsSelect);
+        sortSelect(availableNeighbourhoodsSelect);
     });
 
-    form.addEventListener("submit", function (e) {
-        Array.from(selectedNeighbourhoodsSelect.options).forEach(opt => opt.selected = true);
-
-        const elements = form.elements;
-        for (let i = 0; i < elements.length; i++) {
-            const el = elements[i];
-            if (!el.name || el.disabled) continue;
-            if (el.type === "submit") continue;
-            if (el.value === "") {
-                el.name = ""; // Remove name so it won't be submitted
-            }
-        }
+    form.addEventListener("submit", () => {
+        Array.from(selectedNeighbourhoodsSelect.options)
+            .forEach(opt => {
+                if(!opt.value || opt.value === "null") {
+                    opt.selected = false;
+                } else {
+                    opt.selected = true;
+                }
+            });
     });
 });

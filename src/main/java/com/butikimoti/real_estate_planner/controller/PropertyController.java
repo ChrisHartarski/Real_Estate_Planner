@@ -1,15 +1,23 @@
 package com.butikimoti.real_estate_planner.controller;
 
+import com.butikimoti.real_estate_planner.model.dto.city.CityDTO;
 import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
-import com.butikimoti.real_estate_planner.model.dto.property.*;
+import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.property.HasPropertyType;
+import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.util.CloudinaryImageInfoDTO;
+import com.butikimoti.real_estate_planner.model.dto.util.PropertiesPageContext;
+import com.butikimoti.real_estate_planner.model.dto.util.filter.PropertyFilter;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
-import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.model.entity.PropertyPicture;
 import com.butikimoti.real_estate_planner.model.entity.UserEntity;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
-import com.butikimoti.real_estate_planner.service.*;
+import com.butikimoti.real_estate_planner.service.BasePropertyService;
+import com.butikimoti.real_estate_planner.service.CityService;
+import com.butikimoti.real_estate_planner.service.CommentService;
+import com.butikimoti.real_estate_planner.service.UserEntityService;
 import com.butikimoti.real_estate_planner.service.util.CloudinaryService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
@@ -28,13 +36,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/properties")
+@SessionAttributes({
+        "propertyFilter",
+        "propertiesPageContext"
+})
 public class PropertyController {
     private final BasePropertyService basePropertyService;
     private final UserEntityService userEntityService;
@@ -64,80 +75,96 @@ public class PropertyController {
         return new AddCommentDTO();
     }
 
+    @ModelAttribute("propertyFilter")
+    public PropertyFilter propertyFilter() {
+        return new PropertyFilter();
+    }
+
+    @ModelAttribute("propertiesPageContext")
+    public PropertiesPageContext propertiesPageContext() {
+        return new PropertiesPageContext();
+    }
+
     @GetMapping("/sales")
     public String viewSales(
-            @RequestParam(value = "propertyType", required = false) PropertyType propertyType,
-            @RequestParam(value = "city", required = false) String cityName,
-            @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
-            @RequestParam(value = "contactPhone", required = false) String contactPhone,
-            @RequestParam(value = "minPrice", required = false) Double minPrice,
-            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            @ModelAttribute ("propertyFilter") PropertyFilter filter,
+            @ModelAttribute ("propertiesPageContext") PropertiesPageContext context,
             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
             Model model) {
 
-        Set<String> cities = cityService.getAllCityNames();
-        model.addAttribute("cities", cities);
+        if (isContextChanged(context, OfferType.SALE, false)) {
+            filter.clear();
+        }
+
+        context.setOfferType(OfferType.SALE);
+        context.setArchived(false);
+
         model.addAttribute("pageType", "sales");
 
-        return viewProperties(OfferType.SALE, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, false, pageable, model);
+        return viewProperties(context, filter, pageable, model);
     }
 
     @GetMapping("/rents")
-    public String viewRents(@RequestParam(value = "propertyType", required = false) PropertyType propertyType,
-                            @RequestParam(value = "city", required = false) String cityName,
-                            @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
-                            @RequestParam(value = "contactPhone", required = false) String contactPhone,
-                            @RequestParam(value = "minPrice", required = false) Double minPrice,
-                            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
-                            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
-                            Model model) {
+    public String viewRents(
+            @ModelAttribute ("propertyFilter") PropertyFilter filter,
+            @ModelAttribute ("propertiesPageContext") PropertiesPageContext context,
+            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
 
-        Set<String> cities = cityService.getAllCityNames();
-        model.addAttribute("cities", cities);
+        if (isContextChanged(context, OfferType.RENT, false)) {
+            filter.clear();
+        }
+
+        context.setOfferType(OfferType.RENT);
+        context.setArchived(false);
+
         model.addAttribute("pageType", "rents");
 
-        return viewProperties(OfferType.RENT, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, false, pageable, model);
+        return viewProperties(context, filter, pageable, model);
     }
 
     @GetMapping("/archivedSales")
     public String viewArchivedSales(
-            @RequestParam(value = "propertyType", required = false) PropertyType propertyType,
-            @RequestParam(value = "city", required = false) String cityName,
-            @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
-            @RequestParam(value = "contactPhone", required = false) String contactPhone,
-            @RequestParam(value = "minPrice", required = false) Double minPrice,
-            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            @ModelAttribute ("propertyFilter") PropertyFilter filter,
+            @ModelAttribute ("propertiesPageContext") PropertiesPageContext context,
             @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
             Model model) {
 
-        Set<String> cities = cityService.getAllCityNames();
-        model.addAttribute("cities", cities);
-        model.addAttribute("pageType", "sales");
+        if (isContextChanged(context, OfferType.SALE, true)) {
+            filter.clear();
+        }
 
-        return viewProperties(OfferType.SALE, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, true, pageable, model);
+        context.setOfferType(OfferType.SALE);
+        context.setArchived(true);
+
+        model.addAttribute("pageType", "archivedSales");
+
+        return viewProperties(context, filter, pageable, model);
     }
 
     @GetMapping("/archivedRents")
-    public String viewArchivedRents(@RequestParam(value = "propertyType", required = false) PropertyType propertyType,
-                            @RequestParam(value = "city", required = false) String cityName,
-                            @RequestParam(value = "neighbourhood", required = false) List<String> neighbourhoodNames,
-                            @RequestParam(value = "contactPhone", required = false) String contactPhone,
-                            @RequestParam(value = "minPrice", required = false) Double minPrice,
-                            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
-                            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
-                            Model model) {
+    public String viewArchivedRents(
+            @ModelAttribute ("propertyFilter") PropertyFilter filter,
+            @ModelAttribute ("propertiesPageContext") PropertiesPageContext context,
+            @PageableDefault(size = 10, sort = "updatedOn", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
 
-        Set<String> cities = cityService.getAllCityNames();
-        model.addAttribute("cities", cities);
-        model.addAttribute("pageType", "rents");
+        if (isContextChanged(context, OfferType.RENT, true)) {
+            filter.clear();
+        }
 
-        return viewProperties(OfferType.RENT, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, true, pageable, model);
+        context.setOfferType(OfferType.RENT);
+        context.setArchived(true);
+
+        model.addAttribute("pageType", "archivedRents");
+
+        return viewProperties(context, filter, pageable, model);
     }
 
     @GetMapping("/add")
     public String viewAddProperty(Model model) {
-        Set<String> cities = cityService.getAllCityNames();
-        model.addAttribute("cities", cities);
+        List<CityDTO> cityList = cityService.getAllCities();
+        model.addAttribute("cities", cityList);
         return "add-property";
     }
 
@@ -165,6 +192,7 @@ public class PropertyController {
         }
 
         return "redirect:/properties/" + savedProperty.getId();
+//        return "redirect:/properties/";
     }
 
     @GetMapping("/{id}")
@@ -237,24 +265,8 @@ public class PropertyController {
             model.addAttribute("editPropertyData", editPropertyData);
         }
 
-        Set<String> cities = cityService.getAllCityNames();
-
-        String cityName = editPropertyData.getCity();
-        List<String> neighbourhoods = new ArrayList<>();
-
-        if (cityName != null && !cityName.isBlank()) {
-            neighbourhoods =
-                    cityService
-                            .getCity(cityName)
-                            .getNeighbourhoods()
-                            .stream()
-                            .map(Neighbourhood::getName)
-                            .sorted()
-                            .toList();
-        }
-
-        model.addAttribute("cities", cities);
-        model.addAttribute("neighbourhoods", neighbourhoods);
+        List<CityDTO> cityList = cityService.getAllCities();
+        model.addAttribute("cities", cityList);
 
         return "edit-property";
     }
@@ -313,16 +325,13 @@ public class PropertyController {
         return "redirect:/properties/" + id;
     }
 
-    private String viewProperties(OfferType offerType, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice, boolean isArchived, Pageable pageable, Model model) {
-        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, offerType, propertyType, cityName, neighbourhoodNames, contactPhone, minPrice, maxPrice, isArchived);
+    private String viewProperties(PropertiesPageContext context, PropertyFilter propertyFilter, Pageable pageable, Model model) {
+        Page<PropertyDTO> properties = basePropertyService.getAllPropertiesByCompany(pageable, context.getOfferType(), context.isArchived(), propertyFilter);
+
         model.addAttribute("properties", properties);
-        model.addAttribute("propertyTypeParam", propertyType);
-        model.addAttribute("cityParam", cityName);
-        model.addAttribute("neighbourhoodParam", neighbourhoodNames);
-        model.addAttribute("contactPhoneParam", contactPhone);
-        model.addAttribute("minPriceParam", minPrice);
-        model.addAttribute("maxPriceParam", maxPrice);
-        model.addAttribute("isArchived", isArchived);
+        model.addAttribute("cities", cityService.getAllCities());
+        model.addAttribute("propertyFilter", propertyFilter);
+        model.addAttribute("context", context);
 
         return "properties";
     }
@@ -340,36 +349,6 @@ public class PropertyController {
 
         return userCompanyName.equalsIgnoreCase(property.getOwnerCompanyName());
     }
-
-//    private void validateWithGroup(AddPropertyDTO addPropertyData, BindingResult bindingResult) {
-//        //determine the group by PropertyType
-//        Class<?> group = determineValidationGroup(addPropertyData.getPropertyType());
-//
-//        //get the violations
-//        Set<ConstraintViolation<AddPropertyDTO>> constraintViolations = validator.validate(addPropertyData, group);
-//
-//        //add the violations to bindingResult
-//        for (ConstraintViolation<AddPropertyDTO> violation : constraintViolations) {
-//            String field = violation.getPropertyPath().toString();
-//            String message = violation.getMessage();
-//            bindingResult.addError(new FieldError(bindingResult.getObjectName(), field, message));
-//        }
-//    }
-//
-//    private void validateWithGroup(EditPropertyDTO editPropertyData, BindingResult bindingResult) {
-//        //determine the group by PropertyType
-//        Class<?> group = determineValidationGroup(editPropertyData.getPropertyType());
-//
-//        //get the violations
-//        Set<ConstraintViolation<EditPropertyDTO>> constraintViolations = validator.validate(editPropertyData, group);
-//
-//        //add the violations to bindingResult
-//        for (ConstraintViolation<EditPropertyDTO> violation : constraintViolations) {
-//            String field = violation.getPropertyPath().toString();
-//            String message = violation.getMessage();
-//            bindingResult.addError(new FieldError(bindingResult.getObjectName(), field, message));
-//        }
-//    }
 
     private <T extends HasPropertyType> void validateWithGroup (T dto, BindingResult bindingResult) {
         //determine the group by PropertyType
@@ -395,5 +374,13 @@ public class PropertyController {
             case PropertyType.LAND -> AddPropertyDTO.LandGroup.class;
             default -> throw new RuntimeException("Unknown property type");
         };
+    }
+
+    private boolean isContextChanged(PropertiesPageContext ctx,
+                                     OfferType newType,
+                                     boolean newArchived) {
+
+        return ctx.getOfferType() != newType
+                || ctx.isArchived() != newArchived;
     }
 }

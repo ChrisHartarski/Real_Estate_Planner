@@ -4,46 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:if="${pageType.equals('sales')}">Sales</title>
-    <title th:if="${pageType.equals('rents')}">Rents</title>
+    <title>Имотен Указател</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-    <th:block th:if="${pageType.equals('sales') and !isArchived}">
+    <th:block th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).SALE and !context.archived}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'sales'})}"></header>
     </th:block>
-    <th:block th:if="${pageType.equals('rents') and !isArchived}">
+    <th:block
+            th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).RENT and !context.archived}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'rents'})}"></header>
     </th:block>
-    <th:block th:if="${pageType.equals('sales') and isArchived}">
+    <th:block th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).SALE and context.archived}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'archivedSales'})}"></header>
     </th:block>
-    <th:block th:if="${pageType.equals('rents') and isArchived}">
+    <th:block
+            th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).RENT and context.archived}">
         <header th:replace="~{fragments/navbar.html::navbar(activeLink=${'archivedRents'})}"></header>
     </th:block>
 
     <main>
-        <h1 th:if="${pageType.equals('sales') and !isArchived}"
+        <h1 th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).SALE and !context.archived}"
             th:text="#{property.page-header-sales}"
                 class="white text-center page-title">Продажби
         </h1>
-        <h1 th:if="${pageType.equals('rents') and !isArchived}"
+        <h1
+                th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).RENT and !context.archived}"
             th:text="#{property.page-header-rents}"
             class="white text-center page-title">Наеми
         </h1>
-        <h1 th:if="${pageType.equals('sales') and isArchived}"
+        <h1 th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).SALE and context.archived}"
             th:text="#{property.page-header-archived-sales}"
             class="white text-center page-title">Архив Продажби
         </h1>
-        <h1 th:if="${pageType.equals('rents') and isArchived}"
+        <h1
+                th:if="${context.offerType == T(com.butikimoti.real_estate_planner.model.enums.OfferType).RENT and context.archived}"
             th:text="#{property.page-header-archived-rents}"
             class="white text-center page-title">Архив Наеми
         </h1>
 
-        <div th:if="${!isArchived}"
+        <div th:if="${!context.archived}"
              class="create-new-property-btn">
             <a class="btn btn-white" th:href="@{/properties/add}" th:text="'+ ' + #{index.add-new-property}">Създай нова обява</a>
         </div>
@@ -56,14 +59,17 @@
                     <summary th:text="#{property.filter}">Филтър</summary>
                     <form class="flex-column filter-section gap-1"
                           th:action="@{'/properties/' + ${pageType}}"
-                          th:method="GET">
+                          th:method="GET"
+                          th:object="${propertyFilter}">
                         <div class="filter-items-container">
                             <!--                    Property Type-->
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.property-type}"
                                        for="filter-propertyType"></label>
 
-                                <select class="filter-right-column" id="filter-propertyType" name="propertyType">
+                                <select class="filter-right-column"
+                                        id="filter-propertyType"
+                                        th:field="*{propertyType}">
                                     <option
                                             value=""
                                             th:text="#{property.all-placeholder}">
@@ -71,8 +77,7 @@
                                     <option
                                             th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.PropertyType).values()}"
                                             th:value="${type}"
-                                            th:text="#{${'propertyType.' + type.name()}}"
-                                            th:selected="${type} == ${propertyTypeParam}">
+                                            th:text="#{${'propertyType.' + type.name()}}">
                                     </option>
                                 </select>
                             </div>
@@ -82,21 +87,25 @@
                         <div class="filter-items-container">
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.city}" for="filter-city"></label>
-                                <select class="filter-right-column" id="filter-city" name="city">
+                                <select class="filter-right-column"
+                                        id="filter-city"
+                                        th:field="*{city}">
                                     <option
                                             value=""
                                             th:text="#{property.city-placeholder}">
                                     </option>
                                     <option
                                             th:each="city : ${cities}"
-                                            th:value="${city}"
-                                            th:text="${city}"
-                                            th:selected="${city} == ${cityParam}">
+                                            th:value="${city.id}"
+                                            th:text="${city.name}">
                                     </option>
                                 </select>
                             </div>
                         </div>
                         <!--                            Neighbourhood-->
+                        <div id="filter-state"
+                             th:data-neighbourhoods="${propertyFilter.neighbourhoods}">
+                        </div>
                         <div class="filter-items-container">
                             <div class="center text-center flex-row gap-1">
                                 <div class="filter-right-column flex-column gap-1">
@@ -118,7 +127,11 @@
                                         <label for="selected-neighbourhoods" th:text="#{property.neighbourhood-selected}"></label>
                                     </div>
                                     <div>
-                                        <select class="select-box" id="selected-neighbourhoods" name="neighbourhood" multiple size="5"></select>
+                                        <select class="select-box"
+                                                id="selected-neighbourhoods"
+                                                th:field="*{neighbourhoods}"
+                                                multiple
+                                                size="5"></select>
                                     </div>
                                 </div>
                             </div>
@@ -128,9 +141,10 @@
                             <!--                            Contact Phone-->
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.contact-phone}" for="filter-contactPhone"></label>
-                                <input class="filter-right-column" id="filter-contactPhone" name="contactPhone"
-                                       th:placeholder="#{property.contact-phone}"
-                                       th:value="${contactPhoneParam}"/>
+                                <input class="filter-right-column"
+                                       id="filter-contactPhone"
+                                       th:field="*{contactPhone}"
+                                       th:placeholder="#{property.contact-phone}"/>
                             </div>
                         </div>
                         <div class="filter-items-container">
@@ -138,18 +152,26 @@
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.min-price}"
                                        for="filter-min-price"></label>
-                                <input class="filter-right-column" id="filter-min-price" name="minPrice" type="number" step="1" min="0"
-                                       th:placeholder="#{property.min-price-placeholder}"
-                                       th:value="${addressParam}"/>
+                                <input class="filter-right-column"
+                                       id="filter-min-price"
+                                       type="number"
+                                       step="1"
+                                       min="0"
+                                       th:field="*{minPrice}"
+                                       th:placeholder="#{property.min-price-placeholder}"/>
                             </div>
 
                             <!--                            Max Price-->
                             <div class="filter-item">
                                 <label class="filter-left-column" th:text="#{property.max-price}"
                                        for="filter-max-price"></label>
-                                <input class="filter-right-column" id="filter-max-price" name="maxPrice" type="number" step="1" min="0"
-                                       th:placeholder="#{property.max-price-placeholder}"
-                                       th:value="${addressParam}"/>
+                                <input class="filter-right-column"
+                                       id="filter-max-price"
+                                       type="number"
+                                       step="1"
+                                       min="0"
+                                       th:field="*{maxPrice}"
+                                       th:placeholder="#{property.max-price-placeholder}"/>
                             </div>
                         </div>
 
@@ -276,12 +298,12 @@
                                     <div th:text="#{property.updatedOn} + ': '">Актуализиран на: </div>
                                     <div th:text="${#temporals.format(property.updatedOn, 'dd.MM.yyyy')}">10.05.2025</div>
                                 </div>
-                                <div th:if="${!isArchived}"
+                                <div th:if="${!context.archived}"
                                      class="content-footer-column">
                                     <div th:text="#{property.createdOn} + ': '">Създаден на: </div>
                                     <div th:text="${#temporals.format(property.createdOn, 'dd.MM.yyyy')}">05.05.2025</div>
                                 </div>
-                                <div th:if="${isArchived}"
+                                <div th:if="${context.archived}"
                                      class="content-footer-column">
                                     <div th:text="#{property.archivedOn} + ': '">Архивиран на: </div>
                                     <div th:text="${#temporals.format(property.archivedOn, 'dd.MM.yyyy')}">05.05.2025</div>
@@ -299,25 +321,11 @@
             <div class="pagination">
                 <!-- Go to first page -->
                 <a th:if="${properties.number > 0}"
-                   th:href="@{${'/properties/' + pageType}(page=0,
-                          propertyType=${propertyTypeParam},
-                          city=${cityParam},
-                          neighbourhood=${neighbourhoodParam},
-                          address=${addressParam},
-                          minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam},
-                          isArchived=${isArchived})}">&laquo;</a>
+                   th:href="@{${'/properties/' + pageType}(page=0)}">&laquo;</a>
 
                 <!-- Previous page -->
                 <a th:if="${properties.number > 0}"
-                   th:href="@{${'/properties/' + pageType}(page=${properties.number - 1},
-                          propertyType=${propertyTypeParam},
-                          city=${cityParam},
-                          neighbourhood=${neighbourhoodParam},
-                          address=${addressParam},
-                          minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam},
-                          isArchived=${isArchived})}"
+                   th:href="@{${'/properties/' + pageType}(page=${properties.number - 1})}"
                    th:text="${properties.number}"></a>
 
                 <!-- Current page (highlighted) -->
@@ -325,26 +333,12 @@
 
                 <!-- Next page -->
                 <a th:if="${properties.number < properties.totalPages - 1}"
-                   th:href="@{${'/properties/' + pageType}(page=${properties.number + 1},
-                          propertyType=${propertyTypeParam},
-                          city=${cityParam},
-                          neighbourhood=${neighbourhoodParam},
-                          address=${addressParam},
-                          minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam},
-                          isArchived=${isArchived)}"
+                   th:href="@{${'/properties/' + pageType}(page=${properties.number + 1})}"
                    th:text="${properties.number + 2}"></a>
 
                 <!-- Go to last page -->
                 <a th:if="${properties.number < properties.totalPages - 1}"
-                   th:href="@{${'/properties/' + pageType}(page=${properties.totalPages - 1},
-                          propertyType=${propertyTypeParam},
-                          city=${cityParam},
-                          neighbourhood=${neighbourhoodParam},
-                          address=${addressParam},
-                          minPrice=${minPriceParam},
-                          maxPrice=${maxPriceParam},
-                          isArchived=${isArchived})}">&raquo;</a>
+                   th:href="@{${'/properties/' + pageType}(page=${properties.totalPages - 1})}">&raquo;</a>
             </div>
         </div>
     </main>

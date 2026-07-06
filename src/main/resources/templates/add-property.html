@@ -63,8 +63,8 @@
                                         </option>
                                         <option
                                                 th:each="city : ${cities}"
-                                                th:value="${city}"
-                                                th:text="${city}">
+                                                th:value="${city.id}"
+                                                th:text="${city.name}">
                                         </option>
                                     </select>
                                 </div>

@@ -36,31 +36,46 @@ function toggleFields(selectedTypeValue) {
     }
 }
 
-function populateNeighbourhoods(cityName) {
-    const neighbourhoodSelect = document.getElementById("neighbourhood");
-    const neighbourhoodsCurrentValue = neighbourhoodSelect.dataset.current;
+function sortSelect(select) {
+        const options = Array.from(select.options);
 
-    if (cityName == null || !cityName) {
+        options.sort((a, b) =>
+            a.textContent.localeCompare(b.textContent));
+
+        select.innerHTML = "";
+        options.forEach(o => select.appendChild(o));
+    }
+
+function populateNeighbourhoods(cityId) {
+    const neighbourhoodSelect = document.getElementById("neighbourhood");
+    const currentNeighbourhoodId = neighbourhoodSelect.dataset.selected;
+    console.log(currentNeighbourhoodId);
+
+    if (!cityId) {
         neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"></option>';
         return;
     }
 
-    fetch(`/neighbourhoods?cityName=${cityName}`)
+    fetch(`/neighbourhoods?cityId=${encodeURIComponent(cityId)}`)
         .then(response => response.json())
         .then(data => {
+
             neighbourhoodSelect.innerHTML = '<option value="" th:text="#{property.neighbourhood-placeholder}"></option>';
 
             data.forEach(n => {
                 const option = document.createElement('option');
-                option.value = n;
-                option.textContent = n;
+                option.value = n.id;
+                option.textContent = n.name;
 
-                if (neighbourhoodsCurrentValue && neighbourhoodsCurrentValue === n) {
+                if (String(n.id) === String(currentNeighbourhoodId)) {
                     option.selected = true;
                 }
 
                 neighbourhoodSelect.appendChild(option);
             })
+
+            sortSelect(neighbourhoodSelect);
+
         })
         .catch(err => console.error('Error loading neighbourhoods:', err));
 }

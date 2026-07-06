@@ -3,6 +3,7 @@ package com.butikimoti.real_estate_planner.service.impl;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.util.filter.PropertyFilter;
 import com.butikimoti.real_estate_planner.model.entity.*;
 import com.butikimoti.real_estate_planner.model.enums.*;
 import com.butikimoti.real_estate_planner.repository.BasePropertyRepository;
@@ -44,8 +45,9 @@ public class BasePropertyServiceImplUnitTests {
     private static final Apartment TEST_APARTMENT = new Apartment(TEST_APARTMENT_ID, PropertyType.APARTMENT, TEST_COMPANY, TEST_CITY, TEST_NEIGHBOURHOOD, "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 000 000 000", "contact@mail.com", "description", LocalDateTime.now(), LocalDateTime.now(), ApartmentType.THREE_ROOM, 3, ConstructionType.BRICK, 2000, 3, 8, HeatingType.GAS, true, "facing");
     private static final House TEST_HOUSE = new House(TEST_HOUSE_ID, PropertyType.HOUSE, TEST_COMPANY, TEST_CITY, TEST_NEIGHBOURHOOD, "test_address", 45000.00, 120, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name_2", "+359 111 111 111", "contact2@mail.com", "description2", LocalDateTime.now(), LocalDateTime.now(), HouseType.HOUSE, ConstructionType.JOIST, 1982, HeatingType.HARD_FUEL, 500, AreaUnit.SQUARE_METER, 2, "additional_structures");
     private static final Land TEST_LAND = new Land(TEST_LAND_ID, PropertyType.LAND, TEST_COMPANY, TEST_CITY, TEST_NEIGHBOURHOOD, "test_address3", 120000.00, 100, AreaUnit.DECARE, OfferType.SALE, "contact_name_3", "+359 333 333 333", "contact3@mail.com", "description3", LocalDateTime.now(), LocalDateTime.now(), LandType.ARABLE_LAND);
-    private static final EditPropertyDTO EDIT_PROPERTY_DTO = new EditPropertyDTO(TEST_APARTMENT_ID, TEST_APARTMENT.getPropertyType(), TEST_APARTMENT.getCity().getName(), TEST_APARTMENT.getNeighbourhood().getName(), TEST_APARTMENT.getAddress(), 100000.00, TEST_APARTMENT.getArea(), TEST_APARTMENT.getAreaUnit(), TEST_APARTMENT.getOfferType(), TEST_APARTMENT.getContactName(), TEST_APARTMENT.getContactPhone(), TEST_APARTMENT.getContactEmail(), TEST_APARTMENT.getDescription(), TEST_APARTMENT.getUpdatedOn(), TEST_APARTMENT.getConstructionType(), TEST_APARTMENT.getYear(), TEST_APARTMENT.getRoomCount(), TEST_APARTMENT.getFloor(), TEST_APARTMENT.getBuildingFloors(), TEST_APARTMENT.getFacing(), TEST_APARTMENT.getHeatingType(), TEST_APARTMENT.getApartmentType(), TEST_APARTMENT.isHasElevator(), null, 0, null, 0, null, null, null, null);
+    private static final EditPropertyDTO EDIT_PROPERTY_DTO = new EditPropertyDTO(TEST_APARTMENT_ID, TEST_APARTMENT.getPropertyType(), TEST_APARTMENT.getCity().getId(), TEST_APARTMENT.getNeighbourhood().getId(), TEST_APARTMENT.getAddress(), 100000.00, TEST_APARTMENT.getArea(), TEST_APARTMENT.getAreaUnit(), TEST_APARTMENT.getOfferType(), TEST_APARTMENT.getContactName(), TEST_APARTMENT.getContactPhone(), TEST_APARTMENT.getContactEmail(), TEST_APARTMENT.getDescription(), TEST_APARTMENT.getUpdatedOn(), TEST_APARTMENT.getConstructionType(), TEST_APARTMENT.getYear(), TEST_APARTMENT.getRoomCount(), TEST_APARTMENT.getFloor(), TEST_APARTMENT.getBuildingFloors(), TEST_APARTMENT.getFacing(), TEST_APARTMENT.getHeatingType(), TEST_APARTMENT.getApartmentType(), TEST_APARTMENT.isHasElevator(), null, 0, null, 0, null, null, null, null);
 
+    private static final PropertyFilter NULL_FILTER = new PropertyFilter(null, null, null, null, null, null);
     @Mock
     private BasePropertyRepository basePropertyRepository;
 
@@ -81,7 +83,7 @@ public class BasePropertyServiceImplUnitTests {
                 eq(pageable)))
                 .thenReturn(new PageImpl<>(properties, pageable, 20));
 
-        Page<PropertyDTO> result = serviceToTest.getAllPropertiesByCompany(pageable, OfferType.SALE, null, null, null, null, null, null, false);
+        Page<PropertyDTO> result = serviceToTest.getAllPropertiesByCompany(pageable, OfferType.SALE, false, NULL_FILTER);
         List<PropertyDTO> resultList = result.getContent();
 
         PropertyDTO apartmentDTO = resultList.stream().filter(propertyDTO -> propertyDTO.getPropertyType() == PropertyType.APARTMENT).findFirst().orElse(null);
@@ -139,7 +141,7 @@ public class BasePropertyServiceImplUnitTests {
     public void testGetAllPropertiesByCompany_throwsExceptionWhenThereIsNoLoggedInUser() {
         when(userEntityService.getCurrentUser()).thenReturn(null);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, null, null, null, null, null, null, false));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, false, NULL_FILTER));
     }
 
     @Test
@@ -148,7 +150,7 @@ public class BasePropertyServiceImplUnitTests {
         user.setCompany(null);
         when(userEntityService.getCurrentUser()).thenReturn(user);
 
-        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, null, null, null, null, null, null, false));
+        Assertions.assertThrows(RuntimeException.class, () -> serviceToTest.getAllPropertiesByCompany(TEST_PAGEABLE, OfferType.SALE, false, NULL_FILTER));
     }
 
     @Test
@@ -264,7 +266,7 @@ public class BasePropertyServiceImplUnitTests {
         when(cityService.getCity("test_city")).thenReturn(TEST_CITY);
         when(neighbourhoodService.getNeighbourhood("test_neighbourhood", "test_city")).thenReturn(TEST_NEIGHBOURHOOD);
 
-        AddPropertyDTO addPropertyDTO = new AddPropertyDTO(PropertyType.APARTMENT, null, "test_city", "test_neighbourhood", "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 893 333 595", "contact@mail.com", "test_description", null, null, ConstructionType.BRICK, 2020, 3, 4, 8, "test_facing", HeatingType.GAS, ApartmentType.THREE_ROOM, true, null, null, null, null, null, null, null, null);
+        AddPropertyDTO addPropertyDTO = new AddPropertyDTO(PropertyType.APARTMENT, null, TEST_CITY.getId(), TEST_NEIGHBOURHOOD.getId(), "test_address", 70000.00, 70, AreaUnit.SQUARE_METER, OfferType.SALE, "contact_name", "+359 893 333 595", "contact@mail.com", "test_description", null, null, ConstructionType.BRICK, 2020, 3, 4, 8, "test_facing", HeatingType.GAS, ApartmentType.THREE_ROOM, true, null, null, null, null, null, null, null, null);
         serviceToTest.saveNewPropertyToDB(addPropertyDTO);
 
         verify(basePropertyRepository).saveAndFlush((Apartment) captor.capture());
@@ -273,8 +275,8 @@ public class BasePropertyServiceImplUnitTests {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(addPropertyDTO.getPropertyType(), actual.getPropertyType());
         Assertions.assertEquals(TEST_USER.getCompany().getName(), actual.getOwnerCompany().getName());
-        Assertions.assertEquals(addPropertyDTO.getCity(), actual.getCity().getName());
-        Assertions.assertEquals(addPropertyDTO.getNeighbourhood(), actual.getNeighbourhood().getName());
+        Assertions.assertEquals(addPropertyDTO.getCity(), actual.getCity().getId());
+        Assertions.assertEquals(addPropertyDTO.getNeighbourhood(), actual.getNeighbourhood().getId());
         Assertions.assertEquals(addPropertyDTO.getAddress(), actual.getAddress());
         Assertions.assertEquals(addPropertyDTO.getPrice(), actual.getPrice());
         Assertions.assertEquals(addPropertyDTO.getArea(), actual.getArea());
@@ -327,7 +329,7 @@ public class BasePropertyServiceImplUnitTests {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(EDIT_PROPERTY_DTO.getId(), actual.getId());
         Assertions.assertEquals(EDIT_PROPERTY_DTO.getPropertyType(), actual.getPropertyType());
-        Assertions.assertEquals(EDIT_PROPERTY_DTO.getCity(), actual.getCity().getName());
+        Assertions.assertEquals(EDIT_PROPERTY_DTO.getCityId(), actual.getCity().getId());
         Assertions.assertEquals(EDIT_PROPERTY_DTO.getDescription(), actual.getDescription());
         Assertions.assertEquals(EDIT_PROPERTY_DTO.getPrice(), actual.getPrice());
         Assertions.assertEquals(EDIT_PROPERTY_DTO.getArea(), actual.getArea());

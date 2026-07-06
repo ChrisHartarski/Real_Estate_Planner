@@ -1,30 +1,24 @@
 package com.butikimoti.real_estate_planner.specifications;
 
+import com.butikimoti.real_estate_planner.model.dto.util.filter.PropertyFilter;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
-import com.butikimoti.real_estate_planner.model.entity.City;
 import com.butikimoti.real_estate_planner.model.entity.Company;
-import com.butikimoti.real_estate_planner.model.entity.Neighbourhood;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
-import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class BasePropertySpecifications {
 
     public static Specification<BaseProperty> propertiesPageFilters(
             Company company,
             OfferType offerType,
-            PropertyType propertyType,
-            City city,
-            List<Neighbourhood> neighbourhoods,
-            String contactPhone,
-            Double minPrice,
-            Double maxPrice,
-            boolean isArchived
+            boolean isArchived,
+            PropertyFilter filter
     ) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -35,34 +29,34 @@ public class BasePropertySpecifications {
                 predicates.add(criteriaBuilder.equal(root.get("offerType"), offerType));
             }
 
-            if (propertyType != null) {
-                predicates.add(criteriaBuilder.equal(root.get("propertyType"), propertyType));
+            if (filter.getPropertyType() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("propertyType"), filter.getPropertyType()));
             }
 
-            if (city != null) {
-                predicates.add(criteriaBuilder.equal(root.get("city"), city));
+            if (filter.getCity() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("city").get("id"), filter.getCity()));
             }
 
-            if (neighbourhoods != null && !neighbourhoods.isEmpty()) {
-                List<Neighbourhood> filtered = neighbourhoods.stream()
+            if (filter.getNeighbourhoods() != null && !filter.getNeighbourhoods().isEmpty()) {
+                List<UUID> filtered = filter.getNeighbourhoods().stream()
                         .filter(Objects::nonNull)
                         .toList();
 
                 if (!filtered.isEmpty()) {
-                    predicates.add(root.get("neighbourhood").in(filtered));
+                    predicates.add(root.get("neighbourhood").get("id").in(filtered));
                 }
             }
 
-            if (contactPhone != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("contactPhone")), "%" + contactPhone + "%"));
+            if (filter.getContactPhone() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("contactPhone")), "%" + filter.getContactPhone() + "%"));
             }
 
-            if (minPrice != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+            if (filter.getMinPrice() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), filter.getMinPrice()));
             }
 
-            if (maxPrice != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            if (filter.getMaxPrice() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), filter.getMaxPrice()));
             }
 
             predicates.add(criteriaBuilder.equal(root.get("isArchived"), isArchived));

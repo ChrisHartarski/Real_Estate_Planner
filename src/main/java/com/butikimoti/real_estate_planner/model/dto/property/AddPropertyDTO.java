@@ -5,6 +5,7 @@ import com.butikimoti.real_estate_planner.model.enums.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class AddPropertyDTO implements HasPropertyType {
     public interface ApartmentGroup {}
@@ -18,11 +19,11 @@ public class AddPropertyDTO implements HasPropertyType {
 
     private Company ownerCompany;
 
-    @NotEmpty(message = "{propertyCity.notEmpty")
-    private String city;
+    @NotNull(message = "{propertyCity.notEmpty")
+    private UUID city;
 
-    @NotEmpty(message = "{propertyNeighbourhood.notEmpty}")
-    private String neighbourhood;
+    @NotNull(message = "{propertyNeighbourhood.notEmpty}")
+    private UUID neighbourhood;
 
     @NotEmpty(message = "{propertyAddress.notEmpty}")
     private String address;
@@ -114,7 +115,7 @@ public class AddPropertyDTO implements HasPropertyType {
     public AddPropertyDTO() {
     }
 
-    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, String city, String neighbourhood, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, HeatingType heatingType, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
+    public AddPropertyDTO(PropertyType propertyType, Company ownerCompany, UUID city, UUID neighbourhood, String address, Double price, Integer area, AreaUnit areaUnit, OfferType offerType, String contactName, String contactPhone, String contactEmail, String description, LocalDateTime createdOn, LocalDateTime updatedOn, ConstructionType constructionType, Integer year, Integer roomCount, Integer floor, Integer buildingFloors, String facing, HeatingType heatingType, ApartmentType apartmentType, boolean hasElevator, HouseType houseType, Integer yardArea, AreaUnit yardAreaUnit, Integer floorsCount, String additionalStructures, GarageType garageType, LandType landType, BusinessPropertyType businessPropertyType) {
         this.propertyType = propertyType;
         this.ownerCompany = ownerCompany;
         this.city = city;
@@ -165,19 +166,19 @@ public class AddPropertyDTO implements HasPropertyType {
         this.ownerCompany = ownerCompany;
     }
 
-    public String getCity() {
+    public UUID getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(UUID city) {
         this.city = city;
     }
 
-    public String getNeighbourhood() {
+    public UUID getNeighbourhood() {
         return neighbourhood;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
+    public void setNeighbourhood(UUID neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
 

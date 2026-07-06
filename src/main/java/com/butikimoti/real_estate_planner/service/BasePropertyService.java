@@ -1,13 +1,11 @@
 package com.butikimoti.real_estate_planner.service;
 
-import com.butikimoti.real_estate_planner.model.dto.comment.AddCommentDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.util.filter.PropertyFilter;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
-import com.butikimoti.real_estate_planner.model.enums.PropertyType;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BasePropertyService {
-    Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice, boolean isArchived);
+    Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, boolean isArchived, PropertyFilter filter);
     BaseProperty savePropertyToDB(BaseProperty property);
     BaseProperty saveNewPropertyToDB(AddPropertyDTO addPropertyDTO);
     BaseProperty editPropertyAndAddToDB(EditPropertyDTO editPropertyDTO);
@@ -24,4 +22,5 @@ public interface BasePropertyService {
     void archiveProperty(UUID id);
     void deleteProperty(UUID id) throws IOException;
     void deletePicture(UUID id, UUID pictureId) throws IOException;
+    List<String> getNeighbourhoodNamesFromFilter(PropertyFilter propertyFilter);
 }

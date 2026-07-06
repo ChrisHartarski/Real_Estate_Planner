@@ -56,20 +56,20 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <select class="property-input-fill-long" id="city" th:field="*{city}">
+                                    <select class="property-input-fill-long" id="city" th:field="*{cityId}">
                                         <option
                                                 value=""
                                                 th:text="#{property.city-placeholder}">
                                         </option>
                                         <option
                                                 th:each="city : ${cities}"
-                                                th:value="${city}"
-                                                th:text="${city}">
+                                                th:value="${city.id}"
+                                                th:text="${city.name}">
                                         </option>
                                     </select>
                                 </div>
                             </div>
-                            <small th:errors="*{city}" class="text-red">Property city error!</small>
+                            <small th:errors="*{cityId}" class="text-red">Property city error!</small>
                         </div>
 
                         <!-- Neighbourhood input -->
@@ -81,18 +81,17 @@
                                     </label>
                                 </div>
                                 <div class="property-input-right-column">
-                                    <select class="property-input-fill-long"
-                                            id="neighbourhood"
-                                            th:field="*{neighbourhood}"
-                                            th:data-current="${editPropertyData.neighbourhood}">
-                                        <option th:each="neighbourhood : ${neighbourhoods}"
-                                                th:value="${neighbourhood}"
-                                                th:text="${neighbourhood}">
+                                    <select class="property-input-fill-long" id="neighbourhood"
+                                            th:field="*{neighbourhoodId}"
+                                            th:attr="data-selected=${editPropertyData.neighbourhoodId}">
+                                        <option
+                                                value=""
+                                                th:text="#{property.neighbourhood-placeholder}">
                                         </option>
                                     </select>
                                 </div>
                             </div>
-                            <small th:errors="*{neighbourhood}" class="text-red">Property city error!</small>
+                            <small th:errors="*{neighbourhoodId}" class="text-red">Property city error!</small>
                         </div>
 
                         <!-- Address input -->

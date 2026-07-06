@@ -1,9 +1,9 @@
 package com.butikimoti.real_estate_planner.service.impl;
 
-import com.butikimoti.real_estate_planner.model.dto.property.HasPropertyType;
 import com.butikimoti.real_estate_planner.model.dto.property.AddPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.EditPropertyDTO;
 import com.butikimoti.real_estate_planner.model.dto.property.PropertyDTO;
+import com.butikimoti.real_estate_planner.model.dto.util.filter.PropertyFilter;
 import com.butikimoti.real_estate_planner.model.entity.*;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
@@ -46,7 +46,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
     }
 
     @Override
-    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, PropertyType propertyType, String cityName, List<String> neighbourhoodNames, String contactPhone, Double minPrice, Double maxPrice, boolean isArchived) {
+    public Page<PropertyDTO> getAllPropertiesByCompany(Pageable pageable, OfferType saleOrRent, boolean isArchived, PropertyFilter filter) {
         UserEntity currentUser = userEntityService.getCurrentUser();
 
         if (currentUser == null) {
@@ -58,17 +58,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             throw new RuntimeException("User does not have a company");
         }
 
-        City city = cityService.getCity(cityName);
-        List<Neighbourhood> neighbourhoods = new ArrayList<>();
-
-        if (neighbourhoodNames != null && !neighbourhoodNames.isEmpty()) {
-            neighbourhoods = neighbourhoodNames
-                            .stream()
-                            .map(name -> neighbourhoodService.getNeighbourhood(name, cityName))
-                            .toList();
-        }
-
-        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, propertyType, city, neighbourhoods, contactPhone, minPrice, maxPrice, isArchived);
+        Specification<BaseProperty> specification = BasePropertySpecifications.propertiesPageFilters(ownerCompany, saleOrRent, isArchived, filter);
         Page<BaseProperty> properties = basePropertyRepository.findAll(specification, pageable);
 
         return properties.map(this::mapBasePropertyToPropertyDTO);
@@ -92,7 +82,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
             throw new ResourceNotFoundException("No such property type: " + addPropertyDTO.getPropertyType());
         }
         City city = cityService.getCity(addPropertyDTO.getCity());
-        Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(addPropertyDTO.getNeighbourhood(), addPropertyDTO.getCity());
+        Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(addPropertyDTO.getNeighbourhood());
 
         BaseProperty property = getBasePropertyFromDTO(addPropertyDTO);
         property.setCity(city);
@@ -156,6 +146,20 @@ public class BasePropertyServiceImpl implements BasePropertyService {
         }
     }
 
+    @Override
+    public List<String> getNeighbourhoodNamesFromFilter(PropertyFilter propertyFilter) {
+        List<String> neighbourhoodNames = new ArrayList<>();
+
+        if(propertyFilter.getNeighbourhoods() != null && !propertyFilter.getNeighbourhoods().isEmpty()) {
+            neighbourhoodNames = propertyFilter.getNeighbourhoods()
+                    .stream()
+                    .map (id -> neighbourhoodService.getNeighbourhood(id).getName())
+                    .toList();
+        }
+
+        return neighbourhoodNames;
+    }
+
     private void deleteAllPicturesFromProperty(UUID propertyId) throws IOException {
         BaseProperty property = getPropertyByID(propertyId);
         List<PropertyPicture> pictures = new ArrayList<>(property.getPictures());
@@ -195,7 +199,7 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
     private BaseProperty getBasePropertyFromDTO(AddPropertyDTO dto) {
         City city = cityService.getCity(dto.getCity());
-        Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(dto.getNeighbourhood(), dto.getCity());
+        Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(dto.getNeighbourhood());
 
         BaseProperty result =  switch (dto.getPropertyType()) {
             case APARTMENT -> modelMapper.map(dto, Apartment.class);
@@ -217,15 +221,15 @@ public class BasePropertyServiceImpl implements BasePropertyService {
 
         try {
             configuration.setSkipNullEnabled(true);
+
+            City city = cityService.getCity(editPropertyDTO.getCityId());
+            property.setCity(city);
+
+            Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(editPropertyDTO.getNeighbourhoodId());
+            property.setNeighbourhood(neighbourhood);
+
             modelMapper.map(editPropertyDTO, property);
-            if (!editPropertyDTO.getCity().equals(property.getCity().getName())) {
-                City city = cityService.getCity(editPropertyDTO.getCity());
-                property.setCity(city);
-            }
-            if (!editPropertyDTO.getNeighbourhood().equals(property.getNeighbourhood().getName())) {
-                Neighbourhood neighbourhood = neighbourhoodService.getNeighbourhood(editPropertyDTO.getNeighbourhood(), editPropertyDTO.getCity());
-                property.setNeighbourhood(neighbourhood);
-            }
+
         } finally {
             configuration.setSkipNullEnabled(isSkipNullEnabled);
         }
