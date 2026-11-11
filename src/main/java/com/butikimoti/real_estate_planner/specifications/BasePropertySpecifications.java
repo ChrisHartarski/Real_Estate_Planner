@@ -1,10 +1,14 @@
 package com.butikimoti.real_estate_planner.specifications;
 
 import com.butikimoti.real_estate_planner.model.dto.util.filter.PropertyFilter;
+import com.butikimoti.real_estate_planner.model.entity.Apartment;
 import com.butikimoti.real_estate_planner.model.entity.BaseProperty;
 import com.butikimoti.real_estate_planner.model.entity.Company;
+import com.butikimoti.real_estate_planner.model.entity.House;
 import com.butikimoti.real_estate_planner.model.enums.OfferType;
+import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -31,6 +35,53 @@ public class BasePropertySpecifications {
 
             if (filter.getPropertyType() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("propertyType"), filter.getPropertyType()));
+            }
+
+            // Apartment type
+            if (filter.getApartmentType() != null) {
+                Root<Apartment> apartment = criteriaBuilder.treat(root, Apartment.class);
+
+                predicates.add(criteriaBuilder.equal(
+                        apartment.get("apartmentType"),
+                        filter.getApartmentType()
+                ));
+            }
+
+            // House type
+            if (filter.getHouseType() != null) {
+                Root<House> house = criteriaBuilder.treat(root, House.class);
+
+                predicates.add(criteriaBuilder.equal(
+                        house.get("houseType"),
+                        filter.getHouseType()
+                ));
+            }
+
+            // Construction type
+            if (filter.getConstructionType() != null) {
+                Root<Apartment> apartment = criteriaBuilder.treat(root, Apartment.class);
+                Root<House> house = criteriaBuilder.treat(root, House.class);
+
+                Predicate apartmentConstruction = criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("propertyType"), PropertyType.APARTMENT),
+                        criteriaBuilder.equal(
+                                apartment.get("constructionType"),
+                                filter.getConstructionType()
+                        )
+                );
+
+                Predicate houseConstruction = criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("propertyType"), PropertyType.HOUSE),
+                        criteriaBuilder.equal(
+                                house.get("constructionType"),
+                                filter.getConstructionType()
+                        )
+                );
+
+                predicates.add(criteriaBuilder.or(
+                        apartmentConstruction,
+                        houseConstruction
+                ));
             }
 
             if (filter.getCity() != null) {

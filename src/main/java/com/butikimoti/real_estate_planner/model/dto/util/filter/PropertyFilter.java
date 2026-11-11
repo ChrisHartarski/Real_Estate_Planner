@@ -1,5 +1,8 @@
 package com.butikimoti.real_estate_planner.model.dto.util.filter;
 
+import com.butikimoti.real_estate_planner.model.enums.ApartmentType;
+import com.butikimoti.real_estate_planner.model.enums.ConstructionType;
+import com.butikimoti.real_estate_planner.model.enums.HouseType;
 import com.butikimoti.real_estate_planner.model.enums.PropertyType;
 
 import java.util.ArrayList;
@@ -9,6 +12,9 @@ import java.util.UUID;
 public class PropertyFilter {
 
     private PropertyType propertyType;
+    private ApartmentType apartmentType;
+    private HouseType houseType;
+    private ConstructionType constructionType;
     private UUID city;
     private List<UUID> neighbourhoods;
     private String contactPhone;
@@ -19,8 +25,11 @@ public class PropertyFilter {
         neighbourhoods = new ArrayList<>();
     }
 
-    public PropertyFilter(PropertyType propertyType, UUID city, List<UUID> neighbourhoods, String contactPhone, Double minPrice, Double maxPrice) {
+    public PropertyFilter(PropertyType propertyType, ApartmentType apartmentType, HouseType houseType, ConstructionType constructionType, UUID city, List<UUID> neighbourhoods, String contactPhone, Double minPrice, Double maxPrice) {
         this.propertyType = propertyType;
+        this.apartmentType = apartmentType;
+        this.houseType = houseType;
+        this.constructionType = constructionType;
         this.city = city;
         this.neighbourhoods = neighbourhoods;
         this.contactPhone = contactPhone;
@@ -34,6 +43,30 @@ public class PropertyFilter {
 
     public void setPropertyType(PropertyType propertyType) {
         this.propertyType = propertyType;
+    }
+
+    public ApartmentType getApartmentType() {
+        return apartmentType;
+    }
+
+    public void setApartmentType(ApartmentType apartmentType) {
+        this.apartmentType = apartmentType;
+    }
+
+    public HouseType getHouseType() {
+        return houseType;
+    }
+
+    public void setHouseType(HouseType houseType) {
+        this.houseType = houseType;
+    }
+
+    public ConstructionType getConstructionType() {
+        return constructionType;
+    }
+
+    public void setConstructionType(ConstructionType constructionType) {
+        this.constructionType = constructionType;
     }
 
     public UUID getCity() {
@@ -78,6 +111,9 @@ public class PropertyFilter {
 
     public void clear() {
         setCity(null);
+        setApartmentType(null);
+        setHouseType(null);
+        setConstructionType(null);
         setNeighbourhoods(new ArrayList<>());
         setContactPhone(null);
         setMinPrice(null);

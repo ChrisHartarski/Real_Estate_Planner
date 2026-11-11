@@ -47,7 +47,7 @@ public class BasePropertyServiceImplUnitTests {
     private static final Land TEST_LAND = new Land(TEST_LAND_ID, PropertyType.LAND, TEST_COMPANY, TEST_CITY, TEST_NEIGHBOURHOOD, "test_address3", 120000.00, 100, AreaUnit.DECARE, OfferType.SALE, "contact_name_3", "+359 333 333 333", "contact3@mail.com", "description3", LocalDateTime.now(), LocalDateTime.now(), LandType.ARABLE_LAND);
     private static final EditPropertyDTO EDIT_PROPERTY_DTO = new EditPropertyDTO(TEST_APARTMENT_ID, TEST_APARTMENT.getPropertyType(), TEST_APARTMENT.getCity().getId(), TEST_APARTMENT.getNeighbourhood().getId(), TEST_APARTMENT.getAddress(), 100000.00, TEST_APARTMENT.getArea(), TEST_APARTMENT.getAreaUnit(), TEST_APARTMENT.getOfferType(), TEST_APARTMENT.getContactName(), TEST_APARTMENT.getContactPhone(), TEST_APARTMENT.getContactEmail(), TEST_APARTMENT.getDescription(), TEST_APARTMENT.getUpdatedOn(), TEST_APARTMENT.getConstructionType(), TEST_APARTMENT.getYear(), TEST_APARTMENT.getRoomCount(), TEST_APARTMENT.getFloor(), TEST_APARTMENT.getBuildingFloors(), TEST_APARTMENT.getFacing(), TEST_APARTMENT.getHeatingType(), TEST_APARTMENT.getApartmentType(), TEST_APARTMENT.isHasElevator(), null, 0, null, 0, null, null, null, null);
 
-    private static final PropertyFilter NULL_FILTER = new PropertyFilter(null, null, null, null, null, null);
+    private static final PropertyFilter NULL_FILTER = new PropertyFilter(null, null, null, null, null, null, null, null, null);
     @Mock
     private BasePropertyRepository basePropertyRepository;
 
