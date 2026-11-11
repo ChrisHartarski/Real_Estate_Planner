@@ -3,13 +3,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const citySelect = document.getElementById('filter-city');
     const availableNeighbourhoodsSelect = document.getElementById('available-neighbourhoods');
-    const selectedNeighbourhoodsSelect = document.getElementById('selected-neighbourhoods')
+    const selectedNeighbourhoodsSelect = document.getElementById('selected-neighbourhoods');
 
     const addBtn = document.getElementById("add-neighbourhood-btn");
     const removeBtn = document.getElementById("remove-neighbourhood-btn");
 
     const filterStateEl = document.getElementById("filter-state");
 
+    // Property type filters
+    const propertyTypeSelect = document.getElementById('filter-propertyType');
+
+    const apartmentTypeFilter = document.getElementById('apartment-type-filter');
+    const houseTypeFilter = document.getElementById('house-type-filter');
+    const constructionTypeFilter = document.getElementById('construction-type-filter');
+
+    const apartmentTypeSelect = document.getElementById('filter-apartmentType');
+    const houseTypeSelect = document.getElementById('filter-houseType');
+    const constructionTypeSelect = document.getElementById('filter-constructionType');
+
+    // Property type filter visibility
+    function updatePropertyFilters() {
+
+        const selectedType = propertyTypeSelect.value;
+
+        const isApartment = selectedType === 'APARTMENT';
+        const isHouse = selectedType === 'HOUSE';
+
+        apartmentTypeFilter.style.display = isApartment ? '' : 'none';
+        houseTypeFilter.style.display = isHouse ? '' : 'none';
+
+        constructionTypeFilter.style.display =
+            (isApartment || isHouse) ? '' : 'none';
+
+        // Clear irrelevant selections
+        if (!isApartment) {
+            apartmentTypeSelect.value = '';
+        }
+
+        if (!isHouse) {
+            houseTypeSelect.value = '';
+        }
+
+        if (!isApartment && !isHouse) {
+            constructionTypeSelect.value = '';
+        }
+    }
+
+    propertyTypeSelect.addEventListener('change', updatePropertyFilters);
+
+    // Initialize property filters on page load
+    updatePropertyFilters();
+
+
+    // Neighbourhood filtering
     function sortSelect(select) {
         const options = Array.from(select.options);
 
@@ -90,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", () => {
         Array.from(selectedNeighbourhoodsSelect.options)
             .forEach(opt => {
-                if(!opt.value || opt.value === "null") {
+                if (!opt.value || opt.value === "null") {
                     opt.selected = false;
                 } else {
                     opt.selected = true;

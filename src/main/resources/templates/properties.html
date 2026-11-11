@@ -83,6 +83,78 @@
                             </div>
                         </div>
 
+                        <!-- Apartment Type -->
+                        <div class="filter-items-container"
+                             id="apartment-type-filter"
+                             style="display: none;">
+                            <div class="filter-item">
+                                <label class="filter-left-column"
+                                       th:text="#{property.apartment-type}"
+                                       for="filter-apartmentType"></label>
+
+                                <select class="filter-right-column"
+                                        id="filter-apartmentType"
+                                        th:field="*{apartmentType}">
+                                    <option value=""
+                                            th:text="#{property.all-placeholder}">
+                                    </option>
+                                    <option
+                                            th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.ApartmentType).values()}"
+                                            th:value="${type}"
+                                            th:text="#{${'apartmentType.' + type.name()}}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- House Type -->
+                        <div class="filter-items-container"
+                             id="house-type-filter"
+                             style="display: none;">
+                            <div class="filter-item">
+                                <label class="filter-left-column"
+                                       th:text="#{property.house-type}"
+                                       for="filter-houseType"></label>
+
+                                <select class="filter-right-column"
+                                        id="filter-houseType"
+                                        th:field="*{houseType}">
+                                    <option value=""
+                                            th:text="#{property.all-placeholder}">
+                                    </option>
+                                    <option
+                                            th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.HouseType).values()}"
+                                            th:value="${type}"
+                                            th:text="#{${'houseType.' + type.name()}}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Construction Type -->
+                        <div class="filter-items-container"
+                             id="construction-type-filter"
+                             style="display: none;">
+                            <div class="filter-item">
+                                <label class="filter-left-column"
+                                       th:text="#{property.construction-type}"
+                                       for="filter-constructionType"></label>
+
+                                <select class="filter-right-column"
+                                        id="filter-constructionType"
+                                        th:field="*{constructionType}">
+                                    <option value=""
+                                            th:text="#{property.all-placeholder}">
+                                    </option>
+                                    <option
+                                            th:each="type : ${T(com.butikimoti.real_estate_planner.model.enums.ConstructionType).values()}"
+                                            th:value="${type}"
+                                            th:text="#{${'constructionType.' + type.name()}}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
                         <!--                    City-->
                         <div class="filter-items-container">
                             <div class="filter-item">
