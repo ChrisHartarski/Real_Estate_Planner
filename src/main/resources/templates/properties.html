@@ -251,7 +251,12 @@
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
                         <div class="flex-row w-100">
-                            <button class="btn btn-blue center">Приложи</button>
+                            <div class="flex-row center gap-1">
+                                <button class="btn btn-blue" th:text="#{filter-button.apply}"> Apply </button>
+                                <a th:href="@{/properties/{pageType}/clear-filters(pageType=${pageType})}">
+                                    <button class="btn btn-blue" th:text="#{filter-button.clear-filters}">Clear filters</button>
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </details>

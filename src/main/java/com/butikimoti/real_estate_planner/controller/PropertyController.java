@@ -161,6 +161,15 @@ public class PropertyController {
         return viewProperties(context, filter, pageable, model);
     }
 
+    @GetMapping("/{pageType}/clear-filters")
+    public String clearFilters(@PathVariable String pageType,
+                               Model model) {
+
+        model.addAttribute("propertyFilter", new PropertyFilter());
+
+        return "redirect:/properties/" + pageType;
+    }
+
     @GetMapping("/add")
     public String viewAddProperty(Model model) {
         List<CityDTO> cityList = cityService.getAllCities();
